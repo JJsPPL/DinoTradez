@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Information Lookup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Stock Information Lookup</h2>
+        <input type="text" id="ticker" placeholder="Enter Ticker">
+        <button onclick="fetchStockData()">Get Stock Info</button>
+        <table id="stockTable"></table>
+    </div>
+    
+    <script>
+        const stockData = {
+            "COST": {"Market Cap": 456.47, "Shares": 308417, "$Vol": 3428.4, "Relative Volume StDev": 2.08, "NewHighs": 5230, "Score": 31.1},
+            "AMZN": {"Market Cap": 1249686, "Shares": 10297792059, "$Vol": 108620, "Relative Volume StDev": 1.19, "NewHighs": 163, "Score": 61.2},
+            "AAPL": {"Market Cap": 3692658, "Shares": 15002720379, "$Vol": 13420.9, "Relative Volume StDev": 1.19, "NewHighs": 986, "Score": 40.7},
+            "KAST": {"Market Cap": 0, "Shares": 41141211, "$Vol": 0, "Relative Volume StDev": 3.31, "NewHighs": 1, "Score": 15.0},
+            "INTC": {"Market Cap": 75, "Shares": 4300000000, "$Vol": 2451.3, "Relative Volume StDev": 1.19, "NewHighs": 0, "Score": 12.9}
+        };
+
+        function fetchStockData() {
+            let ticker = document.getElementById("ticker").value.toUpperCase();
+            let table = document.getElementById("stockTable");
+            table.innerHTML = "";
+            
+            if (stockData[ticker]) {
+                let data = stockData[ticker];
+                let html = `<tr><th>Metric</th><th>Value</th></tr>`;
+                for (let key in data) {
+                    html += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
+                }
+                table.innerHTML = html;
+            } else {
+                table.innerHTML = "<tr><td colspan='2'>No data found for this ticker</td></tr>";
+            }
+        }
+    </script>
+</body>
+</html>
