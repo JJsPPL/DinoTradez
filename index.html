@@ -2,175 +2,309 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DinoTradez Chart Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASDAQ: COSTCO - DinoTradez Stock Quote</title>
   <style>
-    /* Basic Reset */
+    /* Reset and Global Styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
-    }
-
-    header {
-      background: #ffd54f;
-      text-align: center;
-      padding: 20px;
-    }
-
-    header h1 {
-      font-size: 2em;
+      background-color: #f8f8f8;
       color: #333;
-      margin-bottom: 10px;
     }
-
-    .logo-container {
-      margin: 10px auto;
-      text-align: center;
-    }
-
-    .logo-container img {
-      max-width: 100px;
-      height: auto;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
+    header {
+      background-color: #00467f;
+      color: #fff;
       padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+    }
+    header .logo img {
+      max-width: 60px;
+      margin-right: 10px;
+    }
+    header h1 {
+      font-size: 1.8em;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+    }
+    .search-bar input[type="text"] {
+      padding: 8px;
+      font-size: 1em;
+      border: none;
+      border-radius: 4px;
+    }
+    .search-bar button {
+      padding: 8px 12px;
+      font-size: 1em;
+      background-color: #ff9900;
+      border: none;
+      border-radius: 4px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+    nav {
+      background-color: #f0f0f0;
+      padding: 10px 20px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+    }
+    nav ul li {
+      margin-right: 20px;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    nav ul li.active,
+    nav ul li:hover {
+      background-color: #ddd;
+    }
+    main {
+      display: flex;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 20px auto;
+      padding: 0 20px;
     }
-
-    .gallery-item {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      overflow: hidden;
+    .content {
+      flex: 3;
+      padding: 20px;
+      background-color: #fff;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 4px;
     }
-
-    .gallery-item img {
-      width: 100%;
-      height: auto;
+    .sidebar {
+      flex: 1;
+      margin-left: 20px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      height: fit-content;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
       display: block;
     }
-
-    .gallery-item .info {
-      padding: 15px;
+    .stock-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
-
-    .gallery-item .info h2 {
-      font-size: 1.1em;
-      margin-bottom: 8px;
-      color: #444;
+    .stock-summary div {
+      flex: 1;
+      text-align: center;
     }
-
-    .gallery-item .info p {
-      font-size: 0.9em;
-      color: #555;
-      line-height: 1.4;
+    .chart-placeholder {
+      width: 100%;
+      height: 300px;
+      background-color: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      margin-bottom: 20px;
+      border-radius: 4px;
     }
-
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    table th {
+      background-color: #f0f0f0;
+    }
     footer {
-      background: #cfd8dc;
+      background-color: #00467f;
+      color: #fff;
       text-align: center;
       padding: 15px;
       margin-top: 20px;
     }
-
-    footer p {
-      color: #333;
-      font-size: 0.9em;
-    }
   </style>
   <script>
-    // (Optional) You could add some interactivity or lightbox features here
+    // Switch between tabs
+    function switchTab(tabId) {
+      const tabs = document.getElementsByClassName('tab-content');
+      for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('active');
+      }
+      document.getElementById(tabId).classList.add('active');
+
+      // Update navigation active state
+      const navItems = document.querySelectorAll('nav ul li');
+      navItems.forEach(item => {
+        if (item.getAttribute('data-tab') === tabId) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }
+
+    // Dummy search function to update stock summary data
+    function searchTicker() {
+      let ticker = document.getElementById('tickerInput').value.trim();
+      if (ticker === '') {
+        alert('Please enter a ticker symbol.');
+        return;
+      }
+      // For demonstration, update the company name and dummy data
+      document.getElementById('companyName').innerText = "NASDAQ: " + ticker.toUpperCase();
+      document.getElementById('stockPrice').innerText = "$420.50";
+      document.getElementById('stockChange').innerText = "+2.35 (0.56%)";
+    }
+
+    window.onload = function() {
+      // Set default tab to Overview on page load
+      switchTab('overview');
+    }
   </script>
 </head>
 <body>
-
+  <!-- Header Section -->
   <header>
-    <h1>DinoTradez Chart Gallery</h1>
-    <div class="logo-container">
-      <!-- Replace "Logo.jpg" with the actual path/filename of your logo -->
+    <div class="logo">
+      <!-- Replace "Logo.jpg" with your actual logo file -->
       <img src="Logo.jpg" alt="DinoTradez Logo" />
+      <h1>DinoTradez Research</h1>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="tickerInput" placeholder="Enter Ticker" />
+      <button onclick="searchTicker()">Search</button>
     </div>
   </header>
-
-  <div class="gallery">
-    <!-- Market Maker Signals -->
-    <div class="gallery-item">
-      <!-- Replace "MarketMakers.jpg" with the actual path/filename -->
-      <img src="MarketMakers.jpg" alt="List of Market Maker Signals" />
-      <div class="info">
-        <h2>Market Maker Signals</h2>
-        <p>Common signals rumored to be used by market makers indicating potential actions or intentions in the market.</p>
+  
+  <!-- Navigation Tabs -->
+  <nav>
+    <ul>
+      <li data-tab="overview" onclick="switchTab('overview')">Overview</li>
+      <li data-tab="financials" onclick="switchTab('financials')">Financials</li>
+      <li data-tab="news" onclick="switchTab('news')">News</li>
+    </ul>
+  </nav>
+  
+  <!-- Main Content Area -->
+  <main>
+    <!-- Primary Content -->
+    <div class="content">
+      <!-- Overview Tab -->
+      <div id="overview" class="tab-content active">
+        <div class="stock-summary">
+          <div>
+            <h2 id="companyName">NASDAQ: COSTCO</h2>
+            <p>Costco Wholesale Corporation</p>
+          </div>
+          <div>
+            <h2 id="stockPrice">$350.00</h2>
+            <p>Stock Price</p>
+          </div>
+          <div>
+            <h2 id="stockChange">+1.20 (0.34%)</h2>
+            <p>Change</p>
+          </div>
+        </div>
+        <div class="chart-placeholder">
+          Chart Area (Interactive Chart Placeholder)
+        </div>
+        <table>
+          <tr>
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Volume</th>
+            <th>Market Cap</th>
+          </tr>
+          <tr>
+            <td>$348.00</td>
+            <td>$352.00</td>
+            <td>$347.00</td>
+            <td>1.2M</td>
+            <td>$100B</td>
+          </tr>
+        </table>
+      </div>
+      
+      <!-- Financials Tab -->
+      <div id="financials" class="tab-content">
+        <h2>Financial Overview</h2>
+        <table>
+          <tr>
+            <th>Revenue</th>
+            <th>EPS</th>
+            <th>P/E Ratio</th>
+            <th>Dividend Yield</th>
+          </tr>
+          <tr>
+            <td>$200B</td>
+            <td>$8.50</td>
+            <td>35</td>
+            <td>0.85%</td>
+          </tr>
+        </table>
+        <h2>Balance Sheet</h2>
+        <table>
+          <tr>
+            <th>Total Assets</th>
+            <th>Total Liabilities</th>
+            <th>Shareholder Equity</th>
+          </tr>
+          <tr>
+            <td>$150B</td>
+            <td>$50B</td>
+            <td>$100B</td>
+          </tr>
+        </table>
+      </div>
+      
+      <!-- News Tab -->
+      <div id="news" class="tab-content">
+        <h2>Latest News</h2>
+        <ul>
+          <li><strong>News Headline 1:</strong> Stock hits new high amid market optimism.</li>
+          <li><strong>News Headline 2:</strong> Analyst upgrades target price based on strong earnings.</li>
+          <li><strong>News Headline 3:</strong> New product launch expected to boost revenue.</li>
+        </ul>
       </div>
     </div>
-
-    <!-- Benner Cycle -->
-    <div class="gallery-item">
-      <!-- Replace "BennerCycle.png" with the actual path/filename -->
-      <img src="BennerCycle.png" alt="Benner Cycle" />
-      <div class="info">
-        <h2>Benner Cycle</h2>
-        <p>Historical cycles that project years of panics, high prices, and low prices, offering a long-term market perspective.</p>
-      </div>
+    
+    <!-- Sidebar: Dino Lookup Panel -->
+    <div class="sidebar">
+      <h2>Dino Lookup</h2>
+      <p>Enter a ticker to view detailed analysis:</p>
+      <input type="text" id="sidebarTicker" placeholder="Ticker Symbol" />
+      <button onclick="searchTicker()">Lookup</button>
+      <hr />
+      <h3>Quick Stats</h3>
+      <p><strong>Rank:</strong> 12</p>
+      <p><strong>Market Cap:</strong> $100B</p>
+      <p><strong>$Vol:</strong> 1.2M</p>
+      <p><strong>Score:</strong> 87</p>
     </div>
-
-    <!-- Ascending Triangle -->
-    <div class="gallery-item">
-      <!-- Replace "Breakout.png" with the actual path/filename -->
-      <img src="Breakout.png" alt="Ascending Triangle Chart Pattern" />
-      <div class="info">
-        <h2>Ascending Triangle Pattern</h2>
-        <p>A bullish continuation pattern characterized by rising swing lows and a flat swing high, often signaling an upcoming breakout.</p>
-      </div>
-    </div>
-
-    <!-- Bullish/Bearish Divergence -->
-    <div class="gallery-item">
-      <!-- Replace "BullishBearishDivergence.png" with the actual path/filename -->
-      <img src="BullishBearishDivergence.png" alt="Bullish and Bearish Divergence" />
-      <div class="info">
-        <h2>Price Divergence</h2>
-        <p>When price action and an indicator move in opposite directions, signaling potential trend reversals (bullish or bearish).</p>
-      </div>
-    </div>
-
-    <!-- Stages (Business Cycle) -->
-    <div class="gallery-item">
-      <!-- Replace "Stages.png" with the actual path/filename -->
-      <img src="Stages.png" alt="Business Cycle Stages" />
-      <div class="info">
-        <h2>Business Cycle Stages</h2>
-        <p>Typical market stages from expansion to contraction and how different asset classes perform in each stage.</p>
-      </div>
-    </div>
-
-    <!-- Astronaut on the Moon -->
-    <div class="gallery-item">
-      <!-- Replace "moon.webp" with the actual path/filename -->
-      <img src="moon.webp" alt="Astronaut Relaxing on the Moon" />
-      <div class="info">
-        <h2>Astronaut on the Moon</h2>
-        <p>Fun image showing an astronaut enjoying a beverage while looking at Earth—often used as a metaphor for 'moonshot' gains.</p>
-      </div>
-    </div>
-
-    <!-- If you have additional images, replicate the gallery-item block as needed -->
-
-  </div>
-
+  </main>
+  
+  <!-- Footer Section -->
   <footer>
-    <p>&copy; 2025 DinoTradez. All rights reserved.</p>
+    <p>&copy; 2025 DinoTradez Research. All rights reserved.</p>
   </footer>
-
 </body>
 </html>
