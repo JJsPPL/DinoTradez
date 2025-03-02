@@ -1,145 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Information Lookup</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Playfair Display', serif;
-            background: url('background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #333;
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 250px;
-            background: #03396c;
-            padding: 20px;
-            min-height: 100vh;
-            color: #fff;
-            position: fixed;
-            top: 0;
-            left: 0;
-            text-align: center;
-        }
-        .sidebar h1 {
-            font-family: 'Lobster', cursive;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        .sidebar nav a {
-            display: block;
-            color: #fff;
-            text-decoration: none;
-            margin: 10px 0;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        .sidebar nav a:hover {
-            color: #ff9a8d;
-        }
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            background: rgba(255, 255, 255, 0.9);
-        }
-        .container, .stock-week {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            width: 45%;
-        }
-        input, button {
-            padding: 10px;
-            margin: 10px;
-            width: 80%;
-            font-size: 16px;
-        }
-        button {
-            background: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-        th {
-            background-color: #007BFF;
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DinoTradez</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lobster&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #03396c;
+      padding: 20px;
+      min-height: 100vh;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      text-align: center;
+    }
+
+    .sidebar .logo {
+      max-width: 80%;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    .sidebar h1 {
+      font-family: 'Lobster', cursive;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .sidebar p {
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+
+    .sidebar nav a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin: 10px 0;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .sidebar nav a:hover {
+      color: #ff9a8d;
+    }
+
+    /* Content area */
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+      flex-grow: 1;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      font-family: 'Lobster', cursive;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #03396c;
+    }
+
+    /* Stocks of the Week */
+    .stock-week {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .stock-week table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    .stock-week th,
+    .stock-week td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .stock-week th {
+      background-color: #007BFF;
+      color: #fff;
+    }
+
+    /* Dino Ratings */
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .container input,
+    .container button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 80%;
+      font-size: 16px;
+    }
+
+    .container button {
+      background: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .container button:hover {
+      background: #0056b3;
+    }
+
+    .container table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    .container th,
+    .container td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .container th {
+      background-color: #007BFF;
+      color: #fff;
+    }
+
+    /* Pics section */
+    #Pics .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    #Pics .grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    #Pics .grid img:hover {
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h1>Stock Tracker</h1>
-        <nav>
-            <a href="#lookup">Stock Lookup</a>
-            <a href="#stock-week">Stock of the Week</a>
-        </nav>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="Logo.jpg" alt="Logo" class="logo" />
+    <h1>DinoTradez</h1>
+    <p>DinoTradez Rankings</p>
+    <nav>
+      <a href="#lookup">Dino Ratings</a>
+      <a href="#stock-week">Stocks of Week</a>
+      <a href="#Pics">Pics</a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Stocks of the Week Section -->
+    <div class="section stock-week" id="stock-week">
+      <h2>Stocks of the Week</h2>
+      <p>This section is manually updated weekly via the repository.</p>
+      <table>
+        <tr><th>Ticker</th><th>Details</th></tr>
+        <tr><td>Example 1</td><td>Market Cap: $500M, New Highs: 250</td></tr>
+        <tr><td>Example 2</td><td>Market Cap: $800M, New Highs: 320</td></tr>
+      </table>
     </div>
 
-    <div class="content">
-        <div class="stock-week" id="stock-week">
-            <h2>Stock of the Week</h2>
-            <p>This section is manually updated weekly via the repository.</p>
-            <table>
-                <tr><th>Ticker</th><th>Details</th></tr>
-                <tr><td>Example 1</td><td>Market Cap: $500M, New Highs: 250</td></tr>
-                <tr><td>Example 2</td><td>Market Cap: $800M, New Highs: 320</td></tr>
-            </table>
-        </div>
-        
-        <div class="container" id="lookup">
-            <h2>Stock Information Lookup</h2>
-            <input type="text" id="ticker" placeholder="Enter Ticker">
-            <button onclick="fetchStockData()">Get Stock Info</button>
-            <table id="stockTable"></table>
-        </div>
+    <!-- Dino Ratings Section -->
+    <div class="section container" id="lookup">
+      <h2>Dino Ratings</h2>
+      <input type="text" id="ticker" placeholder="Enter Ticker" />
+      <button onclick="fetchStockData()">Get Stock Info</button>
+      <table id="stockTable"></table>
     </div>
 
-    <script>
-        const stockData = {
-            "COST": {"Market Cap": 456.47, "Shares": 308417, "$Vol": 3428.4, "Relative Volume StDev": 2.08, "NewHighs": 5230, "Score": 31.1},
-            "AMZN": {"Market Cap": 1249686, "Shares": 10297792059, "$Vol": 108620, "Relative Volume StDev": 1.19, "NewHighs": 163, "Score": 61.2},
-            "AAPL": {"Market Cap": 3692658, "Shares": 15002720379, "$Vol": 13420.9, "Relative Volume StDev": 1.19, "NewHighs": 986, "Score": 40.7}
-        };
+    <!-- Pics Section -->
+    <section id="Pics" class="section">
+      <h2>Our Events</h2>
+      <div class="grid">
+        <img src="BearSqueeze.jpeg" alt="Bear Squeeze" loading="lazy" />
+        <img src="BullSqueeze.jpeg" alt="Bull Squeeze" loading="lazy" />
+        <img src="Logo.jpeg" alt="Logo" loading="lazy" />
+        <img src="MarketMakers.jpeg" alt="Market Makers" loading="lazy" />
+        <img src="tesla.jpeg" alt="Tesla" loading="lazy" />
+        <img src="BennerCycle.jpeg" alt="Benner Cycle" loading="lazy" />
+        <img src="Breakout.jpeg" alt="Breakout" loading="lazy" />
+        <img src="BullishBearishDivergence.jpeg" alt="Bullish Bearish Divergence" loading="lazy" />
+        <img src="GodCandle.jpeg" alt="God Candle" loading="lazy" />
+        <img src="Stages.jpeg" alt="Stages" loading="lazy" />
+        <img src="moon.jpeg" alt="Moon" loading="lazy" />
+      </div>
+    </section>
+  </div>
 
-        function fetchStockData() {
-            let ticker = document.getElementById("ticker").value.toUpperCase();
-            let table = document.getElementById("stockTable");
-            table.innerHTML = "";
-            
-            if (stockData[ticker]) {
-                let data = stockData[ticker];
-                let html = `<tr><th>Metric</th><th>Value</th></tr>`;
-                for (let key in data) {
-                    html += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
-                }
-                table.innerHTML = html;
-            } else {
-                table.innerHTML = "<tr><td colspan='2'>No data found for this ticker</td></tr>";
-            }
+  <!-- JavaScript -->
+  <script>
+    const stockData = {
+      "COST": {
+        "Market Cap": 456.47,
+        "Shares": 308417,
+        "$Vol": 3428.4,
+        "Relative Volume StDev": 2.08,
+        "NewHighs": 5230,
+        "Score": 31.1
+      },
+      "AMZN": {
+        "Market Cap": 1249686,
+        "Shares": 10297792059,
+        "$Vol": 108620,
+        "Relative Volume StDev": 1.19,
+        "NewHighs": 163,
+        "Score": 61.2
+      },
+      "AAPL": {
+        "Market Cap": 3692658,
+        "Shares": 15002720379,
+        "$Vol": 13420.9,
+        "Relative Volume StDev": 1.19,
+        "NewHighs": 986,
+        "Score": 40.7
+      }
+    };
+
+    function fetchStockData() {
+      const tickerInput = document.getElementById("ticker");
+      const ticker = tickerInput.value.toUpperCase();
+      const table = document.getElementById("stockTable");
+      table.innerHTML = "";
+
+      if (stockData[ticker]) {
+        const data = stockData[ticker];
+        let html = "<tr><th>Metric</th><th>Value</th></tr>";
+        for (let key in data) {
+          html += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
         }
-    </script>
+        table.innerHTML = html;
+      } else {
+        table.innerHTML = "<tr><td colspan='2'>No data found for this ticker</td></tr>";
+      }
+    }
+  </script>
 </body>
 </html>
