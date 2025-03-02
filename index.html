@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NASDAQ: COSTCO - DinoTradez Stock Quote</title>
+  <title>DinoTradez Watchlist</title>
   <style>
-    /* Reset and Global Styles */
+    /* Basic Reset */
     * {
       margin: 0;
       padding: 0;
@@ -13,7 +12,7 @@
     }
     body {
       font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
+      background-color: #f4f4f4;
       color: #333;
     }
     header {
@@ -35,95 +34,46 @@
     header h1 {
       font-size: 1.8em;
     }
-    .search-bar {
-      display: flex;
-      align-items: center;
-    }
-    .search-bar input[type="text"] {
-      padding: 8px;
-      font-size: 1em;
-      border: none;
-      border-radius: 4px;
-    }
-    .search-bar button {
-      padding: 8px 12px;
-      font-size: 1em;
-      background-color: #ff9900;
-      border: none;
-      border-radius: 4px;
-      margin-left: 5px;
-      cursor: pointer;
-    }
-    nav {
+    .top-nav {
       background-color: #f0f0f0;
       padding: 10px 20px;
     }
-    nav ul {
+    .top-nav ul {
       list-style: none;
       display: flex;
     }
-    nav ul li {
+    .top-nav ul li {
       margin-right: 20px;
-      cursor: pointer;
       padding: 8px 12px;
       border-radius: 4px;
+      cursor: pointer;
     }
-    nav ul li.active,
-    nav ul li:hover {
+    .top-nav ul li:hover {
       background-color: #ddd;
     }
-    main {
+    .main-content {
       display: flex;
       max-width: 1200px;
       margin: 20px auto;
       padding: 0 20px;
     }
-    .content {
+    /* Left Section: Watchlist Table (Placeholder) */
+    .watchlist-section {
       flex: 3;
-      padding: 20px;
       background-color: #fff;
+      margin-right: 20px;
+      padding: 20px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       border-radius: 4px;
     }
-    .sidebar {
-      flex: 1;
-      margin-left: 20px;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      border-radius: 4px;
-      height: fit-content;
-    }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    .stock-summary {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .stock-summary div {
-      flex: 1;
-      text-align: center;
-    }
-    .chart-placeholder {
-      width: 100%;
-      height: 300px;
-      background-color: #e0e0e0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      margin-bottom: 20px;
-      border-radius: 4px;
+    .watchlist-section h2 {
+      margin-bottom: 15px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
+      font-size: 0.9em;
     }
     table th, table td {
       border: 1px solid #ccc;
@@ -132,6 +82,56 @@
     }
     table th {
       background-color: #f0f0f0;
+    }
+    /* Right Section: Dino Lookup, Link to TOS, etc. */
+    .sidebar {
+      flex: 1;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      height: fit-content;
+    }
+    .sidebar h2 {
+      margin-bottom: 10px;
+    }
+    .sidebar p {
+      margin-bottom: 10px;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+    .tos-link {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #ff9900;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .tos-link:hover {
+      background-color: #e68a00;
+    }
+    .lookup-input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .lookup-btn {
+      padding: 8px 12px;
+      background-color: #00467f;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .lookup-btn:hover {
+      background-color: #00325c;
     }
     footer {
       background-color: #00467f;
@@ -142,169 +142,102 @@
     }
   </style>
   <script>
-    // Switch between tabs
-    function switchTab(tabId) {
-      const tabs = document.getElementsByClassName('tab-content');
-      for (let i = 0; i < tabs.length; i++) {
-        tabs[i].classList.remove('active');
-      }
-      document.getElementById(tabId).classList.add('active');
-
-      // Update navigation active state
-      const navItems = document.querySelectorAll('nav ul li');
-      navItems.forEach(item => {
-        if (item.getAttribute('data-tab') === tabId) {
-          item.classList.add('active');
-        } else {
-          item.classList.remove('active');
-        }
-      });
-    }
-
-    // Dummy search function to update stock summary data
-    function searchTicker() {
-      let ticker = document.getElementById('tickerInput').value.trim();
-      if (ticker === '') {
-        alert('Please enter a ticker symbol.');
+    function performLookup() {
+      const ticker = document.getElementById('lookupTicker').value.trim();
+      if(!ticker) {
+        alert('Please enter a ticker.');
         return;
       }
-      // For demonstration, update the company name and dummy data
-      document.getElementById('companyName').innerText = "NASDAQ: " + ticker.toUpperCase();
-      document.getElementById('stockPrice').innerText = "$420.50";
-      document.getElementById('stockChange').innerText = "+2.35 (0.56%)";
-    }
-
-    window.onload = function() {
-      // Set default tab to Overview on page load
-      switchTab('overview');
+      // Placeholder for any real data fetch or display logic
+      alert('Lookup for: ' + ticker);
     }
   </script>
 </head>
 <body>
+
   <!-- Header Section -->
   <header>
     <div class="logo">
       <!-- Replace "Logo.jpg" with your actual logo file -->
       <img src="Logo.jpg" alt="DinoTradez Logo" />
-      <h1>DinoTradez Research</h1>
-    </div>
-    <div class="search-bar">
-      <input type="text" id="tickerInput" placeholder="Enter Ticker" />
-      <button onclick="searchTicker()">Search</button>
+      <h1>DinoTradez Watchlist</h1>
     </div>
   </header>
-  
-  <!-- Navigation Tabs -->
-  <nav>
+
+  <!-- Navigation -->
+  <div class="top-nav">
     <ul>
-      <li data-tab="overview" onclick="switchTab('overview')">Overview</li>
-      <li data-tab="financials" onclick="switchTab('financials')">Financials</li>
-      <li data-tab="news" onclick="switchTab('news')">News</li>
+      <li>Home</li>
+      <li>Markets</li>
+      <li>Portfolio</li>
+      <li>Research</li>
+      <li>Contact</li>
     </ul>
-  </nav>
-  
-  <!-- Main Content Area -->
-  <main>
-    <!-- Primary Content -->
-    <div class="content">
-      <!-- Overview Tab -->
-      <div id="overview" class="tab-content active">
-        <div class="stock-summary">
-          <div>
-            <h2 id="companyName">NASDAQ: COSTCO</h2>
-            <p>Costco Wholesale Corporation</p>
-          </div>
-          <div>
-            <h2 id="stockPrice">$350.00</h2>
-            <p>Stock Price</p>
-          </div>
-          <div>
-            <h2 id="stockChange">+1.20 (0.34%)</h2>
-            <p>Change</p>
-          </div>
-        </div>
-        <div class="chart-placeholder">
-          Chart Area (Interactive Chart Placeholder)
-        </div>
-        <table>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Watchlist Section -->
+    <div class="watchlist-section">
+      <h2>Watchlist Overview</h2>
+      <p>This table is a placeholder. For live data, open the ThinkorSwim watchlist using the link in the sidebar.</p>
+      <table>
+        <thead>
           <tr>
-            <th>Open</th>
-            <th>High</th>
-            <th>Low</th>
+            <th>Symbol</th>
+            <th>Last Price</th>
+            <th>Change</th>
+            <th>% Change</th>
             <th>Volume</th>
             <th>Market Cap</th>
           </tr>
+        </thead>
+        <tbody>
           <tr>
-            <td>$348.00</td>
-            <td>$352.00</td>
-            <td>$347.00</td>
-            <td>1.2M</td>
-            <td>$100B</td>
-          </tr>
-        </table>
-      </div>
-      
-      <!-- Financials Tab -->
-      <div id="financials" class="tab-content">
-        <h2>Financial Overview</h2>
-        <table>
-          <tr>
-            <th>Revenue</th>
-            <th>EPS</th>
-            <th>P/E Ratio</th>
-            <th>Dividend Yield</th>
+            <td>SPY</td>
+            <td>450.10</td>
+            <td>+2.05</td>
+            <td>+0.46%</td>
+            <td>25.3M</td>
+            <td>$400B</td>
           </tr>
           <tr>
-            <td>$200B</td>
-            <td>$8.50</td>
-            <td>35</td>
-            <td>0.85%</td>
-          </tr>
-        </table>
-        <h2>Balance Sheet</h2>
-        <table>
-          <tr>
-            <th>Total Assets</th>
-            <th>Total Liabilities</th>
-            <th>Shareholder Equity</th>
+            <td>AAPL</td>
+            <td>175.60</td>
+            <td>+1.20</td>
+            <td>+0.69%</td>
+            <td>60.2M</td>
+            <td>$2.7T</td>
           </tr>
           <tr>
-            <td>$150B</td>
-            <td>$50B</td>
-            <td>$100B</td>
+            <td>TSLA</td>
+            <td>245.30</td>
+            <td>-3.10</td>
+            <td>-1.25%</td>
+            <td>30.1M</td>
+            <td>$775B</td>
           </tr>
-        </table>
-      </div>
-      
-      <!-- News Tab -->
-      <div id="news" class="tab-content">
-        <h2>Latest News</h2>
-        <ul>
-          <li><strong>News Headline 1:</strong> Stock hits new high amid market optimism.</li>
-          <li><strong>News Headline 2:</strong> Analyst upgrades target price based on strong earnings.</li>
-          <li><strong>News Headline 3:</strong> New product launch expected to boost revenue.</li>
-        </ul>
-      </div>
+        </tbody>
+      </table>
     </div>
-    
-    <!-- Sidebar: Dino Lookup Panel -->
+
+    <!-- Sidebar -->
     <div class="sidebar">
-      <h2>Dino Lookup</h2>
-      <p>Enter a ticker to view detailed analysis:</p>
-      <input type="text" id="sidebarTicker" placeholder="Ticker Symbol" />
-      <button onclick="searchTicker()">Lookup</button>
+      <h2>Live DinoTradez Watchlist</h2>
+      <p>Click below to open the ThinkorSwim link and view live data for the DinoTradez watchlist:</p>
+      <a href="http://tos.mx/!MXyES646" target="_blank" class="tos-link">Open TOS Watchlist</a>
       <hr />
-      <h3>Quick Stats</h3>
-      <p><strong>Rank:</strong> 12</p>
-      <p><strong>Market Cap:</strong> $100B</p>
-      <p><strong>$Vol:</strong> 1.2M</p>
-      <p><strong>Score:</strong> 87</p>
+      <h3>Dino Lookup</h3>
+      <p>Enter a ticker symbol to look up details.</p>
+      <input type="text" id="lookupTicker" class="lookup-input" placeholder="Ticker (e.g. AAPL)" />
+      <button class="lookup-btn" onclick="performLookup()">Lookup</button>
     </div>
-  </main>
-  
-  <!-- Footer Section -->
+  </div>
+
+  <!-- Footer -->
   <footer>
-    <p>&copy; 2025 DinoTradez Research. All rights reserved.</p>
+    <p>&copy; 2025 DinoTradez. All rights reserved.</p>
   </footer>
+
 </body>
 </html>
