@@ -4,50 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Information Lookup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Georgia', serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            display: flex;
+            font-family: 'Playfair Display', serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #333;
+            display: flex;
+            min-height: 100vh;
         }
         .sidebar {
             width: 250px;
-            background: #2c3e50;
-            color: white;
-            height: 100vh;
-            padding-top: 20px;
+            background: #03396c;
+            padding: 20px;
+            min-height: 100vh;
+            color: #fff;
             position: fixed;
-        }
-        .sidebar h2 {
+            top: 0;
+            left: 0;
             text-align: center;
-            font-size: 22px;
         }
-        .sidebar a {
+        .sidebar h1 {
+            font-family: 'Lobster', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .sidebar nav a {
             display: block;
-            color: white;
-            padding: 15px;
+            color: #fff;
             text-decoration: none;
-            text-align: center;
-            font-size: 18px;
+            margin: 10px 0;
+            font-weight: bold;
+            transition: color 0.3s;
         }
-        .sidebar a:hover {
-            background: #1a252f;
+        .sidebar nav a:hover {
+            color: #ff9a8d;
         }
         .content {
-            margin-left: 260px;
+            margin-left: 250px;
             padding: 20px;
             flex-grow: 1;
             display: flex;
             justify-content: space-around;
             align-items: flex-start;
+            background: rgba(255, 255, 255, 0.9);
         }
         .container, .stock-week {
             background: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             width: 45%;
         }
         input, button {
@@ -79,24 +87,20 @@
             background-color: #007BFF;
             color: white;
         }
-        .image-section img {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h2>Stock Tracker</h2>
-        <a href="#lookup">Stock Lookup</a>
-        <a href="#stock-week">StockofWeek.html</a>
+        <h1>Stock Tracker</h1>
+        <nav>
+            <a href="#lookup">Stock Lookup</a>
+            <a href="#stock-week">Stock of the Week</a>
+        </nav>
     </div>
 
     <div class="content">
         <div class="stock-week" id="stock-week">
-            <h2>StockofWeek.html</h2>
+            <h2>Stock of the Week</h2>
             <p>This section is manually updated weekly via the repository.</p>
             <table>
                 <tr><th>Ticker</th><th>Details</th></tr>
