@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DinoTradez Watchlist</title>
+  <!-- Ensures the page is mobile-friendly and responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DinoTradez Watchlist & Gallery</title>
   <style>
-    /* Basic Reset */
+    /* Reset and Global Styles */
     * {
       margin: 0;
       padding: 0;
@@ -12,63 +14,94 @@
     }
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background: #f4f4f4;
       color: #333;
     }
+
+    /* Header */
     header {
-      background-color: #00467f;
+      background: #00467f;
       color: #fff;
       padding: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap; /* Allows wrapping on mobile screens */
     }
-    header .logo {
+    .logo-container {
       display: flex;
       align-items: center;
+      margin-bottom: 10px;
     }
-    header .logo img {
+    .logo-container img {
       max-width: 60px;
       margin-right: 10px;
     }
     header h1 {
-      font-size: 1.8em;
+      font-size: 1.6em;
+      margin: 0;
     }
-    .top-nav {
+
+    /* Navigation */
+    nav {
       background-color: #f0f0f0;
-      padding: 10px 20px;
+      padding: 10px;
     }
-    .top-nav ul {
+    nav ul {
       list-style: none;
       display: flex;
+      flex-wrap: wrap;
     }
-    .top-nav ul li {
+    nav ul li {
       margin-right: 20px;
       padding: 8px 12px;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 0.95em;
     }
-    .top-nav ul li:hover {
+    nav ul li:hover {
       background-color: #ddd;
     }
-    .main-content {
-      display: flex;
+
+    /* Main Content */
+    main {
       max-width: 1200px;
       margin: 20px auto;
-      padding: 0 20px;
+      padding: 0 15px;
+      display: flex;
+      flex-wrap: wrap; /* Enables responsiveness for side-by-side sections */
     }
-    /* Left Section: Watchlist Table (Placeholder) */
-    .watchlist-section {
-      flex: 3;
-      background-color: #fff;
+
+    /* Watchlist & Dino Lookup Container */
+    .watchlist-container {
+      flex: 2; /* Takes up more space than the gallery on larger screens */
+      min-width: 300px;
+      background: #fff;
+      margin-bottom: 20px;
       margin-right: 20px;
       padding: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .watchlist-section h2 {
+    .watchlist-container h2 {
       margin-bottom: 15px;
     }
+
+    .tos-button {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #ff9900;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .tos-button:hover {
+      background-color: #e68a00;
+    }
+
+    /* Watchlist Table */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -83,45 +116,19 @@
     table th {
       background-color: #f0f0f0;
     }
-    /* Right Section: Dino Lookup, Link to TOS, etc. */
-    .sidebar {
-      flex: 1;
-      background-color: #fff;
-      padding: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      border-radius: 4px;
-      height: fit-content;
+
+    /* Dino Lookup Section */
+    .lookup-section {
+      margin-top: 20px;
     }
-    .sidebar h2 {
-      margin-bottom: 10px;
-    }
-    .sidebar p {
-      margin-bottom: 10px;
-      font-size: 0.9em;
-      line-height: 1.4;
-    }
-    .tos-link {
-      display: inline-block;
-      padding: 10px 15px;
-      background-color: #ff9900;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 4px;
-      margin-bottom: 20px;
-    }
-    .tos-link:hover {
-      background-color: #e68a00;
-    }
-    .lookup-input {
-      width: 100%;
+    .lookup-section input[type="text"] {
+      width: calc(100% - 110px);
       padding: 8px;
-      margin-bottom: 10px;
-      box-sizing: border-box;
       border: 1px solid #ccc;
       border-radius: 4px;
+      margin-right: 5px;
     }
-    .lookup-btn {
+    .lookup-section button {
       padding: 8px 12px;
       background-color: #00467f;
       color: #fff;
@@ -130,57 +137,99 @@
       cursor: pointer;
       font-weight: bold;
     }
-    .lookup-btn:hover {
+    .lookup-section button:hover {
       background-color: #00325c;
     }
+
+    /* Gallery Container */
+    .gallery-container {
+      flex: 1; /* Takes less space than watchlist on larger screens */
+      min-width: 300px;
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .gallery-container h2 {
+      margin-bottom: 15px;
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 2 columns on larger screens */
+      grid-gap: 10px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    /* On very small screens, force single column */
+    @media (max-width: 600px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Footer */
     footer {
-      background-color: #00467f;
+      background: #00467f;
       color: #fff;
       text-align: center;
       padding: 15px;
       margin-top: 20px;
     }
+    footer p {
+      margin: 0;
+      font-size: 0.9em;
+    }
   </style>
   <script>
     function performLookup() {
-      const ticker = document.getElementById('lookupTicker').value.trim();
-      if(!ticker) {
-        alert('Please enter a ticker.');
+      const ticker = document.getElementById('tickerInput').value.trim();
+      if (!ticker) {
+        alert("Please enter a ticker symbol.");
         return;
       }
-      // Placeholder for any real data fetch or display logic
-      alert('Lookup for: ' + ticker);
+      // For demonstration, just alert the user. 
+      // You can add real logic (API calls, etc.) if desired.
+      alert("Dino Lookup for: " + ticker);
     }
   </script>
 </head>
 <body>
 
-  <!-- Header Section -->
+  <!-- Header -->
   <header>
-    <div class="logo">
+    <div class="logo-container">
       <!-- Replace "Logo.jpg" with your actual logo file -->
-      <img src="Logo.jpg" alt="DinoTradez Logo" />
-      <h1>DinoTradez Watchlist</h1>
+      <img src="Logo.jpg" alt="DinoTradez Logo">
+      <h1>DinoTradez</h1>
     </div>
   </header>
 
   <!-- Navigation -->
-  <div class="top-nav">
+  <nav>
     <ul>
       <li>Home</li>
       <li>Markets</li>
-      <li>Portfolio</li>
       <li>Research</li>
       <li>Contact</li>
     </ul>
-  </div>
+  </nav>
 
   <!-- Main Content -->
-  <div class="main-content">
+  <main>
     <!-- Watchlist Section -->
-    <div class="watchlist-section">
+    <div class="watchlist-container">
       <h2>Watchlist Overview</h2>
-      <p>This table is a placeholder. For live data, open the ThinkorSwim watchlist using the link in the sidebar.</p>
+      <p>For live data, open the ThinkorSwim watchlist using the button below:</p>
+      <a class="tos-button" href="http://tos.mx/!MXyES646" target="_blank">Open TOS Watchlist</a>
+
       <table>
         <thead>
           <tr>
@@ -193,6 +242,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Placeholder rows -->
           <tr>
             <td>SPY</td>
             <td>450.10</td>
@@ -219,20 +269,28 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="lookup-section">
+        <h3>Dino Lookup</h3>
+        <input type="text" id="tickerInput" placeholder="Enter Ticker" />
+        <button onclick="performLookup()">Lookup</button>
+      </div>
     </div>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <h2>Live DinoTradez Watchlist</h2>
-      <p>Click below to open the ThinkorSwim link and view live data for the DinoTradez watchlist:</p>
-      <a href="http://tos.mx/!MXyES646" target="_blank" class="tos-link">Open TOS Watchlist</a>
-      <hr />
-      <h3>Dino Lookup</h3>
-      <p>Enter a ticker symbol to look up details.</p>
-      <input type="text" id="lookupTicker" class="lookup-input" placeholder="Ticker (e.g. AAPL)" />
-      <button class="lookup-btn" onclick="performLookup()">Lookup</button>
+    <!-- Gallery Section -->
+    <div class="gallery-container">
+      <h2>Gallery</h2>
+      <div class="gallery-grid">
+        <!-- Replace these with your actual image file paths -->
+        <img src="MarketMakers.jpg" alt="Market Maker Signals">
+        <img src="BennerCycle.png" alt="Benner Cycle">
+        <img src="Breakout.png" alt="Ascending Triangle">
+        <img src="BullishBearishDivergence.png" alt="Bullish & Bearish Divergence">
+        <img src="Stages.png" alt="Market Stages">
+        <img src="moon.webp" alt="Astronaut on the Moon">
+      </div>
     </div>
-  </div>
+  </main>
 
   <!-- Footer -->
   <footer>
