@@ -2,16 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DinoTradez</title>
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lobster&display=swap"
-    rel="stylesheet"
-  />
-
+  <title>DinoTradez Chart Gallery</title>
   <style>
-    /* Reset */
+    /* Basic Reset */
     * {
       margin: 0;
       padding: 0;
@@ -19,267 +12,165 @@
     }
 
     body {
-      font-family: 'Playfair Display', serif;
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-      display: flex;
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
     }
 
-    /* Sidebar */
-    .sidebar {
-      width: 250px;
-      background: #03396c;
-      padding: 20px;
-      min-height: 100vh;
-      color: #fff;
-      position: fixed;
-      top: 0;
-      left: 0;
+    header {
+      background: #ffd54f;
       text-align: center;
+      padding: 20px;
     }
 
-    .sidebar .logo {
-      max-width: 80%;
-      border-radius: 50%;
-      margin-bottom: 20px;
-    }
-
-    .sidebar h1 {
-      font-family: 'Lobster', cursive;
-      font-size: 1.8rem;
+    header h1 {
+      font-size: 2em;
+      color: #333;
       margin-bottom: 10px;
     }
 
-    .sidebar p {
-      margin-bottom: 20px;
-      font-size: 1rem;
+    .logo-container {
+      margin: 10px auto;
+      text-align: center;
     }
 
-    .sidebar nav a {
-      display: block;
-      color: #fff;
-      text-decoration: none;
-      margin: 10px 0;
-      font-weight: bold;
-      transition: color 0.3s;
+    .logo-container img {
+      max-width: 100px;
+      height: auto;
     }
 
-    .sidebar nav a:hover {
-      color: #ff9a8d;
-    }
-
-    /* Content area */
-    .content {
-      margin-left: 250px;
-      padding: 20px;
-      flex-grow: 1;
-      background: rgba(255, 255, 255, 0.9);
-    }
-
-    .section {
-      margin-bottom: 40px;
-    }
-
-    .section h2 {
-      font-family: 'Lobster', cursive;
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #03396c;
-    }
-
-    /* Stocks of the Week */
-    .stock-week {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .stock-week table {
-      width: 100%;
-      margin-top: 20px;
-      border-collapse: collapse;
-    }
-
-    .stock-week th,
-    .stock-week td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-
-    .stock-week th {
-      background-color: #007BFF;
-      color: #fff;
-    }
-
-    /* Dino Ratings */
-    .container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .container input,
-    .container button {
-      padding: 10px;
-      margin: 10px 0;
-      width: 80%;
-      font-size: 16px;
-    }
-
-    .container button {
-      background: #007BFF;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .container button:hover {
-      background: #0056b3;
-    }
-
-    .container table {
-      width: 100%;
-      margin-top: 20px;
-      border-collapse: collapse;
-    }
-
-    .container th,
-    .container td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-
-    .container th {
-      background-color: #007BFF;
-      color: #fff;
-    }
-
-    /* Pics section */
-    #Pics .grid {
+    .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    #Pics .grid img {
+    .gallery-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .gallery-item img {
       width: 100%;
       height: auto;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: transform 0.3s;
+      display: block;
     }
 
-    #Pics .grid img:hover {
-      transform: scale(1.05);
+    .gallery-item .info {
+      padding: 15px;
+    }
+
+    .gallery-item .info h2 {
+      font-size: 1.1em;
+      margin-bottom: 8px;
+      color: #444;
+    }
+
+    .gallery-item .info p {
+      font-size: 0.9em;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    footer {
+      background: #cfd8dc;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    footer p {
+      color: #333;
+      font-size: 0.9em;
     }
   </style>
+  <script>
+    // (Optional) You could add some interactivity or lightbox features here
+  </script>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <img src="Logo.jpg" alt="Logo" class="logo" />
-    <h1>DinoTradez</h1>
-    <p>DinoTradez Rankings</p>
-    <nav>
-      <a href="#lookup">Dino Ratings</a>
-      <a href="#stock-week">Stocks of Week</a>
-      <a href="#Pics">Pics</a>
-    </nav>
-  </div>
 
-  <!-- Main Content -->
-  <div class="content">
-    <!-- Stocks of the Week Section -->
-    <div class="section stock-week" id="stock-week">
-      <h2>Stocks of the Week</h2>
-      <p>This section is manually updated weekly via the repository.</p>
-      <table>
-        <tr><th>Ticker</th><th>Details</th></tr>
-        <tr><td>Example 1</td><td>Market Cap: $500M, New Highs: 250</td></tr>
-        <tr><td>Example 2</td><td>Market Cap: $800M, New Highs: 320</td></tr>
-      </table>
+  <header>
+    <h1>DinoTradez Chart Gallery</h1>
+    <div class="logo-container">
+      <!-- Replace "Logo.jpg" with the actual path/filename of your logo -->
+      <img src="Logo.jpg" alt="DinoTradez Logo" />
     </div>
+  </header>
 
-    <!-- Dino Ratings Section -->
-    <div class="section container" id="lookup">
-      <h2>Dino Ratings</h2>
-      <input type="text" id="ticker" placeholder="Enter Ticker" />
-      <button onclick="fetchStockData()">Get Stock Info</button>
-      <table id="stockTable"></table>
-    </div>
-
-    <!-- Pics Section -->
-    <section id="Pics" class="section">
-      <h2>Shares</h2>
-      <div class="grid">
-        <img src="BearSqueeze.jpeg" alt="Bear Squeeze" loading="lazy" />
-        <img src="BullSqueeze.jpeg" alt="Bull Squeeze" loading="lazy" />
-        <img src="Logo.jpeg" alt="Logo" loading="lazy" />
-        <img src="MarketMakers.jpeg" alt="Market Makers" loading="lazy" />
-        <img src="tesla.jpeg" alt="Tesla" loading="lazy" />
-        <img src="BennerCycle.jpeg" alt="Benner Cycle" loading="lazy" />
-        <img src="Breakout.jpeg" alt="Breakout" loading="lazy" />
-        <img src="BullishBearishDivergence.jpeg" alt="Bullish Bearish Divergence" loading="lazy" />
-        <img src="GodCandle.jpeg" alt="God Candle" loading="lazy" />
-        <img src="Stages.jpeg" alt="Stages" loading="lazy" />
-        <img src="moon.jpeg" alt="Moon" loading="lazy" />
+  <div class="gallery">
+    <!-- Market Maker Signals -->
+    <div class="gallery-item">
+      <!-- Replace "MarketMakers.jpg" with the actual path/filename -->
+      <img src="MarketMakers.jpg" alt="List of Market Maker Signals" />
+      <div class="info">
+        <h2>Market Maker Signals</h2>
+        <p>Common signals rumored to be used by market makers indicating potential actions or intentions in the market.</p>
       </div>
-    </section>
+    </div>
+
+    <!-- Benner Cycle -->
+    <div class="gallery-item">
+      <!-- Replace "BennerCycle.png" with the actual path/filename -->
+      <img src="BennerCycle.png" alt="Benner Cycle" />
+      <div class="info">
+        <h2>Benner Cycle</h2>
+        <p>Historical cycles that project years of panics, high prices, and low prices, offering a long-term market perspective.</p>
+      </div>
+    </div>
+
+    <!-- Ascending Triangle -->
+    <div class="gallery-item">
+      <!-- Replace "Breakout.png" with the actual path/filename -->
+      <img src="Breakout.png" alt="Ascending Triangle Chart Pattern" />
+      <div class="info">
+        <h2>Ascending Triangle Pattern</h2>
+        <p>A bullish continuation pattern characterized by rising swing lows and a flat swing high, often signaling an upcoming breakout.</p>
+      </div>
+    </div>
+
+    <!-- Bullish/Bearish Divergence -->
+    <div class="gallery-item">
+      <!-- Replace "BullishBearishDivergence.png" with the actual path/filename -->
+      <img src="BullishBearishDivergence.png" alt="Bullish and Bearish Divergence" />
+      <div class="info">
+        <h2>Price Divergence</h2>
+        <p>When price action and an indicator move in opposite directions, signaling potential trend reversals (bullish or bearish).</p>
+      </div>
+    </div>
+
+    <!-- Stages (Business Cycle) -->
+    <div class="gallery-item">
+      <!-- Replace "Stages.png" with the actual path/filename -->
+      <img src="Stages.png" alt="Business Cycle Stages" />
+      <div class="info">
+        <h2>Business Cycle Stages</h2>
+        <p>Typical market stages from expansion to contraction and how different asset classes perform in each stage.</p>
+      </div>
+    </div>
+
+    <!-- Astronaut on the Moon -->
+    <div class="gallery-item">
+      <!-- Replace "moon.webp" with the actual path/filename -->
+      <img src="moon.webp" alt="Astronaut Relaxing on the Moon" />
+      <div class="info">
+        <h2>Astronaut on the Moon</h2>
+        <p>Fun image showing an astronaut enjoying a beverage while looking at Earth—often used as a metaphor for 'moonshot' gains.</p>
+      </div>
+    </div>
+
+    <!-- If you have additional images, replicate the gallery-item block as needed -->
+
   </div>
 
-  <!-- JavaScript -->
-  <script>
-    const stockData = {
-      "COST": {
-        "Market Cap": 456.47,
-        "Shares": 308417,
-        "$Vol": 3428.4,
-        "Relative Volume StDev": 2.08,
-        "NewHighs": 5230,
-        "Score": 31.1
-      },
-      "AMZN": {
-        "Market Cap": 1249686,
-        "Shares": 10297792059,
-        "$Vol": 108620,
-        "Relative Volume StDev": 1.19,
-        "NewHighs": 163,
-        "Score": 61.2
-      },
-      "AAPL": {
-        "Market Cap": 3692658,
-        "Shares": 15002720379,
-        "$Vol": 13420.9,
-        "Relative Volume StDev": 1.19,
-        "NewHighs": 986,
-        "Score": 40.7
-      }
-    };
+  <footer>
+    <p>&copy; 2025 DinoTradez. All rights reserved.</p>
+  </footer>
 
-    function fetchStockData() {
-      const tickerInput = document.getElementById("ticker");
-      const ticker = tickerInput.value.toUpperCase();
-      const table = document.getElementById("stockTable");
-      table.innerHTML = "";
-
-      if (stockData[ticker]) {
-        const data = stockData[ticker];
-        let html = "<tr><th>Metric</th><th>Value</th></tr>";
-        for (let key in data) {
-          html += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
-        }
-        table.innerHTML = html;
-      } else {
-        table.innerHTML = "<tr><td colspan='2'>No data found for this ticker</td></tr>";
-      }
-    }
-  </script>
 </body>
 </html>
