@@ -39,15 +39,16 @@
             margin-left: 260px;
             padding: 20px;
             flex-grow: 1;
-            text-align: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
         }
         .container, .stock-week {
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            margin: auto;
+            width: 45%;
         }
         input, button {
             padding: 10px;
@@ -90,28 +91,25 @@
     <div class="sidebar">
         <h2>Stock Tracker</h2>
         <a href="#lookup">Stock Lookup</a>
-        <a href="#stock-week">Stock of the Week</a>
+        <a href="#stock-week">StockofWeek.html</a>
     </div>
 
     <div class="content">
+        <div class="stock-week" id="stock-week">
+            <h2>StockofWeek.html</h2>
+            <p>This section is manually updated weekly via the repository.</p>
+            <table>
+                <tr><th>Ticker</th><th>Details</th></tr>
+                <tr><td>Example 1</td><td>Market Cap: $500M, New Highs: 250</td></tr>
+                <tr><td>Example 2</td><td>Market Cap: $800M, New Highs: 320</td></tr>
+            </table>
+        </div>
+        
         <div class="container" id="lookup">
             <h2>Stock Information Lookup</h2>
             <input type="text" id="ticker" placeholder="Enter Ticker">
             <button onclick="fetchStockData()">Get Stock Info</button>
             <table id="stockTable"></table>
-        </div>
-
-        <div class="stock-week" id="stock-week">
-            <h2>Stock of the Week</h2>
-            <input type="text" id="weekTicker" placeholder="Enter Stock of the Week">
-            <button onclick="addStockOfWeek()">Add Stock</button>
-            <div id="stockWeekTable"></div>
-        </div>
-
-        <div class="image-section">
-            <img src="/mnt/data/GodCandle.png" alt="Stock Image">
-            <img src="/mnt/data/moon.webp" alt="Moon Image">
-            <img src="/mnt/data/tesla.jpg" alt="Tesla Stock">
         </div>
     </div>
 
@@ -136,24 +134,6 @@
                 table.innerHTML = html;
             } else {
                 table.innerHTML = "<tr><td colspan='2'>No data found for this ticker</td></tr>";
-            }
-        }
-
-        function addStockOfWeek() {
-            let ticker = document.getElementById("weekTicker").value.toUpperCase();
-            let display = document.getElementById("stockWeekTable");
-            
-            if (stockData[ticker]) {
-                let data = stockData[ticker];
-                let stockDiv = document.createElement("div");
-                stockDiv.innerHTML = `<h3>${ticker}</h3><table>`;
-                for (let key in data) {
-                    stockDiv.innerHTML += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
-                }
-                stockDiv.innerHTML += "</table>";
-                display.appendChild(stockDiv);
-            } else {
-                alert("Ticker not found in database.");
             }
         }
     </script>
