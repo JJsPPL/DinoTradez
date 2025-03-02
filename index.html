@@ -6,23 +6,64 @@
     <title>Stock Information Lookup</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
+            font-family: 'Georgia', serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            display: flex;
+            color: #333;
         }
-        .container {
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            height: 100vh;
+            padding-top: 20px;
+            position: fixed;
+        }
+        .sidebar h2 {
+            text-align: center;
+            font-size: 22px;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 18px;
+        }
+        .sidebar a:hover {
+            background: #1a252f;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .container, .stock-week {
             background: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
             margin: auto;
         }
         input, button {
             padding: 10px;
             margin: 10px;
             width: 80%;
+            font-size: 16px;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #0056b3;
         }
         table {
             width: 100%;
@@ -31,29 +72,54 @@
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
         }
         th {
             background-color: #007BFF;
             color: white;
         }
+        .image-section img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Stock Information Lookup</h2>
-        <input type="text" id="ticker" placeholder="Enter Ticker">
-        <button onclick="fetchStockData()">Get Stock Info</button>
-        <table id="stockTable"></table>
+    <div class="sidebar">
+        <h2>Stock Tracker</h2>
+        <a href="#lookup">Stock Lookup</a>
+        <a href="#stock-week">Stock of the Week</a>
     </div>
-    
+
+    <div class="content">
+        <div class="container" id="lookup">
+            <h2>Stock Information Lookup</h2>
+            <input type="text" id="ticker" placeholder="Enter Ticker">
+            <button onclick="fetchStockData()">Get Stock Info</button>
+            <table id="stockTable"></table>
+        </div>
+
+        <div class="stock-week" id="stock-week">
+            <h2>Stock of the Week</h2>
+            <input type="text" id="weekTicker" placeholder="Enter Stock of the Week">
+            <button onclick="addStockOfWeek()">Add Stock</button>
+            <div id="stockWeekTable"></div>
+        </div>
+
+        <div class="image-section">
+            <img src="/mnt/data/GodCandle.png" alt="Stock Image">
+            <img src="/mnt/data/moon.webp" alt="Moon Image">
+            <img src="/mnt/data/tesla.jpg" alt="Tesla Stock">
+        </div>
+    </div>
+
     <script>
         const stockData = {
             "COST": {"Market Cap": 456.47, "Shares": 308417, "$Vol": 3428.4, "Relative Volume StDev": 2.08, "NewHighs": 5230, "Score": 31.1},
             "AMZN": {"Market Cap": 1249686, "Shares": 10297792059, "$Vol": 108620, "Relative Volume StDev": 1.19, "NewHighs": 163, "Score": 61.2},
-            "AAPL": {"Market Cap": 3692658, "Shares": 15002720379, "$Vol": 13420.9, "Relative Volume StDev": 1.19, "NewHighs": 986, "Score": 40.7},
-            "KAST": {"Market Cap": 0, "Shares": 41141211, "$Vol": 0, "Relative Volume StDev": 3.31, "NewHighs": 1, "Score": 15.0},
-            "INTC": {"Market Cap": 75, "Shares": 4300000000, "$Vol": 2451.3, "Relative Volume StDev": 1.19, "NewHighs": 0, "Score": 12.9}
+            "AAPL": {"Market Cap": 3692658, "Shares": 15002720379, "$Vol": 13420.9, "Relative Volume StDev": 1.19, "NewHighs": 986, "Score": 40.7}
         };
 
         function fetchStockData() {
@@ -70,6 +136,24 @@
                 table.innerHTML = html;
             } else {
                 table.innerHTML = "<tr><td colspan='2'>No data found for this ticker</td></tr>";
+            }
+        }
+
+        function addStockOfWeek() {
+            let ticker = document.getElementById("weekTicker").value.toUpperCase();
+            let display = document.getElementById("stockWeekTable");
+            
+            if (stockData[ticker]) {
+                let data = stockData[ticker];
+                let stockDiv = document.createElement("div");
+                stockDiv.innerHTML = `<h3>${ticker}</h3><table>`;
+                for (let key in data) {
+                    stockDiv.innerHTML += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
+                }
+                stockDiv.innerHTML += "</table>";
+                display.appendChild(stockDiv);
+            } else {
+                alert("Ticker not found in database.");
             }
         }
     </script>
