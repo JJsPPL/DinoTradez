@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -185,76 +184,46 @@ html {
 
 /* Table styles */
 .watchlist-table th {
-  @apply py-3 px-4 text-left font-medium text-muted-foreground border-b;
+  @apply py-3 px-4 text-left font-medium text-gray-300 border-b;
 }
 
 .watchlist-table td {
-  @apply py-3 px-4 border-b border-muted;
+  @apply py-3 px-4 border-b border-gray-800;
 }
 
 .watchlist-row:hover {
-  @apply bg-secondary/50 transition-colors;
+  @apply bg-gray-800 transition-colors;
 }
 
-/* Gradients */
-.bg-gradient-hero {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+/* Text color improvements for better visibility */
+.text-muted-foreground {
+  color: rgba(229, 231, 235, 0.8); /* Lighter gray for better visibility on dark backgrounds */
 }
 
-.bg-gradient-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(249, 250, 251, 0.9) 100%);
+.text-gray-200 {
+  color: #E5E7EB; /* Lighter shade for better visibility */
 }
 
-/* Card hover effects */
-.card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.text-gray-300 {
+  color: #D1D5DB; /* Improved contrast for better visibility */
 }
 
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+.text-gray-400 {
+  color: #9CA3AF; /* Adjusted for better visibility */
 }
 
-/* Navigation link hover effect */
-.nav-link {
-  position: relative;
+/* Ensure text on dark backgrounds is visible */
+.bg-black .text-white,
+.bg-gray-900 .text-white,
+.bg-secondary .text-white {
+  color: #FFFFFF !important; /* Force white text on dark backgrounds */
 }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background-color: hsl(var(--primary));
-  transition: width 0.3s ease;
+/* Darkpool and block trade styles */
+.darkpool-data {
+  @apply bg-purple-900/20 text-purple-300 rounded-md p-2;
 }
 
-.nav-link:hover::after {
-  width: 100%;
-}
-
-.nav-link.active::after {
-  width: 100%;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
+.block-trade {
+  @apply bg-blue-900/20 text-blue-300 rounded-md p-2;
 }

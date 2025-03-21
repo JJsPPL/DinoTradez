@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
-import { TrendingUp, TrendingDown, Star, Plus, Filter, RefreshCw, ArrowUpDown, X, Eye, Mail, AlertCircle } from 'lucide-react';
+import { TrendingUp, TrendingDown, Star, Plus, Filter, RefreshCw, ArrowUpDown, X, Eye, Mail, AlertCircle, FileText, Database, Upload } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface Stock {
   symbol: string;
@@ -23,6 +23,13 @@ interface Stock {
   putScale: number;
 }
 
+enum DataSource {
+  MOCK = 'mock',
+  EMAIL = 'email',
+  THINKORSWIM = 'thinkorswim',
+  CUSTOM = 'custom'
+}
+
 const mockWatchlist: Stock[] = [
   { symbol: 'AAPL', companyName: 'Apple Inc.', lastPrice: 173.57, change: 2.35, percentChange: 1.37, volume: 74582651, marketCap: '2.7T', sector: 'Technology', marketCapRatio: 37.8, newsflags: 42.0, sVol: 38.5, relativeVolumeStDev: 7.67, shares: 15721386, catScale: 0.902, putScale: 1.32 },
   { symbol: 'MSFT', companyName: 'Microsoft Corp.', lastPrice: 329.93, change: 4.51, percentChange: 1.39, volume: 25698741, marketCap: '2.4T', sector: 'Technology', marketCapRatio: 40.27, newsflags: 29.0, sVol: 35.5, relativeVolumeStDev: 0.0, shares: 8253741, catScale: 0.0, putScale: 0.0 },
@@ -35,7 +42,7 @@ const mockWatchlist: Stock[] = [
 ];
 
 const Watchlist = () => {
-  const { toast } = useToast();
+  const { toast: useToastFn } = useToast();
   const [watchlist, setWatchlist] = useState<Stock[]>(mockWatchlist);
   const [isLoading, setIsLoading] = useState(false);
   const [sortField, setSortField] = useState<string | null>(null);
@@ -43,49 +50,85 @@ const Watchlist = () => {
   const [emailSubscribed, setEmailSubscribed] = useState(false);
   const [emailInput, setEmailInput] = useState('');
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [dataSource, setDataSource] = useState<DataSource>(DataSource.MOCK);
+  const [customSourceUrl, setCustomSourceUrl] = useState('');
+  const [showDataSourceForm, setShowDataSourceForm] = useState(false);
+  const [thinkorswimToken, setThinkorswimToken] = useState('');
+  const [fileUpload, setFileUpload] = useState<File | null>(null);
   
   const refreshData = () => {
     setIsLoading(true);
     
-    // Simulate API call delay
-    setTimeout(() => {
-      // Update some values randomly to simulate live data
-      const updatedWatchlist = watchlist.map(stock => {
-        const changeMultiplier = Math.random() > 0.5 ? 1 : -1;
-        const newChange = parseFloat((stock.change + (Math.random() * 0.5 * changeMultiplier)).toFixed(2));
-        const newPercentChange = parseFloat(((newChange / (stock.lastPrice - stock.change)) * 100).toFixed(2));
-        const newPrice = parseFloat((stock.lastPrice + newChange).toFixed(2));
+    switch (dataSource) {
+      case DataSource.MOCK:
+        setTimeout(() => {
+          const updatedWatchlist = watchlist.map(stock => {
+            const changeMultiplier = Math.random() > 0.5 ? 1 : -1;
+            const newChange = parseFloat((stock.change + (Math.random() * 0.5 * changeMultiplier)).toFixed(2));
+            const newPercentChange = parseFloat(((newChange / (stock.lastPrice - stock.change)) * 100).toFixed(2));
+            const newPrice = parseFloat((stock.lastPrice + newChange).toFixed(2));
+            
+            return {
+              ...stock,
+              lastPrice: newPrice,
+              change: newChange,
+              percentChange: newPercentChange,
+              volume: Math.floor(stock.volume * (0.95 + Math.random() * 0.1)),
+              relativeVolumeStDev: parseFloat((stock.relativeVolumeStDev + (Math.random() * 0.2 - 0.1)).toFixed(2)),
+            };
+          });
+          
+          setWatchlist(updatedWatchlist);
+          setIsLoading(false);
+        }, 800);
+        break;
         
-        return {
-          ...stock,
-          lastPrice: newPrice,
-          change: newChange,
-          percentChange: newPercentChange,
-          volume: Math.floor(stock.volume * (0.95 + Math.random() * 0.1)),
-          relativeVolumeStDev: parseFloat((stock.relativeVolumeStDev + (Math.random() * 0.2 - 0.1)).toFixed(2)),
-        };
-      });
-      
-      setWatchlist(updatedWatchlist);
-      setIsLoading(false);
-    }, 800);
+      case DataSource.THINKORSWIM:
+        toast("ThinkOrSwim data source not implemented", {
+          description: "This would connect to ThinkOrSwim API in a real implementation. Using mock data instead.",
+          action: {
+            label: "Configure",
+            onClick: () => setShowDataSourceForm(true)
+          }
+        });
+        setIsLoading(false);
+        break;
+        
+      case DataSource.EMAIL:
+        toast("Email data source not implemented", {
+          description: "This would connect to an email service in a real implementation. Using mock data instead.",
+          action: {
+            label: "Configure",
+            onClick: () => setShowDataSourceForm(true)
+          }
+        });
+        setIsLoading(false);
+        break;
+        
+      case DataSource.CUSTOM:
+        toast("Custom data source not implemented", {
+          description: "This would fetch from your custom URL in a real implementation. Using mock data instead.",
+          action: {
+            label: "Configure",
+            onClick: () => setShowDataSourceForm(true)
+          }
+        });
+        setIsLoading(false);
+        break;
+    }
   };
   
   useEffect(() => {
     refreshData();
     
-    // Set up interval for periodic refreshes
-    const intervalId = setInterval(refreshData, 60000); // Refresh every minute
-    
+    const intervalId = setInterval(refreshData, 60000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [dataSource]);
   
   const handleSort = (field: string) => {
     if (sortField === field) {
-      // Toggle direction if already sorting by this field
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      // Set new sort field and default to ascending
       setSortField(field);
       setSortDirection('asc');
     }
@@ -95,7 +138,7 @@ const Watchlist = () => {
     e.preventDefault();
     
     if (!emailInput || !emailInput.includes('@')) {
-      toast({
+      useToastFn({
         title: "Invalid email",
         description: "Please enter a valid email address",
         variant: "destructive"
@@ -105,17 +148,40 @@ const Watchlist = () => {
     
     setIsLoading(true);
     
-    // Simulate API call
     setTimeout(() => {
       setEmailSubscribed(true);
       setShowEmailForm(false);
       setIsLoading(false);
-      toast({
+      useToastFn({
         title: "Success!",
         description: "You're now subscribed to watchlist updates",
         variant: "default"
       });
     }, 1000);
+  };
+
+  const handleDataSourceChange = (source: DataSource) => {
+    setDataSource(source);
+    setShowDataSourceForm(true);
+  };
+
+  const handleDataSourceSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowDataSourceForm(false);
+    toast.success("Data source updated", {
+      description: `Now using ${dataSource} as the data source.`
+    });
+    refreshData();
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setFileUpload(files[0]);
+      toast.success("File uploaded", {
+        description: `${files[0].name} will be processed to update the watchlist.`
+      });
+    }
   };
   
   const sortedWatchlist = [...watchlist].sort((a, b) => {
@@ -124,7 +190,6 @@ const Watchlist = () => {
     let aValue: any = a[sortField as keyof Stock];
     let bValue: any = b[sortField as keyof Stock];
     
-    // Handle string values that represent numbers with suffixes like "2.7T"
     if (typeof aValue === 'string' && aValue.match(/^[\d.]+[KMBT]$/)) {
       const multiplier = { K: 1e3, M: 1e6, B: 1e9, T: 1e12 };
       aValue = parseFloat(aValue) * multiplier[aValue.slice(-1) as keyof typeof multiplier];
@@ -168,6 +233,20 @@ const Watchlist = () => {
                   <span>Enable Email Updates</span>
                 </button>
               )}
+
+              <div className="inline-flex items-center px-2 py-1 ml-2 rounded-full bg-gray-700 hover:bg-gray-600 text-xs font-medium cursor-pointer">
+                <Database className="h-3 w-3 mr-1" />
+                <select 
+                  className="bg-transparent border-none outline-none text-gray-300 text-xs cursor-pointer"
+                  value={dataSource}
+                  onChange={(e) => handleDataSourceChange(e.target.value as DataSource)}
+                >
+                  <option value={DataSource.MOCK} className="bg-gray-900 text-white">Mock Data</option>
+                  <option value={DataSource.EMAIL} className="bg-gray-900 text-white">Email Feed</option>
+                  <option value={DataSource.THINKORSWIM} className="bg-gray-900 text-white">ThinkOrSwim</option>
+                  <option value={DataSource.CUSTOM} className="bg-gray-900 text-white">Custom Source</option>
+                </select>
+              </div>
             </div>
             
             <div className="flex items-center gap-2">
@@ -228,6 +307,108 @@ const Watchlist = () => {
                 <AlertCircle className="h-3 w-3 inline mr-1" />
                 You'll receive intraday updates about your watchlist via email
               </p>
+            </div>
+          )}
+
+          {showDataSourceForm && (
+            <div className="px-6 py-3 bg-gray-900">
+              <form onSubmit={handleDataSourceSubmit} className="space-y-4">
+                {dataSource === DataSource.EMAIL && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
+                      Email Configuration
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Email server IMAP settings"
+                      className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white mb-2"
+                    />
+                    <input
+                      type="password"
+                      placeholder="Email password or app password"
+                      className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">
+                      Configure your email server to load watchlist data from emails
+                    </p>
+                  </div>
+                )}
+
+                {dataSource === DataSource.THINKORSWIM && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
+                      ThinkOrSwim API Token
+                    </label>
+                    <input
+                      type="text"
+                      value={thinkorswimToken}
+                      onChange={(e) => setThinkorswimToken(e.target.value)}
+                      placeholder="Enter your ThinkOrSwim API token"
+                      className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">
+                      Get real-time data directly from ThinkOrSwim
+                    </p>
+                  </div>
+                )}
+
+                {dataSource === DataSource.CUSTOM && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
+                      Custom Data Source URL
+                    </label>
+                    <input
+                      type="url"
+                      value={customSourceUrl}
+                      onChange={(e) => setCustomSourceUrl(e.target.value)}
+                      placeholder="https://your-api-endpoint.com/watchlist-data"
+                      className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">
+                      Enter a URL that returns JSON in the required format
+                    </p>
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Or Upload Watchlist File
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <label className="cursor-pointer flex-grow">
+                      <div className="flex items-center justify-center gap-2 px-3 py-2 rounded bg-gray-800 border border-gray-700 text-gray-300 hover:bg-gray-700 transition-colors">
+                        <Upload className="h-4 w-4" />
+                        <span>{fileUpload ? fileUpload.name : "Choose CSV/Excel/JSON file"}</span>
+                      </div>
+                      <input
+                        type="file"
+                        accept=".csv,.xlsx,.json"
+                        className="hidden"
+                        onChange={handleFileUpload}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Upload a file with your watchlist data
+                  </p>
+                </div>
+
+                <div className="flex gap-2 justify-end pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowDataSourceForm(false)}
+                    className="px-3 py-1.5 text-sm rounded bg-gray-800 text-gray-300 hover:bg-gray-700"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-3 py-1.5 text-sm rounded bg-primary text-white hover:bg-primary/90"
+                  >
+                    Save & Apply
+                  </button>
+                </div>
+              </form>
             </div>
           )}
           

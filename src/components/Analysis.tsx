@@ -1,7 +1,59 @@
 
 import React, { useState } from 'react';
-import { BarChart3, LineChart, PieChart, CandlestickChart, Maximize2, ArrowRight, Layers, Clock, Undo2, Redo2, Grid, Share2, ChevronDown } from 'lucide-react';
+import { BarChart3, LineChart, PieChart, CandlestickChart, Maximize2, ArrowRight, Layers, Clock, Undo2, Redo2, Grid, Share2, ChevronDown, Info, Database, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { 
+  ChartContainer, 
+  ChartTooltip, 
+  ChartTooltipContent 
+} from '@/components/ui/chart';
+import { 
+  AreaChart, 
+  Area, 
+  LineChart as RechartsLineChart, 
+  Line, 
+  BarChart as RechartsBarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  ResponsiveContainer 
+} from 'recharts';
+
+// Sample chart data
+const sampleChartData = [
+  { date: '2023-01-01', value: 171.22, volume: 45000000 },
+  { date: '2023-01-02', value: 172.45, volume: 48000000 },
+  { date: '2023-01-03', value: 173.86, volume: 51000000 },
+  { date: '2023-01-04', value: 174.30, volume: 55000000 },
+  { date: '2023-01-05', value: 172.91, volume: 62000000 },
+  { date: '2023-01-06', value: 173.45, volume: 58000000 },
+  { date: '2023-01-07', value: 173.94, volume: 54000000 },
+  { date: '2023-01-08', value: 173.57, volume: 51000000 },
+];
+
+// Sample darkpool data
+const darkpoolData = [
+  { time: '09:35', volume: 240000, price: 173.42, type: 'sell' },
+  { time: '10:15', volume: 350000, price: 173.67, type: 'buy' },
+  { time: '11:05', volume: 180000, price: 173.55, type: 'sell' },
+  { time: '12:30', volume: 420000, price: 173.77, type: 'buy' },
+  { time: '13:45', volume: 280000, price: 173.68, type: 'buy' },
+  { time: '14:20', volume: 310000, price: 173.49, type: 'sell' },
+  { time: '15:10', volume: 550000, price: 173.52, type: 'sell' },
+  { time: '15:55', volume: 620000, price: 173.60, type: 'buy' },
+];
+
+// Sample block trades
+const blockTradeData = [
+  { time: '09:42', shares: 150000, price: 173.45, value: '$26,017,500', origin: 'NYSE' },
+  { time: '11:17', shares: 200000, price: 173.60, value: '$34,720,000', origin: 'NASDAQ' },
+  { time: '12:55', shares: 175000, price: 173.72, value: '$30,401,000', origin: 'NYSE' },
+  { time: '14:03', shares: 225000, price: 173.51, value: '$39,039,750', origin: 'Dark Pool' },
+  { time: '15:28', shares: 300000, price: 173.58, value: '$52,074,000', origin: 'Dark Pool' },
+];
 
 const chartTypes = [
   { icon: CandlestickChart, name: 'Candlestick', id: 'candlestick' },
@@ -29,19 +81,92 @@ const indicators = [
   'Bollinger',
   'Ichimoku',
   'Fibonacci',
+  'Dark Pool',
+  'Block Trades',
 ];
 
 const Analysis = () => {
   const [activeChart, setActiveChart] = useState<string>(chartTypes[0].id);
   const [activeTimeframe, setActiveTimeframe] = useState<string>(timeframes[2].value);
-  const [activeIndicators, setActiveIndicators] = useState<string[]>(['Volume', 'MA (50)']);
+  const [activeIndicators, setActiveIndicators] = useState<string[]>(['Volume', 'MA (50)', 'Dark Pool']);
   const [isIndicatorMenuOpen, setIsIndicatorMenuOpen] = useState(false);
+  const [showDarkpoolData, setShowDarkpoolData] = useState(true);
+  const [showBlockTrades, setShowBlockTrades] = useState(true);
   
   const toggleIndicator = (indicator: string) => {
     if (activeIndicators.includes(indicator)) {
       setActiveIndicators(activeIndicators.filter(i => i !== indicator));
+      
+      // Toggle related data displays
+      if (indicator === 'Dark Pool') setShowDarkpoolData(false);
+      if (indicator === 'Block Trades') setShowBlockTrades(false);
     } else {
       setActiveIndicators([...activeIndicators, indicator]);
+      
+      // Toggle related data displays
+      if (indicator === 'Dark Pool') setShowDarkpoolData(true);
+      if (indicator === 'Block Trades') setShowBlockTrades(true);
+    }
+  };
+
+  // Function to render the appropriate chart based on active chart type
+  const renderChart = () => {
+    switch (activeChart) {
+      case 'line':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <RechartsLineChart data={sampleChartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+              <XAxis dataKey="date" stroke="#888" />
+              <YAxis stroke="#888" />
+              <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
+              <Legend />
+              <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+            </RechartsLineChart>
+          </ResponsiveContainer>
+        );
+      case 'bar':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <RechartsBarChart data={sampleChartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+              <XAxis dataKey="date" stroke="#888" />
+              <YAxis stroke="#888" />
+              <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
+              <Legend />
+              <Bar dataKey="volume" fill="#8884d8" />
+            </RechartsBarChart>
+          </ResponsiveContainer>
+        );
+      case 'area':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={sampleChartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+              <XAxis dataKey="date" stroke="#888" />
+              <YAxis stroke="#888" />
+              <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
+              <Legend />
+              <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
+            </AreaChart>
+          </ResponsiveContainer>
+        );
+      case 'candlestick':
+      default:
+        // For candlestick, we'd use a candlestick chart library
+        // but for this demo, let's use a placeholder with the line chart
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <RechartsLineChart data={sampleChartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+              <XAxis dataKey="date" stroke="#888" />
+              <YAxis stroke="#888" />
+              <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
+              <Legend />
+              <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+            </RechartsLineChart>
+          </ResponsiveContainer>
+        );
     }
   };
 
@@ -185,11 +310,7 @@ const Analysis = () => {
             </div>
             
             <div className="h-96 flex items-center justify-center p-6 pt-16">
-              <div className="text-center">
-                <CandlestickChart className="h-16 w-16 mx-auto text-primary/20 mb-4" />
-                <p className="text-muted-foreground mb-4">Interactive chart will be displayed here</p>
-                <p className="text-xs text-muted-foreground">Chart showing {activeChart} data for AAPL over {activeTimeframe} with {activeIndicators.join(', ')}</p>
-              </div>
+              {renderChart()}
             </div>
           </div>
           
@@ -235,9 +356,9 @@ const Analysis = () => {
           </div>
         </div>
         
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 border-b border-border">
+            <div className="px-6 py-4 border-b border-border flex justify-between items-center">
               <h3 className="font-medium">Technical Indicators</h3>
             </div>
             <div className="p-6">
@@ -279,7 +400,7 @@ const Analysis = () => {
           </div>
           
           <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 border-b border-border">
+            <div className="px-6 py-4 border-b border-border flex justify-between items-center">
               <h3 className="font-medium">Moving Averages</h3>
             </div>
             <div className="p-6">
@@ -318,6 +439,98 @@ const Analysis = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* New Darkpool Data Panel */}
+          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="px-6 py-4 border-b border-border flex justify-between items-center">
+              <h3 className="font-medium flex items-center">
+                <Database className="h-4 w-4 mr-2 text-purple-500" />
+                Darkpool & Block Trade Data
+                <div className="ml-2 rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-800">Premium</div>
+              </h3>
+              <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+            </div>
+
+            {showDarkpoolData && (
+              <div className="p-6 border-b border-border">
+                <h4 className="text-sm font-medium mb-3 flex items-center">
+                  <Activity className="h-4 w-4 mr-1 text-purple-500" />
+                  Darkpool Activity
+                </h4>
+                <div className="overflow-y-auto max-h-36 mb-3">
+                  <table className="w-full text-sm">
+                    <thead className="text-xs text-muted-foreground">
+                      <tr>
+                        <th className="text-left pb-2">Time</th>
+                        <th className="text-right pb-2">Volume</th>
+                        <th className="text-right pb-2">Price</th>
+                        <th className="text-right pb-2">Type</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {darkpoolData.map((item, index) => (
+                        <tr key={index} className="darkpool-row">
+                          <td className="py-1.5">{item.time}</td>
+                          <td className="text-right py-1.5">{item.volume.toLocaleString()}</td>
+                          <td className="text-right py-1.5">${item.price}</td>
+                          <td className={`text-right py-1.5 ${item.type === 'buy' ? 'text-green-500' : 'text-red-500'}`}>
+                            {item.type.toUpperCase()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Darkpool ratio: <span className="font-medium">38.7%</span> of total volume
+                </div>
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-purple-500 rounded-full" style={{ width: '38.7%' }}></div>
+                  </div>
+                  <span className="text-xs font-medium">38.7%</span>
+                </div>
+              </div>
+            )}
+
+            {showBlockTrades && (
+              <div className="p-6">
+                <h4 className="text-sm font-medium mb-3 flex items-center">
+                  <Database className="h-4 w-4 mr-1 text-blue-500" />
+                  Significant Block Trades
+                </h4>
+                <div className="overflow-y-auto max-h-36">
+                  <table className="w-full text-sm">
+                    <thead className="text-xs text-muted-foreground">
+                      <tr>
+                        <th className="text-left pb-2">Time</th>
+                        <th className="text-right pb-2">Shares</th>
+                        <th className="text-right pb-2">Price</th>
+                        <th className="text-right pb-2">Value</th>
+                        <th className="text-right pb-2">Origin</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {blockTradeData.map((item, index) => (
+                        <tr key={index} className="block-trade-row">
+                          <td className="py-1.5">{item.time}</td>
+                          <td className="text-right py-1.5">{item.shares.toLocaleString()}</td>
+                          <td className="text-right py-1.5">${item.price}</td>
+                          <td className="text-right py-1.5">{item.value}</td>
+                          <td className={`text-right py-1.5 ${item.origin === 'Dark Pool' ? 'text-purple-500 font-medium' : ''}`}>
+                            {item.origin}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="mt-3 text-xs text-muted-foreground">
+                  Total block trade volume: <span className="font-medium">1,050,000 shares</span> ($182,252,250)
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
