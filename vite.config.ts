@@ -20,6 +20,6 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // Base path for GitHub Pages - make sure this matches your repository name exactly
+  // Base path for GitHub Pages - using the correct repository name
   base: "/DinoTradez/",
 }));
