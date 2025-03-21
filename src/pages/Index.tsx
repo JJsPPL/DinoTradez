@@ -49,16 +49,6 @@ const Index = () => {
           el.classList.add('text-gray-900');
         }
       );
-      
-      // Fix links for GitHub Pages
-      document.querySelectorAll('a[href^="/"]').forEach(
-        (el) => {
-          const href = el.getAttribute('href');
-          if (href && href.startsWith('/') && !href.startsWith('//')) {
-            el.setAttribute('href', `/DinoTradez${href}`);
-          }
-        }
-      );
     };
 
     // Run after a short delay to ensure all components are rendered
