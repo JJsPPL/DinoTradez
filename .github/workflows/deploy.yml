@@ -39,3 +39,10 @@ jobs:
           echo "  Content-Type: text/html; charset=utf-8" >> dist/_headers
           echo "/assets/*" >> dist/_headers
           echo "  Content-Type: application/javascript; charset=utf-8" >> dist/_headers
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
