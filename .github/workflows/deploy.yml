@@ -35,17 +35,17 @@ jobs:
           # Create 404.html for SPA routing
           cp dist/index.html dist/404.html
           
-          # Create proper content type headers
+          # Create proper content type headers for Netlify or similar providers
           cat > dist/_headers <<EOL
           /*
             Content-Type: text/html; charset=utf-8
-          /assets/*
+          /*.js
             Content-Type: application/javascript
-          *.js
+          /*.mjs
             Content-Type: application/javascript
-          *.css
+          /*.css
             Content-Type: text/css
-          *.json
+          /*.json
             Content-Type: application/json
           EOL
 

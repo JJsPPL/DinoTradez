@@ -21,12 +21,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Ensure proper content types for JavaScript modules
+    // Configure proper MIME types
     rollupOptions: {
       output: {
         // Generate appropriate file extensions for better MIME type handling
-        entryFileNames: 'assets/[name].[hash].js',
-        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].mjs',
+        chunkFileNames: 'assets/[name].[hash].mjs',
         assetFileNames: ({ name }) => {
           if (/\.(gif|jpe?g|png|svg)$/.test(name ?? '')) {
             return 'assets/images/[name].[hash][extname]';
@@ -41,6 +41,6 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     assetsDir: 'assets',
   },
-  // Base path for GitHub Pages - using the correct repository name
-  base: "/DinoTradez/",
+  // We'll set this to "/" initially and update it once we know the new repository name
+  base: "/",
 }));

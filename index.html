@@ -1,7 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DinoTradez - Improved</title>
   <style>
     /* Internal CSS for styling */
@@ -57,30 +59,8 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Welcome to DinoTradez</h1>
-  </header>
-
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
-  </nav>
-
-  <section>
-    <h2>About Us</h2>
-    <p>DinoTradez is a fictional stock trading dashboard that helps you monitor market trends.</p>
-    <p>We make trading as easy as riding a dinosaur!</p>
-    <!-- Button triggers a JavaScript function on click -->
-    <button onclick="showMessage()">Click for a Dino Surprise</button>
-    <!-- Hidden message that will be shown when the button is clicked -->
-    <p id="msg">🦖 Dino says: "Invest wisely and have fun!"</p>
-  </section>
-
-  <footer>
-    &copy; <span id="year"></span> DinoTradez. All rights reserved.
-  </footer>
-
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
   <script>
     // Internal JavaScript for interactivity and dynamic content
     function showMessage() {
@@ -88,9 +68,12 @@
       document.getElementById('msg').style.display = 'block';
     }
     // Display the current year in the footer
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.addEventListener('DOMContentLoaded', function() {
+      const yearEl = document.getElementById('year');
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+    });
   </script>
 </body>
 </html>
-
-
