@@ -36,13 +36,27 @@ const Index = () => {
       document.querySelectorAll('.bg-white .text-white, .bg-gray-50 .text-white, .bg-gray-100 .text-white').forEach(
         (el) => {
           el.classList.add('forced-dark-text');
+          el.classList.remove('text-white');
+          el.classList.add('text-gray-900');
         }
       );
 
-      // Fix for white boxes with white text
+      // Fix for white boxes with white text - stronger fix
       document.querySelectorAll('[class*="bg-white"] .text-white, [class*="bg-gray-50"] .text-white, [class*="bg-gray-100"] .text-white').forEach(
         (el) => {
           el.classList.add('forced-dark-text');
+          el.classList.remove('text-white');
+          el.classList.add('text-gray-900');
+        }
+      );
+      
+      // Fix links for GitHub Pages
+      document.querySelectorAll('a[href^="/"]').forEach(
+        (el) => {
+          const href = el.getAttribute('href');
+          if (href && href.startsWith('/') && !href.startsWith('//')) {
+            el.setAttribute('href', `/DinoTradez${href}`);
+          }
         }
       );
     };
@@ -76,6 +90,18 @@ const Index = () => {
   const toggleHighContrast = () => {
     setHighContrast(!highContrast);
     document.body.classList.toggle('high-contrast');
+    
+    // Force refresh text contrast
+    const fixTextContrast = () => {
+      document.querySelectorAll('.bg-white .text-white, .bg-gray-50 .text-white, .bg-gray-100 .text-white').forEach(
+        (el) => {
+          el.classList.add('forced-dark-text');
+          el.classList.remove('text-white');
+          el.classList.add('text-gray-900');
+        }
+      );
+    };
+    setTimeout(fixTextContrast, 50);
   };
 
   return (

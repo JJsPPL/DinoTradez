@@ -94,3 +94,24 @@ input, select, textarea {
 .bg-contrast-fixed {
   background-color: rgba(0, 0, 0, 0.05) !important; /* Slight darker background for better contrast */
 }
+
+/* Force dark text in white containers - stronger specificity */
+.bg-white *, .bg-gray-50 *, .bg-gray-100 * {
+  color: #333333 !important;
+}
+
+/* Exception for intentionally dark bg elements */
+.bg-black *, .bg-gray-900 *, .bg-gray-800 * {
+  color: #FFFFFF !important;
+}
+
+/* Force higher contrast for all text elements */
+[class*="text-"] {
+  font-weight: 500;
+}
+
+/* Fix for GitHub Pages base path issue */
+a[href^="/"] {
+  /* Convert absolute paths to relative for GitHub Pages */
+  content: attr(href);
+}
