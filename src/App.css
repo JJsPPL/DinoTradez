@@ -35,6 +35,20 @@
   color: #E5E7EB;
 }
 
+/* Improved text contrast for all text containers */
+.bg-white, .bg-card, [class*="bg-white"] {
+  color: #333333 !important; /* Darker text on white backgrounds */
+}
+
+.white-box-text {
+  color: #333333 !important; /* Ensure text in white boxes is dark */
+}
+
+/* Fix for text in light backgrounds */
+.bg-secondary, .bg-muted, .bg-accent, .bg-popover, .bg-background {
+  color: #333333 !important; /* Dark text on light backgrounds */
+}
+
 /* Stock styles */
 .stock-positive {
   color: #16a34a;
@@ -44,4 +58,39 @@
 .stock-negative {
   color: #dc2626;
   font-weight: 600;
+}
+
+/* Ensure all text has appropriate contrast */
+.text-white, .text-gray-100, .text-gray-200, .text-gray-300 {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Add subtle shadow to light text for better readability */
+}
+
+/* Specific fixes for white text on light backgrounds */
+.white-on-light {
+  color: #333333 !important;
+}
+
+/* Better visibility for form inputs and boxes */
+input, select, textarea {
+  color: #333333 !important; 
+  background-color: #F9FAFB !important;
+}
+
+/* High contrast for important data */
+.data-value {
+  font-weight: 600;
+}
+
+/* Ensure cards with white backgrounds have dark text */
+.card-white, .bg-card {
+  color: #333333 !important;
+}
+
+/* Contrast helper classes */
+.text-contrast-fixed {
+  color: #333333 !important; /* For light backgrounds */
+}
+
+.bg-contrast-fixed {
+  background-color: rgba(0, 0, 0, 0.05) !important; /* Slight darker background for better contrast */
 }
