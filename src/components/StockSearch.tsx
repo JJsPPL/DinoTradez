@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Search, TrendingUp, TrendingDown, AlertCircle, Clock, Calendar, DollarSign, LineChart, BarChart, PieChart, CandlestickChart, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -384,7 +383,7 @@ const StockSearch = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-white rounded-xl shadow-md p-6">
                   <div className="flex items-center mb-4">
-                    <BarChart3 className="h-5 w-5 text-primary mr-2" />
+                    <BarChart className="h-5 w-5 text-primary mr-2" />
                     <h4 className="font-medium">Technical Analysis</h4>
                   </div>
                   <div className="h-40 flex items-center justify-center bg-secondary/30 rounded-lg">
