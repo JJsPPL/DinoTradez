@@ -31,6 +31,7 @@ const mockWatchlist: Stock[] = [
   { symbol: 'TSLA', companyName: 'Tesla, Inc.', lastPrice: 194.05, change: -5.87, percentChange: -2.94, volume: 85214763, marketCap: '614.7B', sector: 'Consumer Cyclical', marketCapRatio: 10.56, newsflags: 1.0, sVol: 2.6, relativeVolumeStDev: 0.0, shares: 25995632, catScale: 0.285, putScale: 0.902 },
   { symbol: 'META', companyName: 'Meta Platforms, Inc.', lastPrice: 484.17, change: 7.45, percentChange: 1.56, volume: 15784236, marketCap: '1.2T', sector: 'Technology', marketCapRatio: 99.54, newsflags: 29.0, sVol: 15.6, relativeVolumeStDev: 0.0, shares: 9061417, catScale: 0.141, putScale: 7.433 },
   { symbol: 'NVDA', companyName: 'NVIDIA Corporation', lastPrice: 878.36, change: 15.78, percentChange: 1.83, volume: 41236985, marketCap: '2.1T', sector: 'Technology', marketCapRatio: 1.7472, newsflags: 35.0, sVol: 46.3, relativeVolumeStDev: 0.0, shares: 1587800, catScale: 0.033, putScale: 0.101 },
+  { symbol: 'COST', companyName: 'Costco Wholesale Corp.', lastPrice: 857.35, change: 5.27, percentChange: 0.62, volume: 2130564, marketCap: '380.1B', sector: 'Consumer Defensive', marketCapRatio: 58.36, newsflags: 17.0, sVol: 24.8, relativeVolumeStDev: 0.32, shares: 443921, catScale: 0.215, putScale: 0.175 },
 ];
 
 const Watchlist = () => {
@@ -238,7 +239,7 @@ const Watchlist = () => {
                     <span className="sr-only">Favorite</span>
                   </TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('symbol')}
                   >
                     <div className="flex items-center">
@@ -251,9 +252,9 @@ const Watchlist = () => {
                       )}
                     </div>
                   </TableHead>
-                  <TableHead className="text-gray-400">Last</TableHead>
+                  <TableHead className="text-gray-300">Last</TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('change')}
                   >
                     <div className="flex items-center">
@@ -267,7 +268,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('percentChange')}
                   >
                     <div className="flex items-center">
@@ -281,7 +282,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('marketCapRatio')}
                   >
                     <div className="flex items-center">
@@ -295,7 +296,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('newsflags')}
                   >
                     <div className="flex items-center">
@@ -309,7 +310,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('sVol')}
                   >
                     <div className="flex items-center">
@@ -323,7 +324,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('relativeVolumeStDev')}
                   >
                     <div className="flex items-center">
@@ -337,7 +338,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('marketCap')}
                   >
                     <div className="flex items-center">
@@ -351,7 +352,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('shares')}
                   >
                     <div className="flex items-center">
@@ -365,7 +366,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('volume')}
                   >
                     <div className="flex items-center">
@@ -379,7 +380,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('catScale')}
                   >
                     <div className="flex items-center">
@@ -393,7 +394,7 @@ const Watchlist = () => {
                     </div>
                   </TableHead>
                   <TableHead
-                    className="cursor-pointer hover:bg-gray-800 text-gray-400"
+                    className="cursor-pointer hover:bg-gray-800 text-gray-300"
                     onClick={() => handleSort('putScale')}
                   >
                     <div className="flex items-center">
@@ -431,15 +432,15 @@ const Watchlist = () => {
                     <TableCell className={stock.percentChange >= 0 ? "text-green-500" : "text-red-500"}>
                       {stock.percentChange >= 0 ? "+" : ""}{stock.percentChange.toFixed(2)}%
                     </TableCell>
-                    <TableCell>{stock.marketCapRatio.toFixed(2)}</TableCell>
-                    <TableCell>{stock.newsflags.toFixed(1)}</TableCell>
-                    <TableCell>{stock.sVol.toFixed(1)}</TableCell>
-                    <TableCell>{stock.relativeVolumeStDev.toFixed(2)}</TableCell>
-                    <TableCell>{stock.marketCap}</TableCell>
-                    <TableCell>{stock.shares.toLocaleString()}</TableCell>
-                    <TableCell>{stock.volume.toLocaleString()}</TableCell>
-                    <TableCell>{stock.catScale.toFixed(3)}</TableCell>
-                    <TableCell>{stock.putScale.toFixed(3)}</TableCell>
+                    <TableCell className="text-gray-200">{stock.marketCapRatio.toFixed(2)}</TableCell>
+                    <TableCell className="text-gray-200">{stock.newsflags.toFixed(1)}</TableCell>
+                    <TableCell className="text-gray-200">{stock.sVol.toFixed(1)}</TableCell>
+                    <TableCell className="text-gray-200">{stock.relativeVolumeStDev.toFixed(2)}</TableCell>
+                    <TableCell className="text-gray-200">{stock.marketCap}</TableCell>
+                    <TableCell className="text-gray-200">{stock.shares.toLocaleString()}</TableCell>
+                    <TableCell className="text-gray-200">{stock.volume.toLocaleString()}</TableCell>
+                    <TableCell className="text-gray-200">{stock.catScale.toFixed(3)}</TableCell>
+                    <TableCell className="text-gray-200">{stock.putScale.toFixed(3)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
