@@ -41,6 +41,7 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     assetsDir: 'assets',
   },
-  // We'll set this to "/" initially and update it once we know the new repository name
-  base: "/",
+  // Important: Change this value to match your new repository name after creating it
+  // Example: if your new repo is named "DinoTradez-New", change this to "/DinoTradez-New/"
+  base: "/DinoTradez-New/",
 }));

@@ -35,7 +35,7 @@ jobs:
           # Create 404.html for SPA routing
           cp dist/index.html dist/404.html
           
-          # Create proper content type headers for Netlify or similar providers
+          # Create proper content type headers for GitHub Pages and other hosts
           cat > dist/_headers <<EOL
           /*
             Content-Type: text/html; charset=utf-8

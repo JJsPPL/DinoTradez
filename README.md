@@ -10,6 +10,20 @@ DinoTradez is a modern stock trading dashboard that helps you monitor market tre
 - User-friendly interface
 - Responsive design for all devices
 
+## Important: Repository Setup
+
+After creating your new repository on GitHub:
+
+1. Update the `base` path in `vite.config.ts` to match your repository name:
+   ```javascript
+   // Change this line in vite.config.ts
+   base: "/your-new-repo-name/",
+   ```
+
+2. Enable GitHub Pages in your repository settings:
+   - Go to Settings → Pages
+   - Under "Build and deployment", select "GitHub Actions" as the source
+
 ## Development
 
 This project is built with:
@@ -33,19 +47,6 @@ npm run dev
 
 ```bash
 npm run build
-```
-
-## Deployment
-
-This project is configured to deploy automatically to GitHub Pages using GitHub Actions.
-
-## Important Note
-
-After creating your new repository, update the `base` path in `vite.config.ts` to match your new repository name:
-
-```javascript
-// Change this line in vite.config.ts
-base: "/your-new-repo-name/",
 ```
 
 ## License

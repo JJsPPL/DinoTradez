@@ -4,76 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DinoTradez - Improved</title>
-  <style>
-    /* Internal CSS for styling */
-    body {
-      background-color: #f0f8ff;  /* Light blue background for a fresh look */
-      font-family: Arial, sans-serif;  /* Use a clean sans-serif font for readability */
-      margin: 0;
-      padding: 20px;
-    }
-    header {
-      background-color: #4CAF50;  /* Green header bar */
-      color: white;
-      padding: 1em;
-      text-align: center;
-    }
-    h1 {
-      margin: 0;
-      font-size: 2em;
-    }
-    nav {
-      margin: 1em 0;
-      text-align: center;
-    }
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    section {
-      max-width: 800px;
-      margin: auto;  /* center the content section */
-    }
-    section h2 {
-      color: #4CAF50;
-    }
-    #msg {
-      display: none;  /* hidden by default */
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #fff4e5;
-      border: 1px solid #ffa;
-    }
-    footer {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 0.9em;
-      color: #555;
-    }
-  </style>
+  <title>DinoTradez - Modern Stock Trading Dashboard</title>
+  <meta name="description" content="DinoTradez - A modern stock trading dashboard to monitor market trends and manage your portfolio">
 </head>
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
-  <script>
-    // Internal JavaScript for interactivity and dynamic content
-    function showMessage() {
-      // Show the hidden message when the button is clicked
-      document.getElementById('msg').style.display = 'block';
-    }
-    // Display the current year in the footer
-    document.addEventListener('DOMContentLoaded', function() {
-      const yearEl = document.getElementById('year');
-      if (yearEl) {
-        yearEl.textContent = new Date().getFullYear();
-      }
-    });
-  </script>
 </body>
 </html>
