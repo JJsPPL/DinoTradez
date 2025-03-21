@@ -28,15 +28,14 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Setup GitHub Pages 404 redirect
+      - name: Setup GitHub Pages files
         run: |
-          cp dist/index.html dist/404.html
           # Create .nojekyll file to disable Jekyll processing
           touch dist/.nojekyll
-          
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          branch: gh-pages
-          clean: true
+          # Create 404.html for SPA routing
+          cp dist/index.html dist/404.html
+          # Create a custom _headers file to set proper MIME types
+          echo "/*" > dist/_headers
+          echo "  Content-Type: text/html; charset=utf-8" >> dist/_headers
+          echo "/assets/*" >> dist/_headers
+          echo "  Content-Type: application/javascript; charset=utf-8" >> dist/_headers

@@ -20,6 +20,17 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Ensure proper content types for JavaScript modules
+    rollupOptions: {
+      output: {
+        // Ensure proper file naming for cache busting
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]',
+      },
+    },
+  },
   // Base path for GitHub Pages - using the correct repository name
   base: "/DinoTradez/",
 }));
