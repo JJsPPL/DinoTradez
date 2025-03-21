@@ -1,6 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Search, TrendingUp, TrendingDown, AlertCircle, Clock, Calendar, DollarSign, LineChart, BarChart, PieChart, CandlestickChart, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
 
 interface StockData {
   symbol: string;
@@ -27,7 +30,96 @@ const StockSearch = () => {
   const [stockData, setStockData] = useState<StockData | null>(null);
   const [searchError, setSearchError] = useState('');
   
-  const handleSearch = (e: React.FormEvent) => {
+  // Function to format large numbers
+  const formatNumber = (num: number): string => {
+    if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
+    if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+    if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+    return num.toString();
+  };
+
+  const fetchStockData = async (symbol: string) => {
+    try {
+      // Yahoo Finance API endpoint using RapidAPI
+      const response = await fetch(`https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=${symbol}&region=US`, {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': '1dd4d1c8c8mshb0df8f5edf37e8ap158af3jsn4a8d0d23ea54', // This is a sample key. In production, use a proper key management solution
+          'X-RapidAPI-Host': 'apidojo-yahoo-finance-v1.p.rapidapi.com'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch stock data');
+      }
+      
+      const data = await response.json();
+      
+      // Extract and transform the data
+      const summaryDetail = data.summaryDetail || {};
+      const price = data.price || {};
+      const defaultKeyStatistics = data.defaultKeyStatistics || {};
+      
+      const stockData: StockData = {
+        symbol: symbol.toUpperCase(),
+        name: price.longName || price.shortName || symbol.toUpperCase(),
+        price: price.regularMarketPrice?.raw || 0,
+        change: price.regularMarketChange?.raw || 0,
+        percentChange: price.regularMarketChangePercent?.raw || 0,
+        high52w: summaryDetail.fiftyTwoWeekHigh?.raw || 0,
+        low52w: summaryDetail.fiftyTwoWeekLow?.raw || 0,
+        dayHigh: summaryDetail.dayHigh?.raw || 0,
+        dayLow: summaryDetail.dayLow?.raw || 0,
+        closePrice: summaryDetail.previousClose?.raw || 0,
+        marketCap: formatNumber(summaryDetail.marketCap?.raw || 0),
+        sharesOutstanding: formatNumber(defaultKeyStatistics.sharesOutstanding?.raw || 0),
+        authorizedShares: formatNumber((defaultKeyStatistics.sharesOutstanding?.raw || 0) * 1.15), // Approximation
+        marketCapToEquityRatio: parseFloat((summaryDetail.marketCap?.raw / (defaultKeyStatistics.bookValue?.raw * defaultKeyStatistics.sharesOutstanding?.raw)).toFixed(1)) || 0,
+        dollarVolume: formatNumber((summaryDetail.volume?.raw || 0) * (price.regularMarketPrice?.raw || 0)),
+        volume: summaryDetail.volume?.raw || 0,
+      };
+      
+      return stockData;
+    } catch (error) {
+      console.error('Error fetching stock data:', error);
+      throw error;
+    }
+  };
+
+  // Fallback to mock data if API call fails
+  const getMockData = (symbol: string): StockData => {
+    // Calculate some random values based on the symbol string to simulate unique data
+    const seed = symbol.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const rand = (min: number, max: number) => min + ((seed % 100) / 100) * (max - min);
+    
+    const price = rand(50, 500);
+    const change = rand(-20, 20);
+    const percentChange = (change / price) * 100;
+    const volume = Math.floor(rand(1000000, 50000000));
+    const marketCap = price * rand(1000000, 5000000000);
+    
+    return {
+      symbol: symbol.toUpperCase(),
+      name: `${symbol.toUpperCase()} Inc.`,
+      price: parseFloat(price.toFixed(2)),
+      change: parseFloat(change.toFixed(2)),
+      percentChange: parseFloat(percentChange.toFixed(2)),
+      high52w: parseFloat((price * 1.3).toFixed(2)),
+      low52w: parseFloat((price * 0.7).toFixed(2)),
+      dayHigh: parseFloat((price * 1.05).toFixed(2)),
+      dayLow: parseFloat((price * 0.95).toFixed(2)),
+      closePrice: parseFloat((price - change).toFixed(2)),
+      marketCap: formatNumber(marketCap),
+      sharesOutstanding: formatNumber(Math.floor(marketCap / price)),
+      authorizedShares: formatNumber(Math.floor((marketCap / price) * 1.2)),
+      marketCapToEquityRatio: parseFloat(rand(5, 50).toFixed(1)),
+      dollarVolume: formatNumber(volume * price),
+      volume: volume,
+    };
+  };
+  
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!searchQuery.trim()) {
@@ -38,152 +130,23 @@ const StockSearch = () => {
     setIsSearching(true);
     setSearchError('');
     
-    // Simulate API delay
-    setTimeout(() => {
-      // For demo, if symbol is unknown, show error
-      const knownSymbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'META', 'NVDA'];
-      const searchUpper = searchQuery.toUpperCase();
+    try {
+      // Try to fetch real data
+      const data = await fetchStockData(searchQuery.trim());
+      setStockData(data);
+      toast.success(`Stock data for ${searchQuery.toUpperCase()} loaded successfully`);
+    } catch (error) {
+      console.warn('API fetch failed, using mock data instead:', error);
       
-      if (!knownSymbols.includes(searchUpper)) {
-        setStockData(null);
-        setSearchError('Stock symbol not found. Try AAPL, MSFT, GOOGL, AMZN, TSLA, META, or NVDA');
-        setIsSearching(false);
-        return;
-      }
+      // Fall back to mock data
+      const mockData = getMockData(searchQuery.trim());
+      setStockData(mockData);
       
-      // Mock data based on symbol
-      const mockData: Record<string, StockData> = {
-        'AAPL': {
-          symbol: 'AAPL',
-          name: 'Apple Inc.',
-          price: 173.57,
-          change: 2.35,
-          percentChange: 1.37,
-          high52w: 198.23,
-          low52w: 143.90,
-          dayHigh: 174.30,
-          dayLow: 171.96,
-          closePrice: 173.57,
-          marketCap: '2.71T',
-          sharesOutstanding: '15.63B',
-          authorizedShares: '17.50B',
-          marketCapToEquityRatio: 24.8,
-          dollarVolume: '12.96B',
-          volume: 74582651,
-        },
-        'MSFT': {
-          symbol: 'MSFT',
-          name: 'Microsoft Corporation',
-          price: 329.93,
-          change: 4.51,
-          percentChange: 1.39,
-          high52w: 430.82,
-          low52w: 309.58,
-          dayHigh: 331.95,
-          dayLow: 326.76,
-          closePrice: 329.93,
-          marketCap: '2.45T',
-          sharesOutstanding: '7.43B',
-          authorizedShares: '9.00B',
-          marketCapToEquityRatio: 35.2,
-          dollarVolume: '8.48B',
-          volume: 25698741,
-        },
-        'GOOGL': {
-          symbol: 'GOOGL',
-          name: 'Alphabet Inc.',
-          price: 139.93,
-          change: -1.27,
-          percentChange: -0.90,
-          high52w: 153.78,
-          low52w: 103.71,
-          dayHigh: 141.22,
-          dayLow: 138.64,
-          closePrice: 139.93,
-          marketCap: '1.76T',
-          sharesOutstanding: '12.58B',
-          authorizedShares: '15.00B',
-          marketCapToEquityRatio: 27.3,
-          dollarVolume: '2.65B',
-          volume: 18965423,
-        },
-        'AMZN': {
-          symbol: 'AMZN',
-          name: 'Amazon.com Inc.',
-          price: 178.75,
-          change: 3.24,
-          percentChange: 1.85,
-          high52w: 189.77,
-          low52w: 118.35,
-          dayHigh: 179.32,
-          dayLow: 176.02,
-          closePrice: 178.75,
-          marketCap: '1.85T',
-          sharesOutstanding: '10.35B',
-          authorizedShares: '12.00B',
-          marketCapToEquityRatio: 59.1,
-          dollarVolume: '5.82B',
-          volume: 32541689,
-        },
-        'TSLA': {
-          symbol: 'TSLA',
-          name: 'Tesla, Inc.',
-          price: 194.05,
-          change: -5.87,
-          percentChange: -2.94,
-          high52w: 245.31,
-          low52w: 138.80,
-          dayHigh: 199.82,
-          dayLow: 193.11,
-          closePrice: 194.05,
-          marketCap: '614.7B',
-          sharesOutstanding: '3.17B',
-          authorizedShares: '4.00B',
-          marketCapToEquityRatio: 82.5,
-          dollarVolume: '16.54B',
-          volume: 85214763,
-        },
-        'META': {
-          symbol: 'META',
-          name: 'Meta Platforms, Inc.',
-          price: 484.17,
-          change: 7.45,
-          percentChange: 1.56,
-          high52w: 531.49,
-          low52w: 313.92,
-          dayHigh: 487.62,
-          dayLow: 479.03,
-          closePrice: 484.17,
-          marketCap: '1.24T',
-          sharesOutstanding: '2.56B',
-          authorizedShares: '3.00B',
-          marketCapToEquityRatio: 32.7,
-          dollarVolume: '7.64B',
-          volume: 15784236,
-        },
-        'NVDA': {
-          symbol: 'NVDA',
-          name: 'NVIDIA Corporation',
-          price: 878.36,
-          change: 15.78,
-          percentChange: 1.83,
-          high52w: 974.00,
-          low52w: 373.35,
-          dayHigh: 885.64,
-          dayLow: 867.33,
-          closePrice: 878.36,
-          marketCap: '2.16T',
-          sharesOutstanding: '2.46B',
-          authorizedShares: '2.80B',
-          marketCapToEquityRatio: 98.2,
-          dollarVolume: '36.22B',
-          volume: 41236985,
-        },
-      };
-      
-      setStockData(mockData[searchUpper]);
+      // Show a toast that we're using mock data
+      toast.info(`Using simulated data for ${searchQuery.toUpperCase()}`);
+    } finally {
       setIsSearching(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -200,12 +163,12 @@ const StockSearch = () => {
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-muted-foreground" />
               </div>
-              <input
+              <Input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Enter stock symbol (e.g., AAPL, MSFT, GOOGL)"
-                className="block w-full pl-10 pr-4 py-3 border border-input bg-card text-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                placeholder="Enter any stock symbol (e.g., AAPL, MSFT, GOOGL)"
+                className="block w-full pl-10 pr-4 py-6 border border-input bg-card text-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
             <button 
@@ -233,7 +196,7 @@ const StockSearch = () => {
           
           {stockData && (
             <div className="animate-scale-in">
-              <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+              <div className="bg-white dark:bg-black/70 rounded-xl shadow-md overflow-hidden mb-8">
                 <div className="px-6 py-4 border-b border-border flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2">
@@ -244,7 +207,7 @@ const StockSearch = () => {
                       <span className="text-xl font-semibold mr-4">${stockData.price.toFixed(2)}</span>
                       <span className={cn(
                         "flex items-center text-sm font-medium",
-                        stockData.change >= 0 ? "stock-positive" : "stock-negative"
+                        stockData.change >= 0 ? "text-green-500" : "text-red-500"
                       )}>
                         {stockData.change >= 0 ? (
                           <TrendingUp className="h-4 w-4 mr-1" />
@@ -381,7 +344,7 @@ const StockSearch = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-xl shadow-md p-6">
+                <div className="bg-white dark:bg-black/70 rounded-xl shadow-md p-6">
                   <div className="flex items-center mb-4">
                     <BarChart className="h-5 w-5 text-primary mr-2" />
                     <h4 className="font-medium">Technical Analysis</h4>
@@ -391,7 +354,7 @@ const StockSearch = () => {
                   </div>
                 </div>
                 
-                <div className="bg-white rounded-xl shadow-md p-6">
+                <div className="bg-white dark:bg-black/70 rounded-xl shadow-md p-6">
                   <div className="flex items-center mb-4">
                     <PieChart className="h-5 w-5 text-primary mr-2" />
                     <h4 className="font-medium">Fundamental Analysis</h4>
@@ -401,7 +364,7 @@ const StockSearch = () => {
                   </div>
                 </div>
                 
-                <div className="bg-white rounded-xl shadow-md p-6">
+                <div className="bg-white dark:bg-black/70 rounded-xl shadow-md p-6">
                   <div className="flex items-center mb-4">
                     <LineChart className="h-5 w-5 text-primary mr-2" />
                     <h4 className="font-medium">Performance</h4>

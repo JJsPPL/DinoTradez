@@ -7,6 +7,7 @@ import StockSearch from '@/components/StockSearch';
 import Analysis from '@/components/Analysis';
 import About from '@/components/About';
 import Footer from '@/components/Footer';
+import { Toaster } from 'sonner';
 
 const Index = () => {
   useEffect(() => {
@@ -61,6 +62,7 @@ const Index = () => {
         <About />
       </main>
       <Footer />
+      <Toaster position="top-right" />
     </div>
   );
 };
