@@ -1,38 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DinoTradez - Stock Trading Dashboard</title>
-    <meta name="description" content="Track stocks, analyze market data, and make informed trading decisions with DinoTradez" />
-    <meta name="author" content="DinoTradez" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    
-    <!-- Start Single Page Apps for GitHub Pages -->
-    <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
-    <!-- End Single Page Apps for GitHub Pages -->
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>DinoTradez - Improved</title>
+  <style>
+    /* Internal CSS for styling */
+    body {
+      background-color: #f0f8ff;  /* Light blue background for a fresh look */
+      font-family: Arial, sans-serif;  /* Use a clean sans-serif font for readability */
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      background-color: #4CAF50;  /* Green header bar */
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    nav {
+      margin: 1em 0;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      max-width: 800px;
+      margin: auto;  /* center the content section */
+    }
+    section h2 {
+      color: #4CAF50;
+    }
+    #msg {
+      display: none;  /* hidden by default */
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #fff4e5;
+      border: 1px solid #ffa;
+    }
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to DinoTradez</h1>
+  </header>
 
-  <body>
-    <div id="root"></div>
-    <!-- Lovable script for new features -->
-    <script src="https://cdn.gpteng.co/gptengineer.js"></script>
-    <!-- Use regular script tag instead of module for GitHub Pages compatibility -->
-    <script src="./src/main.tsx" type="text/javascript"></script>
-  </body>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <section>
+    <h2>About Us</h2>
+    <p>DinoTradez is a fictional stock trading dashboard that helps you monitor market trends.</p>
+    <p>We make trading as easy as riding a dinosaur!</p>
+    <!-- Button triggers a JavaScript function on click -->
+    <button onclick="showMessage()">Click for a Dino Surprise</button>
+    <!-- Hidden message that will be shown when the button is clicked -->
+    <p id="msg">🦖 Dino says: "Invest wisely and have fun!"</p>
+  </section>
+
+  <footer>
+    &copy; <span id="year"></span> DinoTradez. All rights reserved.
+  </footer>
+
+  <script>
+    // Internal JavaScript for interactivity and dynamic content
+    function showMessage() {
+      // Show the hidden message when the button is clicked
+      document.getElementById('msg').style.display = 'block';
+    }
+    // Display the current year in the footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>
+
