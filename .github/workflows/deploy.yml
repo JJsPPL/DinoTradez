@@ -34,11 +34,20 @@ jobs:
           touch dist/.nojekyll
           # Create 404.html for SPA routing
           cp dist/index.html dist/404.html
-          # Create a custom _headers file to set proper MIME types
-          echo "/*" > dist/_headers
-          echo "  Content-Type: text/html; charset=utf-8" >> dist/_headers
-          echo "/assets/*" >> dist/_headers
-          echo "  Content-Type: application/javascript; charset=utf-8" >> dist/_headers
+          
+          # Create proper content type headers
+          cat > dist/_headers <<EOL
+          /*
+            Content-Type: text/html; charset=utf-8
+          /assets/*
+            Content-Type: application/javascript
+          *.js
+            Content-Type: application/javascript
+          *.css
+            Content-Type: text/css
+          *.json
+            Content-Type: application/json
+          EOL
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

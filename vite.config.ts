@@ -24,12 +24,22 @@ export default defineConfig(({ mode }) => ({
     // Ensure proper content types for JavaScript modules
     rollupOptions: {
       output: {
-        // Ensure proper file naming for cache busting
+        // Generate appropriate file extensions for better MIME type handling
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]',
+        assetFileNames: ({ name }) => {
+          if (/\.(gif|jpe?g|png|svg)$/.test(name ?? '')) {
+            return 'assets/images/[name].[hash][extname]';
+          }
+          if (/\.css$/.test(name ?? '')) {
+            return 'assets/css/[name].[hash][extname]';
+          }
+          return 'assets/[name].[hash][extname]';
+        },
       },
     },
+    outDir: 'dist',
+    assetsDir: 'assets',
   },
   // Base path for GitHub Pages - using the correct repository name
   base: "/DinoTradez/",
