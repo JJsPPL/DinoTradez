@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Search, TrendingUp, BarChart3, BookOpen, PieChart, Bell, MessageSquare } from 'lucide-react';
+import { Menu, X, Search, TrendingUp, BarChart3, BookOpen, PieChart, Bell } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Header = () => {
@@ -52,14 +52,14 @@ const Header = () => {
     <header 
       className={cn(
         "fixed w-full z-50 transition-all duration-300 ease-in-out",
-        isScrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-md py-3" : "bg-transparent py-4"
+        isScrolled ? "bg-black/90 backdrop-blur-sm shadow-md py-3" : "bg-transparent py-4"
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <TrendingUp className="h-6 w-6 text-primary animate-pulse" />
-            <span className="text-xl font-bold text-foreground">DinoTradez</span>
+            <span className="text-xl font-bold text-gray-200">DinoTradez</span>
           </div>
           
           {/* Desktop Navigation */}
@@ -67,7 +67,7 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('home')} 
               className={cn("nav-link text-sm font-medium transition-colors", 
-                activeSection === 'home' ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                activeSection === 'home' ? "text-primary" : "text-gray-400 hover:text-gray-200"
               )}
             >
               Home
@@ -75,7 +75,7 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('watchlist')} 
               className={cn("nav-link text-sm font-medium transition-colors", 
-                activeSection === 'watchlist' ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                activeSection === 'watchlist' ? "text-primary" : "text-gray-400 hover:text-gray-200"
               )}
             >
               Watchlist
@@ -83,7 +83,7 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('search')} 
               className={cn("nav-link text-sm font-medium transition-colors", 
-                activeSection === 'search' ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                activeSection === 'search' ? "text-primary" : "text-gray-400 hover:text-gray-200"
               )}
             >
               Stock Search
@@ -91,7 +91,7 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('analysis')} 
               className={cn("nav-link text-sm font-medium transition-colors", 
-                activeSection === 'analysis' ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                activeSection === 'analysis' ? "text-primary" : "text-gray-400 hover:text-gray-200"
               )}
             >
               Analysis
@@ -99,7 +99,7 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('about')} 
               className={cn("nav-link text-sm font-medium transition-colors", 
-                activeSection === 'about' ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                activeSection === 'about' ? "text-primary" : "text-gray-400 hover:text-gray-200"
               )}
             >
               About
@@ -107,21 +107,18 @@ const Header = () => {
           </nav>
           
           <div className="hidden md:flex items-center space-x-4">
-            <button className="p-2 rounded-full bg-secondary text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
+            <button className="p-2 rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200 transition-colors">
               <Search className="h-4 w-4" />
             </button>
-            <button className="p-2 rounded-full bg-secondary text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
+            <button className="p-2 rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200 transition-colors">
               <Bell className="h-4 w-4" />
-            </button>
-            <button className="px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors">
-              Login
             </button>
           </div>
           
           {/* Mobile Menu Button */}
           <button 
             onClick={toggleMenu}
-            className="md:hidden p-2 rounded-lg bg-secondary text-muted-foreground hover:bg-secondary/80 transition-colors"
+            className="md:hidden p-2 rounded-lg bg-gray-800 text-gray-400 hover:bg-gray-700 transition-colors"
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -130,12 +127,12 @@ const Header = () => {
       
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden glass animate-fade-in">
+        <div className="md:hidden bg-black/95 backdrop-blur-md border-t border-gray-800 animate-fade-in">
           <div className="container mx-auto px-4 py-4 space-y-4">
             <button 
               onClick={() => scrollToSection('home')}
               className={cn("block w-full text-left px-4 py-2 rounded-lg transition-colors", 
-                activeSection === 'home' ? "bg-primary/10 text-primary" : "text-foreground hover:bg-secondary"
+                activeSection === 'home' ? "bg-gray-800 text-gray-200" : "text-gray-400 hover:bg-gray-800 hover:text-gray-200"
               )}
             >
               Home
@@ -143,7 +140,7 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('watchlist')}
               className={cn("block w-full text-left px-4 py-2 rounded-lg transition-colors", 
-                activeSection === 'watchlist' ? "bg-primary/10 text-primary" : "text-foreground hover:bg-secondary"
+                activeSection === 'watchlist' ? "bg-gray-800 text-gray-200" : "text-gray-400 hover:bg-gray-800 hover:text-gray-200"
               )}
             >
               Watchlist
@@ -151,7 +148,7 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('search')}
               className={cn("block w-full text-left px-4 py-2 rounded-lg transition-colors", 
-                activeSection === 'search' ? "bg-primary/10 text-primary" : "text-foreground hover:bg-secondary"
+                activeSection === 'search' ? "bg-gray-800 text-gray-200" : "text-gray-400 hover:bg-gray-800 hover:text-gray-200"
               )}
             >
               Stock Search
@@ -159,7 +156,7 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('analysis')}
               className={cn("block w-full text-left px-4 py-2 rounded-lg transition-colors", 
-                activeSection === 'analysis' ? "bg-primary/10 text-primary" : "text-foreground hover:bg-secondary"
+                activeSection === 'analysis' ? "bg-gray-800 text-gray-200" : "text-gray-400 hover:bg-gray-800 hover:text-gray-200"
               )}
             >
               Analysis
@@ -167,24 +164,21 @@ const Header = () => {
             <button 
               onClick={() => scrollToSection('about')}
               className={cn("block w-full text-left px-4 py-2 rounded-lg transition-colors", 
-                activeSection === 'about' ? "bg-primary/10 text-primary" : "text-foreground hover:bg-secondary"
+                activeSection === 'about' ? "bg-gray-800 text-gray-200" : "text-gray-400 hover:bg-gray-800 hover:text-gray-200"
               )}
             >
               About
             </button>
             
-            <div className="pt-4 border-t border-border flex items-center justify-between">
+            <div className="pt-4 border-t border-gray-800 flex items-center justify-between">
               <div className="flex space-x-2">
-                <button className="p-2 rounded-full bg-secondary text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
+                <button className="p-2 rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200 transition-colors">
                   <Search className="h-4 w-4" />
                 </button>
-                <button className="p-2 rounded-full bg-secondary text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
+                <button className="p-2 rounded-full bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200 transition-colors">
                   <Bell className="h-4 w-4" />
                 </button>
               </div>
-              <button className="px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors">
-                Login
-              </button>
             </div>
           </div>
         </div>

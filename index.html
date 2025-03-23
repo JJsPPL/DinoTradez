@@ -7,56 +7,23 @@
   <title>DinoTradez - Modern Stock Trading Dashboard</title>
   <meta name="description" content="DinoTradez - A modern stock trading dashboard to monitor market trends and manage your portfolio">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- Debug styles to ensure basic visibility -->
   <style>
     body {
-      background-color: white !important;
-      color: black !important;
+      background-color: black !important;
+      color: #d1d5db !important;
     }
     #root {
       min-height: 100vh;
-      background-color: white !important;
-      color: black !important;
-    }
-    .debug-element {
-      padding: 20px;
-      margin: 20px;
-      border: 2px solid blue;
-      background-color: white;
-      color: black;
-      font-size: 18px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 9999;
+      background-color: black !important;
+      color: #d1d5db !important;
     }
   </style>
 </head>
 <body>
-  <!-- Debug element to verify HTML loading -->
-  <div class="debug-element">HTML Loaded Successfully</div>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
   <script>
-    // Simple script to check if the page is loading
     console.log("HTML document loaded");
-    
-    // Add a timeout to check if React is initializing
-    setTimeout(function() {
-      const rootElement = document.getElementById('root');
-      if (rootElement && rootElement.children.length === 0) {
-        console.error("React app did not render after 3 seconds");
-        const errorElement = document.createElement('div');
-        errorElement.style.padding = '20px';
-        errorElement.style.backgroundColor = 'white';
-        errorElement.style.color = 'red';
-        errorElement.style.border = '2px solid red';
-        errorElement.style.margin = '20px';
-        errorElement.style.fontFamily = 'sans-serif';
-        errorElement.innerHTML = '<h2>App Failed to Initialize</h2><p>The React application did not render properly. Check the console for errors.</p>';
-        document.body.appendChild(errorElement);
-      }
-    }, 3000);
   </script>
 </body>
 </html>
