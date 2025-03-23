@@ -6,8 +6,8 @@
 @tailwind utilities;
 
 :root {
-  /* Light theme */
-  --background: 210 40% 98%;
+  /* Light theme with better contrast */
+  --background: 0 0% 98%;
   --foreground: 222.2 84% 4.9%;
   
   --card: 0 0% 100%;
@@ -74,7 +74,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply bg-white text-gray-900 font-inter;
     margin: 0;
     padding: 0;
   }
@@ -87,7 +87,7 @@
 /* Animation classes for fade and other effects */
 @layer utilities {
   .bg-gradient-hero {
-    @apply bg-black;
+    @apply bg-white;
   }
   
   .bg-gradient-card {
@@ -95,7 +95,7 @@
   }
   
   .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    @apply bg-white/90 backdrop-blur-md border border-gray-200 shadow-md;
   }
   
   .card-hover {

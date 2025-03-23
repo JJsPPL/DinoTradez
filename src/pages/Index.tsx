@@ -35,22 +35,9 @@ const Index = () => {
       elements.forEach(el => observer.observe(el));
     };
 
-    // Fix for text contrast issues
-    const fixTextContrast = () => {
-      // Find elements with white text on light backgrounds and fix them
-      document.querySelectorAll('.bg-white .text-white, .bg-gray-50 .text-white, .bg-gray-100 .text-white').forEach(
-        (el) => {
-          el.classList.add('forced-dark-text');
-          el.classList.remove('text-white');
-          el.classList.add('text-gray-900');
-        }
-      );
-    };
-
     // Run after a short delay to ensure all components are rendered
     setTimeout(() => {
       addAnimationObserver();
-      fixTextContrast();
     }, 100);
     
     // Add animation class to body elements
@@ -76,25 +63,13 @@ const Index = () => {
   const toggleHighContrast = () => {
     setHighContrast(!highContrast);
     document.body.classList.toggle('high-contrast');
-    
-    // Force refresh text contrast
-    const fixTextContrast = () => {
-      document.querySelectorAll('.bg-white .text-white, .bg-gray-50 .text-white, .bg-gray-100 .text-white').forEach(
-        (el) => {
-          el.classList.add('forced-dark-text');
-          el.classList.remove('text-white');
-          el.classList.add('text-gray-900');
-        }
-      );
-    };
-    setTimeout(fixTextContrast, 50);
   };
 
   // Console log to debug
   console.log("Rendering Index component");
 
   return (
-    <div className={`flex flex-col min-h-screen bg-black text-white ${highContrast ? 'high-contrast' : ''}`}>
+    <div className={`flex flex-col min-h-screen bg-white text-gray-900 ${highContrast ? 'high-contrast' : ''}`}>
       <Header />
       <main className="flex-grow">
         <Hero />

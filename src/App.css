@@ -28,25 +28,25 @@
 
 /* Color contrast improvements */
 .text-gray-300 {
-  color: #D1D5DB;
+  color: #6B7280;
 }
 
 .text-gray-200 {
-  color: #E5E7EB;
+  color: #4B5563;
 }
 
 /* Improved text contrast for all text containers */
 .bg-white, .bg-card, [class*="bg-white"] {
-  color: #333333 !important; /* Darker text on white backgrounds */
+  color: #333333; /* Darker text on white backgrounds */
 }
 
 .white-box-text {
-  color: #333333 !important; /* Ensure text in white boxes is dark */
+  color: #333333; /* Ensure text in white boxes is dark */
 }
 
 /* Fix for text in light backgrounds */
 .bg-secondary, .bg-muted, .bg-accent, .bg-popover, .bg-background {
-  color: #333333 !important; /* Dark text on light backgrounds */
+  color: #333333; /* Dark text on light backgrounds */
 }
 
 /* Stock styles */
@@ -62,12 +62,7 @@
 
 /* Ensure all text has appropriate contrast */
 .text-white, .text-gray-100, .text-gray-200, .text-gray-300 {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Add subtle shadow to light text for better readability */
-}
-
-/* Specific fixes for white text on light backgrounds */
-.white-on-light {
-  color: #333333 !important;
+  text-shadow: none; /* Remove shadow for better readability */
 }
 
 /* Better visibility for form inputs and boxes */
@@ -93,21 +88,6 @@ input, select, textarea {
 
 .bg-contrast-fixed {
   background-color: rgba(0, 0, 0, 0.05) !important; /* Slight darker background for better contrast */
-}
-
-/* Force dark text in white containers - stronger specificity */
-.bg-white *, .bg-gray-50 *, .bg-gray-100 * {
-  color: #333333 !important;
-}
-
-/* Exception for intentionally dark bg elements */
-.bg-black *, .bg-gray-900 *, .bg-gray-800 * {
-  color: #FFFFFF !important;
-}
-
-/* Force higher contrast for all text elements */
-[class*="text-"] {
-  font-weight: 500;
 }
 
 /* Fix for GitHub Pages base path issue */
