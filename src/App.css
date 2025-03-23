@@ -95,3 +95,13 @@ a[href^="/"] {
   /* Convert absolute paths to relative for GitHub Pages */
   content: attr(href);
 }
+
+/* Force background colors */
+body, html, #root, main, section {
+  background-color: #ffffff !important;
+}
+
+/* Force all text to be visible */
+h1, h2, h3, h4, h5, h6, p, span, div, a {
+  color: #333333 !important;
+}

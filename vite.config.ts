@@ -25,8 +25,8 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         // Generate appropriate file extensions for better MIME type handling
-        entryFileNames: 'assets/[name].[hash].mjs',
-        chunkFileNames: 'assets/[name].[hash].mjs',
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
         assetFileNames: ({ name }) => {
           if (/\.(gif|jpe?g|png|svg)$/.test(name ?? '')) {
             return 'assets/images/[name].[hash][extname]';
@@ -41,7 +41,6 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     assetsDir: 'assets',
   },
-  // Important: Change this value to match your new repository name after creating it
-  // Example: if your new repo is named "DinoTradez-New", change this to "/DinoTradez-New/"
+  // Change this value to match your repository name
   base: "/DinoTradez-New/",
 }));
