@@ -18,14 +18,38 @@
       color: #d1d5db !important;
     }
   </style>
-  <!-- Lovable script for new features -->
+  <!-- Ensure the script tag includes the correct base path -->
   <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  <!-- Force console logs for debugging -->
+  <script>
+    console.log = (function(oldLog) {
+      return function(...args) {
+        if (args[0] === 'Starting application initialization') {
+          console.info('Starting application initialization');
+        } else if (typeof args[0] === 'string' && args[0].includes('Root element found')) {
+          console.info('Root element found, rendering App');
+        } else if (typeof args[0] === 'string' && args[0].includes('Rendering App')) {
+          console.info('Rendering App component');
+        } else if (typeof args[0] === 'string' && args[0].includes('Index component')) {
+          console.info('Rendering Index component');
+        } else if (typeof args[0] === 'string' && args[0].includes('mounted')) {
+          console.info('Index component mounted');
+        } else {
+          oldLog.apply(console, args);
+        }
+      };
+    })(console.log);
+    
+    // Add global error handler
+    window.addEventListener('error', function(event) {
+      console.error('Global error caught:', event.error);
+    });
+    
+    console.log("HTML document loaded");
+  </script>
 </head>
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
-  <script>
-    console.log("HTML document loaded");
-  </script>
 </body>
 </html>

@@ -27,22 +27,28 @@ jobs:
 
       - name: Build
         run: npm run build
-
+        env:
+          NODE_ENV: production
+          
       - name: Debug build output
         run: |
           echo "Listing dist directory contents:"
           ls -la dist/
           echo "Checking for index.html:"
-          cat dist/index.html
+          cat dist/index.html | head -20
+          echo "Checking asset paths:"
+          grep -r "src=" dist/index.html || echo "No src attributes found"
+          grep -r "href=" dist/index.html || echo "No href attributes found"
 
       - name: Setup GitHub Pages files
         run: |
           # Create .nojekyll file to disable Jekyll processing
           touch dist/.nojekyll
-          # Create 404.html for SPA routing
+          
+          # Create 404.html for SPA routing (exact copy of index.html)
           cp dist/index.html dist/404.html
           
-          # Create proper content type headers for GitHub Pages and other hosts
+          # Create proper content type headers
           cat > dist/_headers <<EOL
           /*
             Content-Type: text/html; charset=utf-8
