@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import "./App.css"; // Make sure CSS is imported
 
 // Create a new QueryClient for React Query
 const queryClient = new QueryClient();
@@ -13,8 +14,6 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
       <HashRouter>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -22,6 +21,8 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </HashRouter>
+      <Toaster />
+      <Sonner />
     </TooltipProvider>
   </QueryClientProvider>
 );

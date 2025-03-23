@@ -7,12 +7,17 @@ import StockSearch from '@/components/StockSearch';
 import Analysis from '@/components/Analysis';
 import About from '@/components/About';
 import Footer from '@/components/Footer';
-import { Toaster } from 'sonner';
+import { toast } from 'sonner';
 
 const Index = () => {
   const [highContrast, setHighContrast] = useState(false);
 
   useEffect(() => {
+    // Show a welcome toast
+    toast.success("Welcome to DinoTradez!", {
+      description: "Your modern stock trading dashboard",
+    });
+    
     const addAnimationObserver = () => {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -34,15 +39,6 @@ const Index = () => {
     const fixTextContrast = () => {
       // Find elements with white text on light backgrounds and fix them
       document.querySelectorAll('.bg-white .text-white, .bg-gray-50 .text-white, .bg-gray-100 .text-white').forEach(
-        (el) => {
-          el.classList.add('forced-dark-text');
-          el.classList.remove('text-white');
-          el.classList.add('text-gray-900');
-        }
-      );
-
-      // Fix for white boxes with white text - stronger fix
-      document.querySelectorAll('[class*="bg-white"] .text-white, [class*="bg-gray-50"] .text-white, [class*="bg-gray-100"] .text-white').forEach(
         (el) => {
           el.classList.add('forced-dark-text');
           el.classList.remove('text-white');
@@ -94,6 +90,9 @@ const Index = () => {
     setTimeout(fixTextContrast, 50);
   };
 
+  // Console log to debug
+  console.log("Rendering Index component");
+
   return (
     <div className={`flex flex-col min-h-screen bg-black text-white ${highContrast ? 'high-contrast' : ''}`}>
       <Header />
@@ -105,7 +104,6 @@ const Index = () => {
         <About />
       </main>
       <Footer />
-      <Toaster position="top-right" />
       
       {/* Accessibility toggle for high contrast mode */}
       <button 

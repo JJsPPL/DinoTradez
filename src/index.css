@@ -1,302 +1,114 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+:root {
+  /* Light theme */
+  --background: 210 40% 98%;
+  --foreground: 222.2 84% 4.9%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  
+  --primary: 201 96% 32%;
+  --primary-foreground: 210 40% 98%;
+  
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
 
-@layer base {
-  :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 211 100% 50%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+  
+  --radius: 0.5rem;
 }
 
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  
+  --primary: 201 96% 32%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+}
+
+/* Global styles */
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-inter antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground font-inter;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-.font-inter {
-  font-family: 'Inter', sans-serif;
-}
-
-/* Animation keyframes */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 0.8; }
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.98); }
-  50% { transform: scale(1); }
-  100% { transform: scale(0.98); }
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-/* Animation classes */
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.6s ease-out forwards;
-}
-
-.animate-pulse {
-  animation: pulse 3s infinite ease-in-out;
-}
-
-.animate-float {
-  animation: float 6s infinite ease-in-out;
-}
-
-/* Animation delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-600 { animation-delay: 600ms; }
-.delay-700 { animation-delay: 700ms; }
-.delay-800 { animation-delay: 800ms; }
-
-/* Glass morphism effects */
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-.glass-dark {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Stock chart styles */
-.stock-positive {
-  color: #16a34a;
-  font-weight: 600;
-}
-
-.stock-negative {
-  color: #dc2626;
-  font-weight: 600;
-}
-
-.bg-stock-positive {
-  background-color: rgba(22, 163, 74, 0.1);
-}
-
-.bg-stock-negative {
-  background-color: rgba(220, 38, 38, 0.1);
-}
-
-/* Table styles */
-.watchlist-table th {
-  @apply py-3 px-4 text-left font-medium text-gray-300 border-b;
-}
-
-.watchlist-table td {
-  @apply py-3 px-4 border-b border-gray-800;
-}
-
-.watchlist-row:hover {
-  @apply bg-gray-800 transition-colors;
-}
-
-/* Improved text visibility and contrast */
-.text-muted-foreground {
-  color: rgba(31, 41, 55, 0.9) !important; /* Darker gray for better visibility */
-}
-
-.text-white {
-  color: #FFFFFF;
-  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2); /* Add subtle shadow for better contrast */
-}
-
-.dark .text-white {
-  color: #FFFFFF !important;
-}
-
-.text-gray-200 {
-  color: #374151 !important; /* Much darker for better visibility */
-}
-
-.text-gray-300 {
-  color: #374151 !important; /* Much darker for better visibility */
-}
-
-.text-gray-400 {
-  color: #4B5563 !important; /* Darker for better visibility */
-}
-
-/* Fix for white text on white background issue */
-.bg-white *:not([class*="bg-"]) {
-  color: #333333 !important;
-}
-
-.bg-card *:not([class*="bg-"]) {
-  color: #333333 !important;
-}
-
-.light-bg-text {
-  color: #333333 !important;
-}
-
-/* High contrast mode overrides */
-.high-contrast {
-  --foreground: 0 0% 0% !important;
-  --background: 0 0% 100% !important;
-  --card: 0 0% 100% !important;
-  --card-foreground: 0 0% 0% !important;
-}
-
-/* Fix specifically for white boxes with white text */
-[class*="bg-white"], [class*="bg-gray-50"], [class*="bg-gray-100"] {
-  color: #333333 !important;
-}
-
-[class*="bg-white"] *, [class*="bg-gray-50"] *, [class*="bg-gray-100"] * {
-  color: #333333 !important;
-}
-
-/* Override any white text on light backgrounds */
-.bg-white .text-white,
-.bg-gray-50 .text-white,
-.bg-gray-100 .text-white,
-.bg-gray-200 .text-white {
-  color: #333333 !important;
-}
-
-/* Ensure text on dark backgrounds is visible */
-.bg-black .text-white,
-.bg-gray-900 .text-white,
-.bg-secondary .text-white {
-  color: #FFFFFF !important; /* Force white text on dark backgrounds */
-}
-
-/* Darkpool and block trade styles */
-.darkpool-data {
-  @apply bg-purple-900/20 text-purple-300 rounded-md p-2;
-}
-
-.block-trade {
-  @apply bg-blue-900/20 text-blue-300 rounded-md p-2;
-}
-
-/* Accessibility improvements */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-.forced-dark-text {
-  color: #333333 !important;
-}
-
-.forced-light-text {
-  color: #ffffff !important;
-}
-
-.forced-contrast {
-  color: #000000 !important;
-  background-color: #ffffff !important;
+/* Animation classes for fade and other effects */
+@layer utilities {
+  .bg-gradient-hero {
+    @apply bg-black;
+  }
+  
+  .bg-gradient-card {
+    @apply bg-white dark:bg-gray-800;
+  }
+  
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+  }
+  
+  .high-contrast {
+    --primary: 201 90% 30%;
+    --foreground: 0 0% 0%;
+    --background: 0 0% 100%;
+  }
+  
+  .forced-dark-text {
+    color: #333333 !important;
+  }
 }
