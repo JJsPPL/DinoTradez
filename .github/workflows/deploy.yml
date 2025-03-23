@@ -28,6 +28,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Debug build output
+        run: |
+          echo "Listing dist directory contents:"
+          ls -la dist/
+          echo "Checking for index.html:"
+          cat dist/index.html
+
       - name: Setup GitHub Pages files
         run: |
           # Create .nojekyll file to disable Jekyll processing
@@ -53,3 +60,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
+

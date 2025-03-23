@@ -40,7 +40,9 @@ export default defineConfig(({ mode }) => ({
     },
     outDir: 'dist',
     assetsDir: 'assets',
+    minify: true,
+    sourcemap: true, // Enable sourcemaps for debugging
   },
-  // Change this value to match your repository name
+  // Make sure this matches your repository name exactly
   base: "/DinoTradez-New/",
 }));

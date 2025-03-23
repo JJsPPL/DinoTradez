@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
@@ -38,6 +37,37 @@
   --radius: 0.5rem;
 }
 
+/* Global styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-white text-gray-900 font-inter;
+    margin: 0;
+    padding: 0;
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    background-color: white;
+  }
+  
+  #root {
+    background-color: white !important;
+    color: black !important;
+    min-height: 100vh;
+  }
+}
+
+/* Important overrides to ensure visibility */
+body, html, #root, main, section, div, p, h1, h2, h3, h4, h5, h6, span {
+  background-color: white !important;
+  color: black !important;
+}
+
 .dark {
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
@@ -66,22 +96,6 @@
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
   --ring: 212.7 26.8% 83.9%;
-}
-
-/* Global styles */
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-white text-gray-900 font-inter;
-    margin: 0;
-    padding: 0;
-  }
-  
-  html {
-    scroll-behavior: smooth;
-  }
 }
 
 /* Animation classes for fade and other effects */

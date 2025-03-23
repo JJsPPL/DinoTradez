@@ -13,50 +13,30 @@ const Index = () => {
   const [highContrast, setHighContrast] = useState(false);
 
   useEffect(() => {
+    console.log("Index component mounted");
+    
     // Show a welcome toast
     toast.success("Welcome to DinoTradez!", {
       description: "Your modern stock trading dashboard",
     });
     
-    const addAnimationObserver = () => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('animate-fade-in');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
-      );
-      
-      const elements = document.querySelectorAll('.animate-on-scroll');
-      elements.forEach(el => observer.observe(el));
-    };
-
-    // Run after a short delay to ensure all components are rendered
-    setTimeout(() => {
-      addAnimationObserver();
-    }, 100);
+    // Add a simple test element to verify the component is mounting
+    const testDiv = document.createElement('div');
+    testDiv.style.padding = '20px';
+    testDiv.style.backgroundColor = 'white';
+    testDiv.style.color = 'black';
+    testDiv.style.border = '2px solid red';
+    testDiv.style.margin = '20px';
+    testDiv.style.zIndex = '9999';
+    testDiv.style.position = 'fixed';
+    testDiv.style.top = '100px';
+    testDiv.style.left = '20px';
+    testDiv.textContent = 'Index component mounted';
+    document.body.appendChild(testDiv);
     
-    // Add animation class to body elements
-    const sections = document.querySelectorAll('section');
-    sections.forEach((section, index) => {
-      section.classList.add('animate-on-scroll');
-      section.style.opacity = '0';
-      // Add staggered animation delay
-      section.style.animationDelay = `${index * 0.1}s`;
-    });
-    
+    // Clean up test element
     return () => {
-      // Clean up animation classes when component unmounts
-      const sections = document.querySelectorAll('section');
-      sections.forEach(section => {
-        section.classList.remove('animate-on-scroll');
-        section.style.opacity = '1';
-        section.style.animationDelay = '';
-      });
+      document.body.removeChild(testDiv);
     };
   }, []);
 
@@ -69,7 +49,11 @@ const Index = () => {
   console.log("Rendering Index component");
 
   return (
-    <div className={`flex flex-col min-h-screen bg-white text-gray-900 ${highContrast ? 'high-contrast' : ''}`} style={{backgroundColor: "#ffffff"}}>
+    <div className={`flex flex-col min-h-screen bg-white text-gray-900 ${highContrast ? 'high-contrast' : ''}`} 
+         style={{backgroundColor: "#ffffff", color: "#000000", border: "1px solid #000000"}}>
+      <div style={{padding: "20px", backgroundColor: "white", color: "black", margin: "20px", border: "2px solid green"}}>
+        Index Component Rendering Test
+      </div>
       <Header />
       <main className="flex-grow" style={{backgroundColor: "#ffffff"}}>
         <Hero />
