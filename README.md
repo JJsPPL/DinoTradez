@@ -10,19 +10,34 @@ DinoTradez is a modern stock trading dashboard that helps you monitor market tre
 - User-friendly interface
 - Responsive design for all devices
 
-## Important: Repository Setup
+## Important: GitHub Pages Deployment
 
-After creating your new repository on GitHub:
+To deploy this application to GitHub Pages:
 
-1. Update the `base` path in `vite.config.ts` to match your repository name:
+1. Make sure the `base` path in `vite.config.ts` matches your repository name exactly:
    ```javascript
-   // Change this line in vite.config.ts
-   base: "/your-new-repo-name/",
+   // In vite.config.ts
+   base: "/DinoTradezLovable/",
    ```
 
-2. Enable GitHub Pages in your repository settings:
-   - Go to Settings → Pages
-   - Under "Build and deployment", select "GitHub Actions" as the source
+2. Push your changes to the main branch to trigger the GitHub Actions workflow.
+
+3. If you need to manually deploy:
+   ```bash
+   # Build the project
+   npm run build
+   
+   # Create .nojekyll file to disable Jekyll processing
+   touch dist/.nojekyll
+   
+   # Deploy to GitHub Pages
+   npx gh-pages -d dist
+   ```
+
+4. After deployment, your site should be available at:
+   ```
+   https://jjsppl.github.io/DinoTradezLovable/
+   ```
 
 ## Development
 

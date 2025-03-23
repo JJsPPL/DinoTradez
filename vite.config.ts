@@ -43,6 +43,6 @@ export default defineConfig(({ mode }) => ({
     minify: true,
     sourcemap: true, // Enable sourcemaps for debugging
   },
-  // Make sure this matches your repository name exactly
-  base: "/DinoTradez-New/",
+  // Update base path to match your GitHub repository name exactly 
+  base: "/DinoTradezLovable/",
 }));
