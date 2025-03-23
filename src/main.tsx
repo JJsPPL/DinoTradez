@@ -27,7 +27,11 @@ try {
       (event.reason ? event.reason.toString() : 'Unknown error') + '</pre></div>';
   });
   
-  root.render(<App />);
+  root.render(
+    <div style={{color: 'white', backgroundColor: 'black', minHeight: '100vh'}}>
+      <App />
+    </div>
+  );
   console.log("App component rendered successfully");
 } catch (error) {
   console.error("Error rendering React application:", error);

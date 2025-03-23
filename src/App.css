@@ -5,7 +5,7 @@
   margin: 0 auto;
   text-align: center;
   background-color: #000000 !important;
-  color: #e5e5e5 !important;
+  color: white !important;
   min-height: 100vh;
 }
 
@@ -29,13 +29,9 @@
   opacity: 0;
 }
 
-/* Color definitions for dark theme */
-.text-gray-300 {
-  color: #d1d5db;
-}
-
-.text-gray-200 {
-  color: #e5e7eb;
+/* Color definitions to ensure visibility */
+.text-gray-300, .text-gray-200, body, html, p, h1, h2, h3, h4, h5, h6, div, span {
+  color: white !important;
 }
 
 /* Stock styles */
@@ -51,7 +47,7 @@
 
 /* Better visibility for form inputs and boxes */
 input, select, textarea {
-  color: #e5e5e5 !important; 
+  color: white !important; 
   background-color: #1f2937 !important;
   border: 1px solid #374151;
 }
@@ -59,12 +55,12 @@ input, select, textarea {
 /* High contrast for important data */
 .data-value {
   font-weight: 600;
-  color: #f9fafb !important;
+  color: white !important;
 }
 
 /* Card styling */
 .card-dark {
-  color: #e5e5e5 !important;
+  color: white !important;
   background-color: #111827 !important;
   border: 1px solid #1f2937;
 }
@@ -76,7 +72,7 @@ body, html, #root, main, section {
 
 /* Make text visible */
 h1, h2, h3, h4, h5, h6, p, span, div, a {
-  color: #e5e5e5 !important;
+  color: white !important;
 }
 
 /* Button styling */
@@ -87,5 +83,5 @@ button.btn-primary {
 
 button.btn-secondary {
   background-color: #1f2937 !important;
-  color: #e5e5e5 !important;
+  color: white !important;
 }
