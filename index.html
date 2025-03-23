@@ -18,8 +18,7 @@
       color: #d1d5db !important;
     }
   </style>
-  <!-- Ensure the script tag includes the correct base path -->
-  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  <!-- Remove GPT Engineer script that might be causing issues -->
   <!-- Force console logs for debugging -->
   <script>
     console.log = (function(oldLog) {
@@ -43,6 +42,8 @@
     // Add global error handler
     window.addEventListener('error', function(event) {
       console.error('Global error caught:', event.error);
+      document.getElementById('root').innerHTML += '<div style="color:red;background:black;padding:20px;margin:20px;border:1px solid red;font-family:monospace"><h3>Error Caught:</h3><pre>' + 
+        (event.error ? event.error.toString() : 'Unknown error') + '</pre></div>';
     });
     
     console.log("HTML document loaded");

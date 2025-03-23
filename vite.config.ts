@@ -43,5 +43,5 @@ export default defineConfig(({ mode }) => ({
     minify: true,
     sourcemap: true, // Enable sourcemaps for debugging
   },
-  base: "/DinoTradezLovable/", // Ensure this matches repository name exactly
+  base: "/DinoTradez/", // Updated to match actual repository name
 }));
