@@ -28,9 +28,7 @@ try {
   });
   
   root.render(
-    <div style={{color: 'white', backgroundColor: 'black', minHeight: '100vh'}}>
-      <App />
-    </div>
+    <App />
   );
   console.log("App component rendered successfully");
 } catch (error) {

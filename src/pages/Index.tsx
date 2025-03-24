@@ -22,9 +22,9 @@ const Index = () => {
   console.log("Rendering Index component");
 
   return (
-    <div className="flex flex-col min-h-screen bg-black" style={{color: 'white'}}>
+    <div className="flex flex-col min-h-screen bg-black text-white">
       <Header />
-      <main className="flex-grow" style={{color: 'white', backgroundColor: 'black'}}>
+      <main className="flex-grow bg-black text-white">
         <Hero />
         <Watchlist />
         <StockSearch />

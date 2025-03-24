@@ -29,9 +29,22 @@
   opacity: 0;
 }
 
-/* Color definitions to ensure visibility */
-.text-gray-300, .text-gray-200, body, html, p, h1, h2, h3, h4, h5, h6, div, span {
+/* Force visibility of all text */
+body, html, #root, main, section, div, span, p, h1, h2, h3, h4, h5, h6, 
+a, button, li, ul, ol, header, footer, nav, article, aside, 
+.container, .content, .text, .title, .subtitle {
   color: white !important;
+}
+
+/* Specific component colors */
+.text-gray-300, .text-gray-200, .text-foreground, .text-primary-foreground {
+  color: white !important;
+}
+
+/* Force backgrounds */
+body, html, #root, main, section, header, footer, 
+.bg-background, .bg-card, .app-container {
+  background-color: black !important;
 }
 
 /* Stock styles */
@@ -65,16 +78,6 @@ input, select, textarea {
   border: 1px solid #1f2937;
 }
 
-/* Force background colors */
-body, html, #root, main, section {
-  background-color: #000000 !important;
-}
-
-/* Make text visible */
-h1, h2, h3, h4, h5, h6, p, span, div, a {
-  color: white !important;
-}
-
 /* Button styling */
 button.btn-primary {
   background-color: #3b82f6 !important;
@@ -84,4 +87,14 @@ button.btn-primary {
 button.btn-secondary {
   background-color: #1f2937 !important;
   color: white !important;
+}
+
+/* Force opacity on all elements to ensure visibility */
+* {
+  opacity: 1 !important;
+}
+
+/* Override any hidden elements */
+.hidden {
+  display: block !important;
 }
