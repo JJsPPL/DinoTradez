@@ -20,16 +20,7 @@ try {
   console.log("Root element found, rendering App");
   const root = createRoot(rootElement);
   
-  // Add error boundary directly
-  window.addEventListener('unhandledrejection', function(event) {
-    console.error('Unhandled Promise Rejection:', event.reason);
-    rootElement.innerHTML += '<div style="color:red;background:black;padding:20px;margin:20px;border:1px solid red;font-family:monospace"><h3>Unhandled Promise Rejection:</h3><pre>' + 
-      (event.reason ? event.reason.toString() : 'Unknown error') + '</pre></div>';
-  });
-  
-  root.render(
-    <App />
-  );
+  root.render(<App />);
   console.log("App component rendered successfully");
 } catch (error) {
   console.error("Error rendering React application:", error);

@@ -31,35 +31,6 @@
   </style>
   <!-- Lovable script tag -->
   <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-  <!-- Force console logs for debugging -->
-  <script>
-    console.log = (function(oldLog) {
-      return function(...args) {
-        if (args[0] === 'Starting application initialization') {
-          console.info('Starting application initialization');
-        } else if (typeof args[0] === 'string' && args[0].includes('Root element found')) {
-          console.info('Root element found, rendering App');
-        } else if (typeof args[0] === 'string' && args[0].includes('Rendering App')) {
-          console.info('Rendering App component');
-        } else if (typeof args[0] === 'string' && args[0].includes('Index component')) {
-          console.info('Rendering Index component');
-        } else if (typeof args[0] === 'string' && args[0].includes('mounted')) {
-          console.info('Index component mounted');
-        } else {
-          oldLog.apply(console, args);
-        }
-      };
-    })(console.log);
-    
-    // Add global error handler
-    window.addEventListener('error', function(event) {
-      console.error('Global error caught:', event.error);
-      document.getElementById('root').innerHTML += '<div style="color:red;background:black;padding:20px;margin:20px;border:1px solid red;font-family:monospace"><h3>Error Caught:</h3><pre>' + 
-        (event.error ? event.error.toString() : 'Unknown error') + '</pre></div>';
-    });
-    
-    console.log("HTML document loaded");
-  </script>
 </head>
 <body>
   <div id="root"></div>

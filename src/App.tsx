@@ -25,14 +25,12 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <HashRouter>
-          <div className="app-container" style={{ color: 'white', backgroundColor: 'black', minHeight: '100vh' }}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <Toaster />
-            <Sonner />
-          </div>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Toaster />
+          <Sonner />
         </HashRouter>
       </TooltipProvider>
     </QueryClientProvider>

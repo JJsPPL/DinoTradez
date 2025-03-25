@@ -29,7 +29,7 @@
   opacity: 0;
 }
 
-/* Force visibility of all text */
+/* Force visibility of all text with !important to override conflicting styles */
 body, html, #root, main, section, div, span, p, h1, h2, h3, h4, h5, h6, 
 a, button, li, ul, ol, header, footer, nav, article, aside, 
 .container, .content, .text, .title, .subtitle {
@@ -89,12 +89,44 @@ button.btn-secondary {
   color: white !important;
 }
 
-/* Force opacity on all elements to ensure visibility */
+/* Ensure all components are visible regardless of z-index or opacity */
 * {
   opacity: 1 !important;
+  z-index: auto;
 }
 
-/* Override any hidden elements */
+/* Force display of any potentially hidden elements */
 .hidden {
   display: block !important;
+}
+
+/* Additional fixes for Hero section specifically */
+section#home {
+  background-color: black !important;
+  color: white !important;
+}
+
+section#home h1,
+section#home p,
+section#home div,
+section#home span {
+  color: white !important;
+}
+
+/* Fix for chart visualizations */
+.rounded-lg.bg-gray-50 {
+  background-color: #1f2937 !important;
+}
+
+.rounded-lg.bg-gray-50 * {
+  color: white !important;
+}
+
+/* Fix card styles */
+.card-hover.rounded-xl.bg-white {
+  background-color: #111827 !important;
+}
+
+.card-hover.rounded-xl.bg-white * {
+  color: white !important;
 }

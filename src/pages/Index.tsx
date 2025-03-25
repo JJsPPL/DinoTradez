@@ -24,7 +24,7 @@ const Index = () => {
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
       <Header />
-      <main className="flex-grow bg-black text-white">
+      <main className="flex-grow">
         <Hero />
         <Watchlist />
         <StockSearch />
