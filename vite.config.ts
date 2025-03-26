@@ -43,5 +43,5 @@ export default defineConfig(({ mode }) => ({
     minify: true,
     sourcemap: true, // Enable sourcemaps for debugging
   },
-  base: "/dinotradez/", // Updated to lowercase for consistency with GitHub URL
+  base: "./", // Change to relative path instead of absolute
 }));

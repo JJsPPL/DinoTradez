@@ -29,6 +29,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          BASE_URL: "./"
           
       - name: Debug build output
         run: |
@@ -58,6 +59,21 @@ jobs:
             Content-Type: text/css
           /*.json
             Content-Type: application/json
+          EOL
+          
+          # Create a temporary HTML file to test direct access
+          cat > dist/test.html <<EOL
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Test Page</title>
+          </head>
+          <body style="background-color:#ffffff;color:#000000;">
+            <h1>Test Page</h1>
+            <p>If you can see this, static file serving is working correctly.</p>
+            <p>Timestamp: $(date)</p>
+          </body>
+          </html>
           EOL
 
       - name: Deploy to GitHub Pages

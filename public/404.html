@@ -19,15 +19,12 @@
       }
     }(window.location));
     
-    // Set the correct base path for the repository
-    var segmentCount = 0; // Adjust based on your GitHub Pages URL structure
-    var repoName = "dinotradez"; // Changed to lowercase to match URL
+    // Debug info
+    console.log("404 page loaded, redirecting...");
+    console.log("Current location:", window.location.href);
     
-    var l = window.location;
-    var basePath = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/' + repoName + '/#/';
-    
-    // Redirect to home with hash router format
-    window.location.href = basePath;
+    // Redirect to home with hash router format - use relative path
+    window.location.href = "./";
   </script>
   <style>
     body {
@@ -82,7 +79,7 @@
     <h1>404 - Page Not Found</h1>
     <p>Oops! The page you're looking for seems to have gone extinct.</p>
     <p>You're being redirected to the homepage...</p>
-    <a href="/dinotradez/#/" class="btn">Return to Homepage</a>
+    <a href="./" class="btn">Return to Homepage</a>
   </div>
 </body>
 </html>
