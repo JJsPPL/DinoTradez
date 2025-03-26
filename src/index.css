@@ -44,29 +44,18 @@
     @apply border-border;
   }
   body {
-    @apply bg-black text-gray-300 font-inter;
+    @apply bg-background text-foreground font-inter;
     margin: 0;
     padding: 0;
-    background-color: black !important;
-    color: #d1d5db !important;
   }
   
   html {
     scroll-behavior: smooth;
-    background-color: black;
   }
   
   #root {
-    background-color: black !important;
-    color: #d1d5db !important;
     min-height: 100vh;
   }
-}
-
-/* Styling overrides for dark theme */
-body, html, #root, main, section {
-  background-color: black !important;
-  color: #d1d5db !important;
 }
 
 /* Animation classes for fade and other effects */

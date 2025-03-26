@@ -22,7 +22,7 @@ const Index = () => {
   console.log("Rendering Index component");
 
   return (
-    <div className="flex flex-col min-h-screen bg-black text-white">
+    <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-grow">
         <Hero />

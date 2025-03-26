@@ -27,7 +27,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen pt-24 pb-20 overflow-hidden bg-black text-white">
+    <section id="home" className="relative min-h-screen pt-24 pb-20 overflow-hidden">
       <div className="absolute inset-0 z-0 opacity-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-dino-600 rounded-full filter blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-72 h-72 bg-dino-400 rounded-full filter blur-3xl"></div>
@@ -41,12 +41,12 @@ const Hero = () => {
             <span>Advanced Stock Analysis</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in">
             Trade Smarter with <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-dino-600 to-dino-400">DinoTradez</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-8 animate-fade-in delay-100">
+          <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 animate-fade-in delay-100">
             Advanced technical and fundamental analysis to help you make informed trading decisions. Get real-time market data, comprehensive watchlists, and in-depth stock insights.
           </p>
           
@@ -109,7 +109,7 @@ const Hero = () => {
             <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
               <BarChart3 className="h-6 w-6 text-primary" />
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-white">Technical Analysis</h3>
+            <h3 className="text-lg font-semibold mb-2">Technical Analysis</h3>
             <p className="text-gray-300">Advanced charting and technical indicators to identify trends and trading opportunities.</p>
           </div>
           
@@ -117,7 +117,7 @@ const Hero = () => {
             <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
               <PieChart className="h-6 w-6 text-primary" />
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-white">Fundamental Analysis</h3>
+            <h3 className="text-lg font-semibold mb-2">Fundamental Analysis</h3>
             <p className="text-gray-300">Comprehensive financial data and ratios to evaluate company performance and value.</p>
           </div>
           
@@ -125,7 +125,7 @@ const Hero = () => {
             <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
               <TrendingUp className="h-6 w-6 text-primary" />
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-white">Market Insights</h3>
+            <h3 className="text-lg font-semibold mb-2">Market Insights</h3>
             <p className="text-gray-300">Real-time market data and curated watchlists to keep track of the stocks that matter to you.</p>
           </div>
         </div>
