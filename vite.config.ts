@@ -43,5 +43,5 @@ export default defineConfig(({ mode }) => ({
     minify: true,
     sourcemap: true, // Enable sourcemaps for debugging
   },
-  base: "./", // Change to relative path instead of absolute
+  base: "./", // Use relative paths for all assets
 }));

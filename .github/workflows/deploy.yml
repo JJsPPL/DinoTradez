@@ -67,11 +67,22 @@ jobs:
           <html>
           <head>
             <title>Test Page</title>
+            <style>
+              body {
+                background-color: #ffffff;
+                color: #000000;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                text-align: center;
+              }
+            </style>
           </head>
-          <body style="background-color:#ffffff;color:#000000;">
+          <body>
             <h1>Test Page</h1>
             <p>If you can see this, static file serving is working correctly.</p>
             <p>Timestamp: $(date)</p>
+            <p>Repository: dinotradez</p>
           </body>
           </html>
           EOL

@@ -14,10 +14,10 @@ DinoTradez is a modern stock trading dashboard that helps you monitor market tre
 
 To deploy this application to GitHub Pages:
 
-1. Make sure the `base` path in `vite.config.ts` matches your repository name exactly:
+1. Make sure the `base` path in `vite.config.ts` is set to relative paths:
    ```javascript
    // In vite.config.ts
-   base: "/DinoTradez/",
+   base: "./",
    ```
 
 2. Push your changes to the main branch to trigger the GitHub Actions workflow.
@@ -36,7 +36,7 @@ To deploy this application to GitHub Pages:
 
 4. After deployment, your site should be available at:
    ```
-   https://jjsppl.github.io/DinoTradez/
+   https://jjsppl.github.io/dinotradez/
    ```
 
 ## Development
