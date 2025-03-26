@@ -7,10 +7,15 @@ import './index.css'
 console.log("Starting application initialization");
 console.log("Environment:", import.meta.env.MODE);
 console.log("Base path:", import.meta.env.BASE_URL);
-console.log("Repository should be: dinotradez (lowercase)");
 console.log("Current URL:", window.location.href);
 console.log("Pathname:", window.location.pathname);
 console.log("Hash:", window.location.hash);
+
+// Debugging support
+window.onerror = function(message, source, lineno, colno, error) {
+  console.error('Global error caught:', {message, source, lineno, colno, error: error?.stack || error});
+  return false;
+};
 
 // Debug render target
 const rootElement = document.getElementById("root");
@@ -40,6 +45,14 @@ function showError(message) {
   errorHandler.innerHTML = `<h2>Application Error</h2><p>${message}</p>`;
 }
 
+// Remove the loader element when app is initialized
+function removeLoader() {
+  const loader = document.querySelector('.loader');
+  if (loader && loader.parentNode) {
+    loader.parentNode.removeChild(loader);
+  }
+}
+
 // Add debugging for React root creation
 try {
   console.log("Root element found, creating React root");
@@ -50,6 +63,9 @@ try {
     console.log("Attempting to render App component");
     root.render(<App />);
     console.log("App component rendered successfully");
+    // Mark application as loaded
+    window.__DINOTRADEZ_LOADED__ = true;
+    removeLoader();
   } catch (renderError) {
     showError("Error rendering React application: " + (renderError instanceof Error ? renderError.message : String(renderError)));
   }

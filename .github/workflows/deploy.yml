@@ -29,7 +29,6 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          BASE_URL: "/dinotradez/"
           
       - name: Debug build output
         run: |
@@ -46,7 +45,7 @@ jobs:
           # Create .nojekyll file to disable Jekyll processing
           touch dist/.nojekyll
           
-          # Create 404.html for SPA routing (custom version from public folder)
+          # Create 404.html for SPA routing
           cp public/404.html dist/404.html
           
           # Create a test HTML file to confirm deployment
@@ -71,7 +70,7 @@ jobs:
             <p>If you can see this, static file serving is working correctly.</p>
             <p>Timestamp: $(date)</p>
             <p>Repository: dinotradez</p>
-            <p><a href="/dinotradez/">Go to main app</a></p>
+            <p><a href="./">Go to main app</a></p>
           </body>
           </html>
           EOL

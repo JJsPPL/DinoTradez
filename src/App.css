@@ -1,75 +1,29 @@
 
-/* Base styles for the application */
+/* App-specific styles */
 #root {
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
   min-height: 100vh;
-  background-color: #ffffff; /* Ensure there's a visible background */
-}
-
-body {
-  background-color: #ffffff; /* Ensure white background */
-  color: #333333; /* Dark text for visibility */
-}
-
-/* Animation classes */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-.animate-on-scroll {
-  opacity: 0;
-}
-
-/* Stock styles */
-.stock-positive {
-  color: #10b981 !important;
-  font-weight: 600;
-}
-
-.stock-negative {
-  color: #ef4444 !important;
-  font-weight: 600;
-}
-
-/* Better visibility for form inputs and boxes */
-input, select, textarea {
-  color: inherit;
-  background-color: #f9fafb;
-  border: 1px solid #d1d5db;
-}
-
-/* High contrast for important data */
-.data-value {
-  font-weight: 600;
-}
-
-/* Card styling */
-.card-dark {
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  color: #333333;
 }
 
-/* Button styling */
-button.btn-primary {
-  background-color: #3b82f6;
+/* Debug information */
+.debug-info {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
+  padding: 10px;
+  font-size: 12px;
+  z-index: 9999;
+  border-top-left-radius: 4px;
+  max-width: 300px;
 }
 
-button.btn-secondary {
-  background-color: #1f2937;
-  color: white;
+@media (max-width: 768px) {
+  .debug-info {
+    font-size: 10px;
+    max-width: 200px;
+  }
 }

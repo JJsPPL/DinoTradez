@@ -21,10 +21,8 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Configure proper MIME types
     rollupOptions: {
       output: {
-        // Generate appropriate file extensions for better MIME type handling
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
         assetFileNames: ({ name }) => {
@@ -41,7 +39,8 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     assetsDir: 'assets',
     minify: true,
-    sourcemap: true, // Enable sourcemaps for debugging
+    sourcemap: true,
   },
-  base: "/dinotradez/", // Use absolute path for GitHub Pages with the correct repo name
+  // Use relative path for GitHub Pages and development
+  base: './',
 }));
