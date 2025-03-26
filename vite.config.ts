@@ -43,5 +43,5 @@ export default defineConfig(({ mode }) => ({
     minify: true,
     sourcemap: true, // Enable sourcemaps for debugging
   },
-  base: "/DinoTradez/", // Repository name for GitHub Pages
+  base: "/dinotradez/", // Updated to lowercase for consistency with GitHub URL
 }));

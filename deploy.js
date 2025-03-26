@@ -58,7 +58,7 @@ try {
   console.log('✅ Deployment successful!');
 
   console.log('\n🎉 Your site should now be available at:');
-  console.log('https://jjsppl.github.io/DinoTradez/');
+  console.log('https://jjsppl.github.io/dinotradez/');
   console.log('\n⚠️ Note: It may take a few minutes for changes to appear.');
   console.log('\n💡 If the page is blank, check browser console (F12) for errors.');
 
