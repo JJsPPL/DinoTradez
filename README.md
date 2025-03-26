@@ -17,7 +17,7 @@ To deploy this application to GitHub Pages:
 1. Make sure the `base` path in `vite.config.ts` matches your repository name exactly:
    ```javascript
    // In vite.config.ts
-   base: "/DinoTradezLovable/",
+   base: "/DinoTradez/",
    ```
 
 2. Push your changes to the main branch to trigger the GitHub Actions workflow.
@@ -36,7 +36,7 @@ To deploy this application to GitHub Pages:
 
 4. After deployment, your site should be available at:
    ```
-   https://jjsppl.github.io/DinoTradezLovable/
+   https://jjsppl.github.io/DinoTradez/
    ```
 
 ## Development
