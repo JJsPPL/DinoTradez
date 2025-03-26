@@ -8,6 +8,7 @@
   <script>
     // Single Page Apps for GitHub Pages
     // MIT License
+    // https://github.com/rafgraph/spa-github-pages
     (function(l) {
       if (l.search[1] === '/' ) {
         var decoded = l.search.slice(1).split('&').map(function(s) { 
@@ -23,16 +24,25 @@
     console.log("404 page loaded, redirecting...");
     console.log("Current location:", window.location.href);
     
-    // Redirect to home with hash router format - use relative path
-    window.location.href = "./";
+    // For GitHub Pages repository sites (username.github.io/repo-name)
+    var pathSegmentsToKeep = 1; // /repo-name/
+
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
   </script>
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #111827;
-      color: #fff;
+      background-color: #ffffff;
+      color: #111827;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -79,7 +89,7 @@
     <h1>404 - Page Not Found</h1>
     <p>Oops! The page you're looking for seems to have gone extinct.</p>
     <p>You're being redirected to the homepage...</p>
-    <a href="./" class="btn">Return to Homepage</a>
+    <a href="/dinotradez/" class="btn">Return to Homepage</a>
   </div>
 </body>
 </html>

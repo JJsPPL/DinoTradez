@@ -48,6 +48,11 @@
         document.querySelector('.error-fallback').style.display = 'block';
       }
     }, 5000);
+
+    // Log more detailed deployment information
+    console.log("DinoTradez application initializing");
+    console.log("Deployment path:", window.location.pathname);
+    console.log("Full URL:", window.location.href);
   </script>
   
   <script type="module" src="./src/main.tsx"></script>

@@ -8,6 +8,9 @@ console.log("Starting application initialization");
 console.log("Environment:", import.meta.env.MODE);
 console.log("Base path:", import.meta.env.BASE_URL);
 console.log("Repository should be: dinotradez (lowercase)");
+console.log("Current URL:", window.location.href);
+console.log("Pathname:", window.location.pathname);
+console.log("Hash:", window.location.hash);
 
 // Debug render target
 const rootElement = document.getElementById("root");
@@ -15,6 +18,26 @@ if (!rootElement) {
   console.error("Failed to find the root element");
   document.body.innerHTML = '<div style="color:black;background:white;padding:20px;font-family:sans-serif"><h1>Error Initializing Application</h1><p>Could not find root element. Please check the console for more details.</p></div>';
   throw new Error("Failed to find the root element");
+}
+
+// Create a visual error handler element
+const errorHandler = document.createElement('div');
+errorHandler.style.display = 'none';
+errorHandler.style.position = 'fixed';
+errorHandler.style.top = '0';
+errorHandler.style.left = '0';
+errorHandler.style.right = '0';
+errorHandler.style.padding = '20px';
+errorHandler.style.backgroundColor = '#f8d7da';
+errorHandler.style.color = '#721c24';
+errorHandler.style.zIndex = '9999';
+document.body.appendChild(errorHandler);
+
+// Function to show errors visibly
+function showError(message) {
+  console.error(message);
+  errorHandler.style.display = 'block';
+  errorHandler.innerHTML = `<h2>Application Error</h2><p>${message}</p>`;
 }
 
 // Add debugging for React root creation
@@ -28,12 +51,8 @@ try {
     root.render(<App />);
     console.log("App component rendered successfully");
   } catch (renderError) {
-    console.error("Error rendering React application:", renderError);
-    rootElement.innerHTML = '<div style="color:black;background:white;padding:20px;font-family:sans-serif"><h1>Render Error</h1><p>Failed to render the application. See console for details.</p><pre>' + 
-      (renderError instanceof Error ? renderError.stack : String(renderError)) + '</pre></div>';
+    showError("Error rendering React application: " + (renderError instanceof Error ? renderError.message : String(renderError)));
   }
 } catch (error) {
-  console.error("Error creating React root:", error);
-  rootElement.innerHTML = '<div style="color:black;background:white;padding:20px;font-family:sans-serif"><h1>React Error</h1><p>Failed to create React root. See console for details.</p><pre>' + 
-    (error instanceof Error ? error.stack : String(error)) + '</pre></div>';
+  showError("Error creating React root: " + (error instanceof Error ? error.message : String(error)));
 }
