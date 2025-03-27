@@ -48,16 +48,72 @@ try {
   fs.copyFileSync(indexPath, path.join(distPath, '404.html'));
   console.log(`${colors.green}✅ 404.html file created!${colors.reset}`);
 
+  // Add cache busting timestamp
+  const timestamp = Date.now();
+  console.log(`\n${colors.blue}🔄 Adding cache busting timestamp...${colors.reset}`);
+  const indexContent = fs.readFileSync(indexPath, 'utf8');
+  const updatedIndexContent = indexContent.replace('</head>', 
+    `<meta name="build-timestamp" content="${timestamp}" />\n</head>`);
+  fs.writeFileSync(indexPath, updatedIndexContent);
+  console.log(`${colors.green}✅ Cache busting timestamp added!${colors.reset}`);
+
   // Create a deployment timestamp file
-  const timestamp = new Date().toISOString();
   console.log(`\n${colors.blue}📄 Creating deployment timestamp file...${colors.reset}`);
-  fs.writeFileSync(path.join(distPath, 'deploy-timestamp.txt'), `Deployed on: ${timestamp}`);
+  fs.writeFileSync(path.join(distPath, 'deploy-timestamp.txt'), `Deployed on: ${new Date().toISOString()} with timestamp: ${timestamp}`);
   console.log(`${colors.green}✅ Timestamp file created!${colors.reset}`);
+
+  // Create a deployment status page
+  console.log(`\n${colors.blue}📄 Creating deployment status page...${colors.reset}`);
+  const statusPage = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DinoTradez Deployment Status</title>
+  <meta name="deployment-id" content="${timestamp}">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <style>
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .status {
+      background-color: #0f172a;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    .timestamp {
+      color: #3b82f6;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🦖 DinoTradez Deployment Status</h1>
+  <div class="status">
+    <h2>Deployment Active</h2>
+    <p>This page confirms that your deployment is active.</p>
+    <p>Deployment Timestamp: <span class="timestamp">${timestamp}</span></p>
+    <p>Deployment Time: <span class="timestamp">${new Date().toISOString()}</span></p>
+    <p><a href="./" style="color: #3b82f6;">Return to DinoTradez App</a></p>
+  </div>
+</body>
+</html>
+  `;
+  fs.writeFileSync(path.join(distPath, 'deployment-status.html'), statusPage);
+  console.log(`${colors.green}✅ Deployment status page created!${colors.reset}`);
 
   // Deploy to GitHub Pages
   console.log(`\n${colors.blue}🚀 Deploying to GitHub Pages...${colors.reset}`);
   console.log(`${colors.yellow}This may take a few minutes...${colors.reset}`);
-  execSync('npx gh-pages -d dist', { stdio: 'inherit' });
+  execSync('npx gh-pages -d dist --no-history', { stdio: 'inherit' });
   console.log(`${colors.green}✅ Deployment submitted successfully!${colors.reset}`);
 
   console.log(`\n${colors.cyan}${colors.bright}Deployment Information:${colors.reset}`);
@@ -69,8 +125,8 @@ try {
   console.log(`${colors.yellow}• GitHub Pages deployment typically takes 1-5 minutes to process${colors.reset}`);
   console.log(`${colors.yellow}• You can check deployment status in the GitHub repository's Actions tab${colors.reset}`);
   console.log(`${colors.yellow}• To verify the deployment, wait a few minutes and then visit:${colors.reset}`);
-  console.log(`  ${colors.bright}https://jjsppl.github.io/dinotradez/deploy-timestamp.txt${colors.reset}`);
-  console.log(`  If you see "${timestamp}", your deployment is live${colors.reset}`);
+  console.log(`  ${colors.bright}https://jjsppl.github.io/dinotradez/deployment-status.html${colors.reset}`);
+  console.log(`  If you see the timestamp "${timestamp}", your deployment is live${colors.reset}`);
   
   // Provide a function to check deployment status
   console.log(`\n${colors.blue}Checking deployment status...${colors.reset}`);
@@ -96,15 +152,16 @@ function checkDeploymentStatus(url, expectedTimestamp) {
     });
     
     res.on('end', () => {
-      if (data.includes(expectedTimestamp)) {
+      if (data.includes(expectedTimestamp.toString())) {
         console.log(`\n${colors.green}✅ Deployment confirmed live!${colors.reset}`);
         console.log(`${colors.green}Your site is now available at:${colors.reset}`);
         console.log(`${colors.bright}https://jjsppl.github.io/dinotradez/${colors.reset}`);
       } else {
-        console.log(`\n${colors.yellow}⚠️ Deployment not yet detected.${colors.reset}`);
+        console.log(`\n${colors.yellow}⚠️ Deployment not yet detected or cache not updated.${colors.reset}`);
         console.log(`${colors.yellow}This is normal - GitHub Pages deployments can take up to 10 minutes.${colors.reset}`);
-        console.log(`${colors.yellow}Try visiting your site in a few minutes:${colors.reset}`);
+        console.log(`${colors.yellow}Try visiting your site in incognito mode or after clearing cache:${colors.reset}`);
         console.log(`${colors.bright}https://jjsppl.github.io/dinotradez/${colors.reset}`);
+        console.log(`${colors.bright}https://jjsppl.github.io/dinotradez/?t=${Date.now()}${colors.reset}`);
       }
     });
   }).on('error', (err) => {

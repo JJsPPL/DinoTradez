@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -48,12 +50,20 @@ jobs:
           # Create 404.html for SPA routing
           cp dist/index.html dist/404.html
           
-          # Create timestamp file to verify deployment
-          echo "Deployed on: $(date -u)" > dist/deploy-timestamp.txt
+          # Add timestamp for cache busting
+          TIMESTAMP=$(date +%s)
+          echo "<meta name=\"build-timestamp\" content=\"$TIMESTAMP\">" >> dist/index.html
           
-          # Create cache busting meta tag
-          DEPLOY_ID=$(date +%s)
-          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
+          # Create timestamp file to verify deployment
+          echo "Deployed on: $(date -u) with timestamp: $TIMESTAMP" > dist/deploy-timestamp.txt
+          
+          # Create cache control headers
+          cat > dist/_headers <<EOL
+          /*
+            Cache-Control: no-cache, no-store, must-revalidate
+          /assets/*
+            Cache-Control: public, max-age=31536000, immutable
+          EOL
           
           # Create a test HTML file to confirm deployment
           cat > dist/deployment-status.html <<EOL
@@ -61,7 +71,10 @@ jobs:
           <html>
           <head>
             <title>DinoTradez Deployment Status</title>
-            <meta name="deployment-id" content="$DEPLOY_ID">
+            <meta name="deployment-id" content="$TIMESTAMP">
+            <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+            <meta http-equiv="Pragma" content="no-cache" />
+            <meta http-equiv="Expires" content="0" />
             <style>
               body {
                 background-color: #000000;
@@ -89,15 +102,15 @@ jobs:
             <div class="status">
               <h2>Deployment Active</h2>
               <p>This page confirms that your deployment is active.</p>
-              <p>Deployment ID: <span class="timestamp">$DEPLOY_ID</span></p>
-              <p>Timestamp: <span class="timestamp">$(date -u)</span></p>
+              <p>Deployment Timestamp: <span class="timestamp">$TIMESTAMP</span></p>
+              <p>Deployment Time: <span class="timestamp">$(date -u)</span></p>
               <p><a href="./" style="color: #3b82f6;">Return to DinoTradez App</a></p>
             </div>
           </body>
           </html>
           EOL
           
-          echo "Created deployment status page with ID: $DEPLOY_ID"
+          echo "Created deployment status page with timestamp: $TIMESTAMP"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -105,17 +118,31 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
+          cname: ${{ secrets.CNAME }}
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy to GitHub Pages [skip ci]'
+
+      - name: Clear GitHub Pages cache
+        run: |
+          # Using the GitHub API to request a new build
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/pages/builds
 
       - name: Deployment Summary
         run: |
+          TIMESTAMP=$(date +%s)
           echo "## 🦖 DinoTradez Deployment" >> $GITHUB_STEP_SUMMARY
           echo "Deployment completed successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
-          echo "- **Deployment ID:** ${DEPLOY_ID}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deployment Timestamp:** ${TIMESTAMP}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deployment Time:** $(date -u)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Important Notes" >> $GITHUB_STEP_SUMMARY
           echo "- GitHub Pages may take a few minutes to reflect changes" >> $GITHUB_STEP_SUMMARY
-          echo "- Visit https://jjsppl.github.io/dinotradez/ to view your site" >> $GITHUB_STEP_SUMMARY
+          echo "- Site URL: https://jjsppl.github.io/dinotradez/" >> $GITHUB_STEP_SUMMARY
           echo "- Verify deployment at https://jjsppl.github.io/dinotradez/deployment-status.html" >> $GITHUB_STEP_SUMMARY
+          echo "- Check timestamp file at https://jjsppl.github.io/dinotradez/deploy-timestamp.txt" >> $GITHUB_STEP_SUMMARY
