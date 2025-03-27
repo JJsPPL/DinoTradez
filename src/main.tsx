@@ -63,7 +63,7 @@ try {
     console.log("Attempting to render App component");
     root.render(<App />);
     console.log("App component rendered successfully");
-    // Mark application as loaded - fix TS error by using window object directly
+    // Mark application as loaded
     window.setTimeout(() => {
       removeLoader();
     }, 100);
