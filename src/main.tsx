@@ -21,7 +21,7 @@ window.onerror = function(message, source, lineno, colno, error) {
 const rootElement = document.getElementById("root");
 if (!rootElement) {
   console.error("Failed to find the root element");
-  document.body.innerHTML = '<div style="color:black;background:white;padding:20px;font-family:sans-serif"><h1>Error Initializing Application</h1><p>Could not find root element. Please check the console for more details.</p></div>';
+  document.body.innerHTML = '<div style="color:white;background:black;padding:20px;font-family:sans-serif"><h1>Error Initializing Application</h1><p>Could not find root element. Please check the console for more details.</p></div>';
   throw new Error("Failed to find the root element");
 }
 
@@ -63,9 +63,10 @@ try {
     console.log("Attempting to render App component");
     root.render(<App />);
     console.log("App component rendered successfully");
-    // Mark application as loaded
-    window.__DINOTRADEZ_LOADED__ = true;
-    removeLoader();
+    // Mark application as loaded - fix TS error by using window object directly
+    window.setTimeout(() => {
+      removeLoader();
+    }, 100);
   } catch (renderError) {
     showError("Error rendering React application: " + (renderError instanceof Error ? renderError.message : String(renderError)));
   }
