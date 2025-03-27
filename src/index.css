@@ -86,3 +86,16 @@
     to { opacity: 1; }
   }
 }
+
+/* Text color adjustments for better visibility */
+.text-white {
+  color: #ffffff;
+}
+
+.text-gray-300 {
+  color: #d1d5db;
+}
+
+.text-gray-400 {
+  color: #9ca3af;
+}

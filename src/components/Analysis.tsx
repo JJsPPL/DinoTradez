@@ -174,20 +174,20 @@ const Analysis = () => {
     <section id="analysis" className="py-24 bg-gradient-to-b from-background to-secondary/30">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-10">
-          <h2 className="text-3xl font-bold mb-3">Technical Analysis</h2>
-          <p className="text-muted-foreground max-w-2xl">Advanced charting tools and technical indicators to analyze stock performance and identify trends.</p>
+          <h2 className="text-3xl font-bold mb-3 text-white">Technical Analysis</h2>
+          <p className="text-gray-300 max-w-2xl">Advanced charting tools and technical indicators to analyze stock performance and identify trends.</p>
         </div>
         
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="p-4 border-b border-border flex flex-wrap items-center justify-between gap-4">
+        <div className="glass rounded-xl shadow-md overflow-hidden border border-gray-800">
+          <div className="p-4 border-b border-gray-800 flex flex-wrap items-center justify-between gap-4 bg-black/80">
             <div className="flex items-center">
-              <div className="font-medium mr-3">AAPL</div>
-              <div className="text-muted-foreground">Apple Inc.</div>
+              <div className="font-medium mr-3 text-white">AAPL</div>
+              <div className="text-gray-400">Apple Inc.</div>
               <div className="ml-4 text-sm font-medium stock-positive">$173.57 +1.37%</div>
             </div>
             
             <div className="flex items-center space-x-2">
-              <div className="flex bg-secondary rounded-lg p-1">
+              <div className="flex bg-gray-900 rounded-lg p-1">
                 {chartTypes.map((chartType) => (
                   <button
                     key={chartType.id}
@@ -195,8 +195,8 @@ const Analysis = () => {
                     className={cn(
                       "p-2 rounded-md flex items-center transition-colors",
                       activeChart === chartType.id 
-                        ? "bg-white text-primary shadow-sm" 
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "bg-primary text-white shadow-sm" 
+                        : "text-gray-400 hover:text-white"
                     )}
                   >
                     <chartType.icon className="h-4 w-4" />
@@ -204,7 +204,7 @@ const Analysis = () => {
                 ))}
               </div>
               
-              <div className="flex bg-secondary rounded-lg overflow-hidden">
+              <div className="flex bg-gray-900 rounded-lg overflow-hidden">
                 {timeframes.map((timeframe) => (
                   <button
                     key={timeframe.value}
@@ -213,7 +213,7 @@ const Analysis = () => {
                       "px-3 py-1.5 text-xs transition-colors",
                       activeTimeframe === timeframe.value 
                         ? "bg-primary text-white" 
-                        : "text-muted-foreground hover:text-foreground"
+                        : "text-gray-400 hover:text-white"
                     )}
                   >
                     {timeframe.label}
@@ -224,7 +224,7 @@ const Analysis = () => {
               <div className="relative">
                 <button 
                   onClick={() => setIsIndicatorMenuOpen(!isIndicatorMenuOpen)}
-                  className="flex items-center px-3 py-1.5 rounded-lg bg-secondary text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center px-3 py-1.5 rounded-lg bg-gray-900 text-sm text-gray-300 hover:text-white transition-colors"
                 >
                   <Layers className="h-4 w-4 mr-1" />
                   <span>Indicators</span>
@@ -232,12 +232,12 @@ const Analysis = () => {
                 </button>
                 
                 {isIndicatorMenuOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 p-2 animate-fade-in">
-                    <div className="text-xs font-medium text-muted-foreground mb-2 px-2">Select Indicators</div>
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-black rounded-lg shadow-lg z-10 p-2 animate-fade-in border border-gray-800">
+                    <div className="text-xs font-medium text-gray-400 mb-2 px-2">Select Indicators</div>
                     {indicators.map((indicator) => (
                       <div 
                         key={indicator}
-                        className="flex items-center px-2 py-1.5 hover:bg-secondary rounded-md cursor-pointer"
+                        className="flex items-center px-2 py-1.5 hover:bg-gray-900 rounded-md cursor-pointer"
                         onClick={() => toggleIndicator(indicator)}
                       >
                         <input 
@@ -246,7 +246,7 @@ const Analysis = () => {
                           className="mr-2"
                           onChange={() => {}} // controlled component
                         />
-                        <span className="text-sm">{indicator}</span>
+                        <span className="text-sm text-gray-300">{indicator}</span>
                       </div>
                     ))}
                   </div>
@@ -255,57 +255,57 @@ const Analysis = () => {
             </div>
           </div>
           
-          <div className="p-4 border-b border-border flex items-center justify-between text-sm bg-secondary/30">
+          <div className="p-4 border-b border-gray-800 flex items-center justify-between text-sm bg-gray-900/70">
             <div className="flex items-center space-x-3">
-              <button className="p-1.5 rounded hover:bg-secondary transition-colors">
-                <Undo2 className="h-4 w-4 text-muted-foreground" />
+              <button className="p-1.5 rounded hover:bg-gray-800 transition-colors">
+                <Undo2 className="h-4 w-4 text-gray-400" />
               </button>
-              <button className="p-1.5 rounded hover:bg-secondary transition-colors">
-                <Redo2 className="h-4 w-4 text-muted-foreground" />
+              <button className="p-1.5 rounded hover:bg-gray-800 transition-colors">
+                <Redo2 className="h-4 w-4 text-gray-400" />
               </button>
-              <div className="border-l border-border h-5 mx-1"></div>
-              <button className="p-1.5 rounded hover:bg-secondary transition-colors">
-                <Grid className="h-4 w-4 text-muted-foreground" />
+              <div className="border-l border-gray-800 h-5 mx-1"></div>
+              <button className="p-1.5 rounded hover:bg-gray-800 transition-colors">
+                <Grid className="h-4 w-4 text-gray-400" />
               </button>
-              <span className="text-xs text-muted-foreground">Auto</span>
-              <div className="border-l border-border h-5 mx-1"></div>
+              <span className="text-xs text-gray-400">Auto</span>
+              <div className="border-l border-gray-800 h-5 mx-1"></div>
               <div className="flex items-center">
-                <Clock className="h-4 w-4 text-muted-foreground mr-1" />
-                <span className="text-xs">Last updated: 04:03:21 PM</span>
+                <Clock className="h-4 w-4 text-gray-400 mr-1" />
+                <span className="text-xs text-gray-300">Last updated: 04:03:21 PM</span>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
-              <button className="p-1.5 rounded hover:bg-secondary transition-colors">
-                <Share2 className="h-4 w-4 text-muted-foreground" />
+              <button className="p-1.5 rounded hover:bg-gray-800 transition-colors">
+                <Share2 className="h-4 w-4 text-gray-400" />
               </button>
-              <button className="p-1.5 rounded hover:bg-secondary transition-colors">
-                <Maximize2 className="h-4 w-4 text-muted-foreground" />
+              <button className="p-1.5 rounded hover:bg-gray-800 transition-colors">
+                <Maximize2 className="h-4 w-4 text-gray-400" />
               </button>
             </div>
           </div>
           
-          <div className="relative">
+          <div className="relative bg-black/70">
             <div className="flex justify-between p-4 absolute top-0 left-0 right-0 z-10 text-sm">
               <div>
-                <div className="text-xs text-muted-foreground">Open</div>
-                <div>171.22</div>
+                <div className="text-xs text-gray-400">Open</div>
+                <div className="text-white">171.22</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">High</div>
-                <div>174.30</div>
+                <div className="text-xs text-gray-400">High</div>
+                <div className="text-white">174.30</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Low</div>
-                <div>171.96</div>
+                <div className="text-xs text-gray-400">Low</div>
+                <div className="text-white">171.96</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Close</div>
-                <div>173.57</div>
+                <div className="text-xs text-gray-400">Close</div>
+                <div className="text-white">173.57</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Volume</div>
-                <div>74.58M</div>
+                <div className="text-xs text-gray-400">Volume</div>
+                <div className="text-white">74.58M</div>
               </div>
             </div>
             
@@ -314,11 +314,11 @@ const Analysis = () => {
             </div>
           </div>
           
-          <div className="p-4 border-t border-border bg-secondary/30">
+          <div className="p-4 border-t border-gray-800 bg-gray-900/70">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <h4 className="font-medium text-sm mr-2">Analysis Summary</h4>
-                <div className="inline-flex items-center px-2 py-1 rounded-full bg-success/10 text-success text-xs font-medium">
+                <h4 className="font-medium text-sm mr-2 text-white">Analysis Summary</h4>
+                <div className="inline-flex items-center px-2 py-1 rounded-full bg-green-900/30 text-green-400 text-xs font-medium">
                   Bullish
                 </div>
               </div>
@@ -329,138 +329,138 @@ const Analysis = () => {
             </div>
             
             <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="rounded-lg bg-white p-3">
-                <div className="text-xs text-muted-foreground mb-1">Moving Averages</div>
+              <div className="rounded-lg bg-black p-3 border border-gray-800">
+                <div className="text-xs text-gray-400 mb-1">Moving Averages</div>
                 <div className="text-sm font-medium stock-positive">Buy</div>
-                <div className="text-xs text-muted-foreground mt-1">7 Buy, 5 Neutral, 0 Sell</div>
+                <div className="text-xs text-gray-400 mt-1">7 Buy, 5 Neutral, 0 Sell</div>
               </div>
               
-              <div className="rounded-lg bg-white p-3">
-                <div className="text-xs text-muted-foreground mb-1">Oscillators</div>
-                <div className="text-sm font-medium text-foreground">Neutral</div>
-                <div className="text-xs text-muted-foreground mt-1">2 Buy, 8 Neutral, 1 Sell</div>
+              <div className="rounded-lg bg-black p-3 border border-gray-800">
+                <div className="text-xs text-gray-400 mb-1">Oscillators</div>
+                <div className="text-sm font-medium text-gray-300">Neutral</div>
+                <div className="text-xs text-gray-400 mt-1">2 Buy, 8 Neutral, 1 Sell</div>
               </div>
               
-              <div className="rounded-lg bg-white p-3">
-                <div className="text-xs text-muted-foreground mb-1">Pivot Points</div>
+              <div className="rounded-lg bg-black p-3 border border-gray-800">
+                <div className="text-xs text-gray-400 mb-1">Pivot Points</div>
                 <div className="text-sm font-medium stock-positive">Bullish</div>
-                <div className="text-xs text-muted-foreground mt-1">Support: 171.50, Resistance: 175.80</div>
+                <div className="text-xs text-gray-400 mt-1">Support: 171.50, Resistance: 175.80</div>
               </div>
               
-              <div className="rounded-lg bg-white p-3">
-                <div className="text-xs text-muted-foreground mb-1">Summary</div>
+              <div className="rounded-lg bg-black p-3 border border-gray-800">
+                <div className="text-xs text-gray-400 mb-1">Summary</div>
                 <div className="text-sm font-medium stock-positive">Buy</div>
-                <div className="text-xs text-muted-foreground mt-1">9 Buy, 13 Neutral, 1 Sell</div>
+                <div className="text-xs text-gray-400 mt-1">9 Buy, 13 Neutral, 1 Sell</div>
               </div>
             </div>
           </div>
         </div>
         
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 border-b border-border flex justify-between items-center">
-              <h3 className="font-medium">Technical Indicators</h3>
+          <div className="glass rounded-xl shadow-md overflow-hidden border border-gray-800">
+            <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center bg-black/80">
+              <h3 className="font-medium text-white">Technical Indicators</h3>
             </div>
-            <div className="p-6">
+            <div className="p-6 bg-black/60">
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-sm">RSI (14)</span>
-                  <span className="text-sm">58.34</span>
+                  <span className="text-sm text-gray-300">RSI (14)</span>
+                  <span className="text-sm text-white">58.34</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">MACD (12, 26, 9)</span>
-                  <span className="text-sm">2.15</span>
+                  <span className="text-sm text-gray-300">MACD (12, 26, 9)</span>
+                  <span className="text-sm text-white">2.15</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">Stochastic %K (14, 3, 3)</span>
-                  <span className="text-sm">65.23</span>
+                  <span className="text-sm text-gray-300">Stochastic %K (14, 3, 3)</span>
+                  <span className="text-sm text-white">65.23</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">CCI (14)</span>
-                  <span className="text-sm">127.54</span>
+                  <span className="text-sm text-gray-300">CCI (14)</span>
+                  <span className="text-sm text-white">127.54</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">ATR (14)</span>
-                  <span className="text-sm">3.21</span>
+                  <span className="text-sm text-gray-300">ATR (14)</span>
+                  <span className="text-sm text-white">3.21</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">Highs/Lows (14)</span>
-                  <span className="text-sm">0.85</span>
+                  <span className="text-sm text-gray-300">Highs/Lows (14)</span>
+                  <span className="text-sm text-white">0.85</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">Ultimate Oscillator</span>
-                  <span className="text-sm">54.17</span>
+                  <span className="text-sm text-gray-300">Ultimate Oscillator</span>
+                  <span className="text-sm text-white">54.17</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">ROC</span>
-                  <span className="text-sm">6.45</span>
+                  <span className="text-sm text-gray-300">ROC</span>
+                  <span className="text-sm text-white">6.45</span>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 border-b border-border flex justify-between items-center">
-              <h3 className="font-medium">Moving Averages</h3>
+          <div className="glass rounded-xl shadow-md overflow-hidden border border-gray-800">
+            <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center bg-black/80">
+              <h3 className="font-medium text-white">Moving Averages</h3>
             </div>
-            <div className="p-6">
+            <div className="p-6 bg-black/60">
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-sm">MA (5)</span>
+                  <span className="text-sm text-gray-300">MA (5)</span>
                   <span className="text-sm stock-positive">172.85 (Buy)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">MA (10)</span>
+                  <span className="text-sm text-gray-300">MA (10)</span>
                   <span className="text-sm stock-positive">170.93 (Buy)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">MA (20)</span>
+                  <span className="text-sm text-gray-300">MA (20)</span>
                   <span className="text-sm stock-positive">168.75 (Buy)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">MA (50)</span>
+                  <span className="text-sm text-gray-300">MA (50)</span>
                   <span className="text-sm stock-positive">168.12 (Buy)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">MA (100)</span>
+                  <span className="text-sm text-gray-300">MA (100)</span>
                   <span className="text-sm stock-positive">170.45 (Buy)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">MA (200)</span>
-                  <span className="text-sm text-muted-foreground">175.36 (Neutral)</span>
+                  <span className="text-sm text-gray-300">MA (200)</span>
+                  <span className="text-sm text-gray-400">175.36 (Neutral)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">EMA (5)</span>
+                  <span className="text-sm text-gray-300">EMA (5)</span>
                   <span className="text-sm stock-positive">173.12 (Buy)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">EMA (10)</span>
+                  <span className="text-sm text-gray-300">EMA (10)</span>
                   <span className="text-sm stock-positive">171.54 (Buy)</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* New Darkpool Data Panel */}
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 border-b border-border flex justify-between items-center">
-              <h3 className="font-medium flex items-center">
+          {/* Darkpool Data Panel */}
+          <div className="glass rounded-xl shadow-md overflow-hidden border border-gray-800">
+            <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center bg-black/80">
+              <h3 className="font-medium flex items-center text-white">
                 <Database className="h-4 w-4 mr-2 text-purple-500" />
                 Darkpool & Block Trade Data
-                <div className="ml-2 rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-800">Premium</div>
+                <div className="ml-2 rounded-full bg-purple-900/50 px-2 py-0.5 text-xs text-purple-300">Premium</div>
               </h3>
-              <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+              <Info className="h-4 w-4 text-gray-400 cursor-help" />
             </div>
 
             {showDarkpoolData && (
-              <div className="p-6 border-b border-border">
-                <h4 className="text-sm font-medium mb-3 flex items-center">
+              <div className="p-6 border-b border-gray-800 bg-black/60">
+                <h4 className="text-sm font-medium mb-3 flex items-center text-white">
                   <Activity className="h-4 w-4 mr-1 text-purple-500" />
                   Darkpool Activity
                 </h4>
                 <div className="overflow-y-auto max-h-36 mb-3">
                   <table className="w-full text-sm">
-                    <thead className="text-xs text-muted-foreground">
+                    <thead className="text-xs text-gray-400">
                       <tr>
                         <th className="text-left pb-2">Time</th>
                         <th className="text-right pb-2">Volume</th>
@@ -468,12 +468,12 @@ const Analysis = () => {
                         <th className="text-right pb-2">Type</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-gray-800">
                       {darkpoolData.map((item, index) => (
                         <tr key={index} className="darkpool-row">
-                          <td className="py-1.5">{item.time}</td>
-                          <td className="text-right py-1.5">{item.volume.toLocaleString()}</td>
-                          <td className="text-right py-1.5">${item.price}</td>
+                          <td className="py-1.5 text-gray-300">{item.time}</td>
+                          <td className="text-right py-1.5 text-gray-300">{item.volume.toLocaleString()}</td>
+                          <td className="text-right py-1.5 text-gray-300">${item.price}</td>
                           <td className={`text-right py-1.5 ${item.type === 'buy' ? 'text-green-500' : 'text-red-500'}`}>
                             {item.type.toUpperCase()}
                           </td>
@@ -482,27 +482,27 @@ const Analysis = () => {
                     </tbody>
                   </table>
                 </div>
-                <div className="text-xs text-muted-foreground">
-                  Darkpool ratio: <span className="font-medium">38.7%</span> of total volume
+                <div className="text-xs text-gray-400">
+                  Darkpool ratio: <span className="font-medium text-gray-300">38.7%</span> of total volume
                 </div>
                 <div className="mt-3 flex items-center gap-2">
-                  <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-purple-500 rounded-full" style={{ width: '38.7%' }}></div>
+                  <div className="flex-1 h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-purple-600 rounded-full" style={{ width: '38.7%' }}></div>
                   </div>
-                  <span className="text-xs font-medium">38.7%</span>
+                  <span className="text-xs font-medium text-gray-300">38.7%</span>
                 </div>
               </div>
             )}
 
             {showBlockTrades && (
-              <div className="p-6">
-                <h4 className="text-sm font-medium mb-3 flex items-center">
+              <div className="p-6 bg-black/60">
+                <h4 className="text-sm font-medium mb-3 flex items-center text-white">
                   <Database className="h-4 w-4 mr-1 text-blue-500" />
                   Significant Block Trades
                 </h4>
                 <div className="overflow-y-auto max-h-36">
                   <table className="w-full text-sm">
-                    <thead className="text-xs text-muted-foreground">
+                    <thead className="text-xs text-gray-400">
                       <tr>
                         <th className="text-left pb-2">Time</th>
                         <th className="text-right pb-2">Shares</th>
@@ -511,14 +511,14 @@ const Analysis = () => {
                         <th className="text-right pb-2">Origin</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-gray-800">
                       {blockTradeData.map((item, index) => (
                         <tr key={index} className="block-trade-row">
-                          <td className="py-1.5">{item.time}</td>
-                          <td className="text-right py-1.5">{item.shares.toLocaleString()}</td>
-                          <td className="text-right py-1.5">${item.price}</td>
-                          <td className="text-right py-1.5">{item.value}</td>
-                          <td className={`text-right py-1.5 ${item.origin === 'Dark Pool' ? 'text-purple-500 font-medium' : ''}`}>
+                          <td className="py-1.5 text-gray-300">{item.time}</td>
+                          <td className="text-right py-1.5 text-gray-300">{item.shares.toLocaleString()}</td>
+                          <td className="text-right py-1.5 text-gray-300">${item.price}</td>
+                          <td className="text-right py-1.5 text-gray-300">{item.value}</td>
+                          <td className={`text-right py-1.5 ${item.origin === 'Dark Pool' ? 'text-purple-400 font-medium' : 'text-gray-300'}`}>
                             {item.origin}
                           </td>
                         </tr>
@@ -526,8 +526,8 @@ const Analysis = () => {
                     </tbody>
                   </table>
                 </div>
-                <div className="mt-3 text-xs text-muted-foreground">
-                  Total block trade volume: <span className="font-medium">1,050,000 shares</span> ($182,252,250)
+                <div className="mt-3 text-xs text-gray-400">
+                  Total block trade volume: <span className="font-medium text-gray-300">1,050,000 shares</span> ($182,252,250)
                 </div>
               </div>
             )}

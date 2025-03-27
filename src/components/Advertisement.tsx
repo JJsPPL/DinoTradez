@@ -18,7 +18,7 @@ const Advertisement = ({ size, title, content, imageUrl, linkUrl }: Advertisemen
     <div className={containerClass}>
       <span className="ad-label">Advertisement</span>
       <div className="p-3">
-        <h4 className="font-medium text-lg mb-2">{title}</h4>
+        <h4 className="font-medium text-lg mb-2 text-white">{title}</h4>
         <p className="text-sm text-gray-300 mb-3">{content}</p>
         
         {imageUrl && (
