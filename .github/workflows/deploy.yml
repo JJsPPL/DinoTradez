@@ -48,12 +48,20 @@ jobs:
           # Create 404.html for SPA routing
           cp dist/index.html dist/404.html
           
+          # Create timestamp file to verify deployment
+          echo "Deployed on: $(date -u)" > dist/deploy-timestamp.txt
+          
+          # Create cache busting meta tag
+          DEPLOY_ID=$(date +%s)
+          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
+          
           # Create a test HTML file to confirm deployment
-          cat > dist/test.html <<EOL
+          cat > dist/deployment-status.html <<EOL
           <!DOCTYPE html>
           <html>
           <head>
-            <title>DinoTradez Test Page</title>
+            <title>DinoTradez Deployment Status</title>
+            <meta name="deployment-id" content="$DEPLOY_ID">
             <style>
               body {
                 background-color: #000000;
@@ -63,16 +71,33 @@ jobs:
                 padding: 20px;
                 text-align: center;
               }
+              .status {
+                background-color: #0f172a;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px auto;
+                max-width: 600px;
+              }
+              .timestamp {
+                color: #3b82f6;
+                font-weight: bold;
+              }
             </style>
           </head>
           <body>
-            <h1>DinoTradez Test Page</h1>
-            <p>If you can see this, deployment was successful.</p>
-            <p>Timestamp: $(date)</p>
-            <p><a href="./" style="color: #3b82f6;">Go to main app</a></p>
+            <h1>🦖 DinoTradez Deployment Status</h1>
+            <div class="status">
+              <h2>Deployment Active</h2>
+              <p>This page confirms that your deployment is active.</p>
+              <p>Deployment ID: <span class="timestamp">$DEPLOY_ID</span></p>
+              <p>Timestamp: <span class="timestamp">$(date -u)</span></p>
+              <p><a href="./" style="color: #3b82f6;">Return to DinoTradez App</a></p>
+            </div>
           </body>
           </html>
           EOL
+          
+          echo "Created deployment status page with ID: $DEPLOY_ID"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -80,3 +105,17 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
+
+      - name: Deployment Summary
+        run: |
+          echo "## 🦖 DinoTradez Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "Deployment completed successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deployment ID:** ${DEPLOY_ID}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Important Notes" >> $GITHUB_STEP_SUMMARY
+          echo "- GitHub Pages may take a few minutes to reflect changes" >> $GITHUB_STEP_SUMMARY
+          echo "- Visit https://jjsppl.github.io/dinotradez/ to view your site" >> $GITHUB_STEP_SUMMARY
+          echo "- Verify deployment at https://jjsppl.github.io/dinotradez/deployment-status.html" >> $GITHUB_STEP_SUMMARY
