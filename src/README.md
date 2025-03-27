@@ -15,71 +15,43 @@ DinoTradez is a powerful trading dashboard designed to help you track stocks, an
 - **Block Trade Analysis**: Track large market transactions
 - **Responsive Design**: Works on desktop and mobile devices
 
-## Deployment Instructions
+## GitHub Pages Deployment
 
-### To deploy this project to GitHub Pages:
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
 
-1. Make sure you have the latest code:
-   ```
-   git clone https://github.com/JJsPPL/DinoTradez.git
-   cd DinoTradez
-   npm install
-   ```
+### Automatic Deployment
 
-2. Build the project:
-   ```
-   npm run build
-   ```
+Every push to the main branch will trigger a GitHub Actions workflow that builds and deploys the site.
 
-3. Create a gh-pages branch:
-   ```
-   git checkout --orphan gh-pages
-   ```
+### Manual Deployment
 
-4. Remove all tracked files:
-   ```
-   git rm -rf .
-   ```
+You can also deploy manually:
 
-5. Copy files from dist to root:
-   ```
-   cp -r dist/* .
-   ```
+```bash
+# Using npm script
+npm run deploy
 
-6. Create a .nojekyll file to disable Jekyll processing:
-   ```
-   touch .nojekyll
-   ```
+# Or using the deploy script directly
+node deploy.js
+```
 
-7. Add, commit and push:
-   ```
-   git add .
-   git commit -m "Deploy to GitHub Pages"
-   git push -f origin gh-pages
-   ```
+After deployment, your site will be available at:
+```
+https://jjsppl.github.io/DinoTradez/
+```
 
-8. Return to main branch:
-   ```
-   git checkout main
-   ```
+## Troubleshooting Deployment
 
-9. Your site should now be available at:
-   ```
-   https://jjsppl.github.io/DinoTradez/
-   ```
+If your deployed site shows a blank page:
 
-## Common GitHub Pages Issues
-
-If your site shows a blank page:
-
-1. Check that your repository settings have GitHub Pages enabled with the gh-pages branch
-2. Ensure all path references use relative paths, not absolute paths
-3. Check browser console for errors (F12 key)
-4. Verify that the base path in vite.config.ts matches your repository name
+1. Check browser console (F12) for errors
+2. Verify that all assets use relative paths
+3. Ensure the repository settings have GitHub Pages enabled for the gh-pages branch
+4. Check that the base path in vite.config.ts is set to "./"
 
 ## Local Development
 
-```
+```bash
 npm install
 npm run dev
 ```

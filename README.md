@@ -7,37 +7,34 @@ DinoTradez is a modern stock trading dashboard that helps you monitor market tre
 
 - Stock watchlist tracking
 - Technical analysis tools
+- Darkpool data analysis
 - User-friendly interface
 - Responsive design for all devices
 
-## Important: GitHub Pages Deployment
+## GitHub Pages Deployment
 
-To deploy this application to GitHub Pages:
+This project is configured for automatic deployment to GitHub Pages. 
 
-1. Make sure the `base` path in `vite.config.ts` is set to relative paths:
-   ```javascript
-   // In vite.config.ts
-   base: "./",
-   ```
+### Automatic Deployment
 
-2. Push your changes to the main branch to trigger the GitHub Actions workflow.
+When you push to the main branch, GitHub Actions will automatically build and deploy your site to GitHub Pages.
 
-3. If you need to manually deploy:
-   ```bash
-   # Build the project
-   npm run build
-   
-   # Create .nojekyll file to disable Jekyll processing
-   touch dist/.nojekyll
-   
-   # Deploy to GitHub Pages
-   npx gh-pages -d dist
-   ```
+### Manual Deployment
 
-4. After deployment, your site should be available at:
-   ```
-   https://jjsppl.github.io/dinotradez/
-   ```
+To manually deploy the application:
+
+```bash
+# Option 1: Using npm script
+npm run deploy
+
+# Option 2: Running the deploy script directly
+node deploy.js
+```
+
+After deployment, your site will be available at:
+```
+https://jjsppl.github.io/dinotradez/
+```
 
 ## Development
 

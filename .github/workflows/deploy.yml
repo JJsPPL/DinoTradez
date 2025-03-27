@@ -46,7 +46,7 @@ jobs:
           touch dist/.nojekyll
           
           # Create 404.html for SPA routing
-          cp public/404.html dist/404.html
+          cp dist/index.html dist/404.html
           
           # Create a test HTML file to confirm deployment
           cat > dist/test.html <<EOL
@@ -56,9 +56,9 @@ jobs:
             <title>DinoTradez Test Page</title>
             <style>
               body {
-                background-color: #ffffff;
-                color: #000000;
-                font-family: Arial, sans-serif;
+                background-color: #000000;
+                color: #ffffff;
+                font-family: 'Inter', sans-serif;
                 margin: 0;
                 padding: 20px;
                 text-align: center;
@@ -67,10 +67,9 @@ jobs:
           </head>
           <body>
             <h1>DinoTradez Test Page</h1>
-            <p>If you can see this, static file serving is working correctly.</p>
+            <p>If you can see this, deployment was successful.</p>
             <p>Timestamp: $(date)</p>
-            <p>Repository: dinotradez</p>
-            <p><a href="./">Go to main app</a></p>
+            <p><a href="./" style="color: #3b82f6;">Go to main app</a></p>
           </body>
           </html>
           EOL

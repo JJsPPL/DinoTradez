@@ -1,7 +1,7 @@
 
 #!/usr/bin/env node
 
-// Enhanced script to deploy to GitHub Pages with better error handling
+// GitHub Pages deployment script
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -36,22 +36,6 @@ try {
   fs.copyFileSync(indexPath, path.join(distPath, '404.html'));
   console.log('✅ 404.html file created!');
 
-  // Create _headers file for Netlify/Vercel (optional but good practice)
-  console.log('\n📄 Creating _headers file for better content types...');
-  fs.writeFileSync(
-    path.join(distPath, '_headers'),
-    `/*
-  Content-Type: text/html; charset=utf-8
-/*.js
-  Content-Type: application/javascript
-/*.css
-  Content-Type: text/css
-/*.json
-  Content-Type: application/json
-`
-  );
-  console.log('✅ _headers file created!');
-
   // Deploy to GitHub Pages
   console.log('\n🚀 Deploying to GitHub Pages...');
   execSync('npx gh-pages -d dist', { stdio: 'inherit' });
@@ -60,7 +44,6 @@ try {
   console.log('\n🎉 Your site should now be available at:');
   console.log('https://jjsppl.github.io/dinotradez/');
   console.log('\n⚠️ Note: It may take a few minutes for changes to appear.');
-  console.log('\n💡 If the page is blank, check browser console (F12) for errors.');
 
 } catch (error) {
   console.error('\n❌ Error during deployment:', error);
